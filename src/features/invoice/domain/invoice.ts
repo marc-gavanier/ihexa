@@ -1,6 +1,6 @@
 import type { DomainModel } from '@/libraries/ddd/domain-model';
 
-type InvoiceId = DomainModel<'InvoiceId', string>;
+export type InvoiceId = DomainModel<'InvoiceId', string>;
 
 type Name = DomainModel<
   'Name',

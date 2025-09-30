@@ -2,9 +2,15 @@
   "name": "ihexa",
   "version": "1.0.0",
   "description": "",
+  "type": "module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test": "vitest",
+    "coverage": "vitest run --coverage",
+    "e2e": "playwright test"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +18,16 @@
   "packageManager": "pnpm@10.15.1",
   "devDependencies": {
     "@biomejs/biome": "2.2.4",
-    "typescript": "^5.9.2"
+    "@playwright/test": "^1.55.1",
+    "@types/node": "^24.6.0",
+    "@types/react": "^19.1.16",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
+  },
+  "dependencies": {
+    "next": "^15.5.4",
+    "piqure": "^2.1.2",
+    "react": "^19.1.1",
+    "react-dom": "^19.1.1"
   }
 }
