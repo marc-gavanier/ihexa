@@ -1,0 +1,17 @@
+{
+  "name": "ihexa",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "packageManager": "pnpm@10.15.1",
+  "devDependencies": {
+    "@biomejs/biome": "2.2.4",
+    "typescript": "^5.9.2"
+  }
+}
