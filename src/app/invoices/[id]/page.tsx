@@ -1,3 +1,4 @@
+import type { InvoiceId } from '@/features/invoice/domain';
 import {
   INVOICES_REPOSITORY,
   InMemoryInvoicesRepository,
@@ -6,14 +7,15 @@ import {
 import { provide } from '@/libraries/injection';
 
 interface PageProps {
-  params: {
-    id: string;
-  };
+  params: Promise<{
+    id: InvoiceId;
+  }>;
 }
 
-const Page = ({ params }: PageProps) => {
+const Page = async ({ params }: PageProps) => {
   provide(INVOICES_REPOSITORY, InMemoryInvoicesRepository);
-  return <InvoicePage invoiceId={params.id} />;
+  const { id } = await params;
+  return <InvoicePage invoiceId={id} />;
 };
 
 export default Page;

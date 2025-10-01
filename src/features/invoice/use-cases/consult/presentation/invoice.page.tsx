@@ -1,29 +1,21 @@
 import { Suspense } from 'react';
-import type { InvoiceId } from '@/features/invoice/domain';
-import { inject } from '@/libraries/injection';
-import { INVOICES_REPOSITORY } from '../invoices.key';
-
-const Invoice = async ({ id }: { id: string }) => {
-  const invoices = inject(INVOICES_REPOSITORY);
-
-  try {
-    const invoice = await invoices.get(id as InvoiceId);
-    return <div data-testid="invoice-content">Invoice: {invoice.id}</div>;
-  } catch (error) {
-    return (
-      <div data-testid="invoice-error">Error: {(error as Error).message}</div>
-    );
-  }
-};
+import type { Invoice, InvoiceId } from '@/features/invoice/domain';
+import { InvoiceDetails } from './invoice-details';
+import { InvoiceError } from './invoice-error';
+import { InvoiceLoader } from './invoice-loader';
+import { InvoiceResolver } from './invoice-resolver';
 
 type InvoicePageProps = {
-  invoiceId: string;
+  invoiceId: InvoiceId;
 };
 
-export const InvoicePage = async ({ invoiceId }: InvoicePageProps) => {
-  return (
-    <Suspense fallback={<div data-testid="invoice-loader">Loading...</div>}>
-      <Invoice id={invoiceId} />
-    </Suspense>
-  );
-};
+export const InvoicePage = async ({ invoiceId }: InvoicePageProps) => (
+  <Suspense fallback={<InvoiceLoader />}>
+    <InvoiceResolver
+      id={invoiceId}
+      onError={(error: unknown) => <InvoiceError error={error} />}
+    >
+      {(invoice: Invoice) => <InvoiceDetails invoice={invoice} />}
+    </InvoiceResolver>
+  </Suspense>
+);

@@ -1,10 +1,11 @@
 import { pipe } from 'effect';
 import { fail, flatMap, map, runPromise, sleep, succeed } from 'effect/Effect';
 import { fromNullable, match } from 'effect/Option';
-import type {
-  Invoice,
-  InvoiceId,
-  InvoicesRepository,
+import {
+  type Invoice,
+  type InvoiceId,
+  InvoiceNotFoundError,
+  type InvoicesRepository,
 } from '@/features/invoice/domain';
 
 const INVOICE = {
@@ -27,13 +28,6 @@ const INVOICE = {
 const INVOICES: Map<InvoiceId, Invoice> = new Map([
   ['36916dcd-ccd1-46ef-972d-377db546014a' as InvoiceId, INVOICE],
 ]);
-
-class InvoiceNotFoundError extends Error {
-  constructor(public readonly id: InvoiceId) {
-    super(`Invoice id ${id} not found`);
-    this.name = 'InvoiceNotFoundError';
-  }
-}
 
 const toInvoiceMatching = (id: string & { isInvoiceId: true }) => () =>
   fromNullable(INVOICES.get(id));
