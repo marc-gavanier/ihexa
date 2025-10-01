@@ -25,6 +25,7 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
+    "effect": "^3.18.1",
     "next": "^15.5.4",
     "piqure": "^2.1.2",
     "react": "^19.1.1",

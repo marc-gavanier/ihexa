@@ -5,9 +5,15 @@ import {
 } from '@/features/invoice/use-cases/consult';
 import { provide } from '@/libraries/injection';
 
-const Page = () => {
+interface PageProps {
+  params: {
+    id: string;
+  };
+}
+
+const Page = ({ params }: PageProps) => {
   provide(INVOICES_REPOSITORY, InMemoryInvoicesRepository);
-  return <InvoicePage invoiceId="" />;
+  return <InvoicePage invoiceId={params.id} />;
 };
 
 export default Page;

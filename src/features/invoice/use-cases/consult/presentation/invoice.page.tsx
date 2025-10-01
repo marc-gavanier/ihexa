@@ -1,13 +1,19 @@
 import { Suspense } from 'react';
 import type { InvoiceId } from '@/features/invoice/domain';
 import { inject } from '@/libraries/injection';
-import { INVOICES_REPOSITORY } from './invoices.key';
+import { INVOICES_REPOSITORY } from '../invoices.key';
 
 const Invoice = async ({ id }: { id: string }) => {
   const invoices = inject(INVOICES_REPOSITORY);
-  const invoice = await invoices.get(id as InvoiceId);
 
-  return <div data-testid="invoice-content">Invoice: {invoice.id}</div>;
+  try {
+    const invoice = await invoices.get(id as InvoiceId);
+    return <div data-testid="invoice-content">Invoice: {invoice.id}</div>;
+  } catch (error) {
+    return (
+      <div data-testid="invoice-error">Error: {(error as Error).message}</div>
+    );
+  }
 };
 
 type InvoicePageProps = {
