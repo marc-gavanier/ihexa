@@ -3,9 +3,9 @@ import { fail, flatMap, map, runPromise, sleep, succeed } from 'effect/Effect';
 import { fromNullable, match } from 'effect/Option';
 import {
   type Invoice,
+  type InvoiceById,
   type InvoiceId,
   InvoiceNotFoundError,
-  type InvoicesRepository,
 } from '@/features/invoice/domain';
 
 const INVOICE = {
@@ -32,18 +32,16 @@ const INVOICES: Map<InvoiceId, Invoice> = new Map([
 const toInvoiceMatching = (id: string & { isInvoiceId: true }) => () =>
   fromNullable(INVOICES.get(id));
 
-export const InMemoryInvoicesRepository: InvoicesRepository = {
-  get: (id: InvoiceId): Promise<Invoice> =>
-    runPromise(
-      pipe(
-        sleep(1000),
-        map(toInvoiceMatching(id)),
-        flatMap(
-          match({
-            onSome: succeed,
-            onNone: () => fail(new InvoiceNotFoundError(id)),
-          }),
-        ),
+export const invoiceById: InvoiceById = (id: InvoiceId): Promise<Invoice> =>
+  runPromise(
+    pipe(
+      sleep(1000),
+      map(toInvoiceMatching(id)),
+      flatMap(
+        match({
+          onSome: succeed,
+          onNone: () => fail(new InvoiceNotFoundError(id)),
+        }),
       ),
     ),
-};
+  );

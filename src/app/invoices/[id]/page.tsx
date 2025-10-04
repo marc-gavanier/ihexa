@@ -1,7 +1,7 @@
 import type { InvoiceId } from '@/features/invoice/domain';
+import { invoiceById } from '@/features/invoice/implementations/in-memory';
 import {
-  INVOICES_REPOSITORY,
-  InMemoryInvoicesRepository,
+  INVOICE_BY_ID,
   InvoicePage,
 } from '@/features/invoice/use-cases/consult';
 import { provide } from '@/libraries/injection';
@@ -13,7 +13,7 @@ interface PageProps {
 }
 
 const Page = async ({ params }: PageProps) => {
-  provide(INVOICES_REPOSITORY, InMemoryInvoicesRepository);
+  provide(INVOICE_BY_ID, invoiceById);
   const { id } = await params;
   return <InvoicePage invoiceId={id} />;
 };

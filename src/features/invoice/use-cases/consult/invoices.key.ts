@@ -1,5 +1,4 @@
 import { key } from 'piqure';
-import type { InvoicesRepository } from '@/features/invoice/domain';
+import type { InvoiceById } from '@/features/invoice/domain';
 
-export const INVOICES_REPOSITORY =
-  key<InvoicesRepository>('invoice.repository');
+export const INVOICE_BY_ID = key<InvoiceById>('invoice.by-id');
