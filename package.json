@@ -9,26 +9,47 @@
     "build": "next build",
     "start": "next start",
     "test": "vitest",
-    "coverage": "vitest run --coverage",
-    "e2e": "playwright test"
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "lint:code:fix": "pnpm exec biome check --write",
+    "lint:code:ci": "pnpm exec biome ci",
+    "lint:commit": "commitlint --from origin/main",
+    "prepare": "husky"
   },
-  "keywords": [],
-  "author": "",
+  "keywords": [
+    "ihexa",
+    "training",
+    "clean architecture",
+    "react",
+    "nextjs",
+    "typescript"
+  ],
+  "contributors": [
+    {
+      "name": "Marc Gavanier",
+      "email": "marc.gavanier@gmail.com",
+      "url": "https://www.linkedin.com/in/marc-gavanier/"
+    }
+  ],
   "license": "MIT",
-  "packageManager": "pnpm@10.15.1",
   "devDependencies": {
-    "@biomejs/biome": "2.2.4",
+    "@biomejs/biome": "2.2.5",
+    "@commitlint/cli": "^20.1.0",
+    "@commitlint/config-conventional": "^20.0.0",
     "@playwright/test": "^1.55.1",
-    "@types/node": "^24.6.0",
-    "@types/react": "^19.1.16",
-    "typescript": "^5.9.2",
+    "@types/node": "^24.6.2",
+    "@types/react": "^19.2.0",
+    "@vitejs/plugin-react": "^5.0.4",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.3",
+    "typescript": "^5.9.3",
     "vitest": "^3.2.4"
   },
   "dependencies": {
-    "effect": "^3.18.1",
+    "effect": "^3.18.2",
     "next": "^15.5.4",
     "piqure": "^2.1.2",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0"
   }
 }

@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/complexity/useLiteralKeys: This env variable is only useful for CI, no need to make it explicit */
 import { defineConfig, devices } from '@playwright/test';
 
 /**
