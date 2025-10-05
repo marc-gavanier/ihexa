@@ -29,8 +29,8 @@ jobs:
       - name: 'Create env file'
         run: |
           touch .env
-          echo AWS_ACCESS_KEY_ID="${{ vars.AWS_ACCESS_KEY_ID }}" >> .env
-          echo AWS_SECRET_ACCESS_KEY="${{ vars.AWS_SECRET_ACCESS_KEY }}" >> .env
+          echo AWS_ACCESS_KEY_ID="${{ secrets.AWS_ACCESS_KEY_ID }}" >> .env
+          echo AWS_SECRET_ACCESS_KEY="${{ secrets.AWS_SECRET_ACCESS_KEY }}" >> .env
       - name: Build and Deploy
         id: deploy
         run: |
