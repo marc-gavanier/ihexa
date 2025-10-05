@@ -12,6 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     environment:
       name: production
+      url: ${{ steps.deploy.outputs.cloudfront_url }}
     steps:
       - name: Checkout repository
         uses: actions/checkout@v5
