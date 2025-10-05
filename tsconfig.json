@@ -8,7 +8,7 @@
     // See also https://aka.ms/tsconfig/module
     "module": "esnext",
     "target": "esnext",
-    "lib": ["esnext"],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "types": ["node"],
     // Other Outputs
     "sourceMap": true,
@@ -44,10 +44,10 @@
     "allowUnusedLabels": false,
     "allowUnreachableCode": false,
     "esModuleInterop": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "plugins": [{ "name": "next" }]
   },
   "include": ["next-env.d.ts", ".next/types/**/*.ts", "**/*.ts", "**/*.tsx"],
-  "exclude": ["node_modules"]
+  "exclude": ["node_modules", "sst.config.ts"]
 }

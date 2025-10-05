@@ -19,7 +19,8 @@
   "keywords": [
     "ihexa",
     "training",
-    "clean architecture",
+    "feature-based",
+    "clean-architecture",
     "react",
     "nextjs",
     "typescript"
@@ -39,6 +40,7 @@
     "@playwright/test": "^1.55.1",
     "@types/node": "^24.6.2",
     "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^5.0.4",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.3",
@@ -46,10 +48,12 @@
     "vitest": "^3.2.4"
   },
   "dependencies": {
+    "dotenv": "^17.2.3",
     "effect": "^3.18.2",
     "next": "^15.5.4",
     "piqure": "^2.1.2",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "sst": "3.17.14"
   }
 }
