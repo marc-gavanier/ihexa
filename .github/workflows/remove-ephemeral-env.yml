@@ -1,0 +1,53 @@
+name: Remove Ephemeral Environment
+
+on:
+  delete:
+    branches:
+      - 'build/*'
+      - 'chore/*'
+      - 'ci/*'
+      - 'docs/*'
+      - 'feat/*'
+      - 'fix/*'
+      - 'perf/*'
+      - 'refactor/*'
+      - 'revert/*'
+      - 'style/*'
+      - 'test/*'
+
+jobs:
+  cleanup:
+    name: Remove ephemeral deployment
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: latest
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Remove ephemeral environment
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.EPHEMERAL_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.EPHEMERAL_AWS_SECRET_ACCESS_KEY }}
+        run: |
+          STAGE_NAME=$(echo "${{ github.ref_name }}" | tr '/' '-')
+          echo "Removing stage: $STAGE_NAME"
+          pnpm sst remove --stage "$STAGE_NAME"
+      - name: Delete GitHub environment
+        run: |
+          ENV_NAME=$(echo "${{ github.ref_name }}" | tr '/' '-')
+          echo "Deleting GitHub environment: $ENV_NAME"
+          gh api \
+            --method DELETE \
+            -H "Accept: application/vnd.github+json" \
+            /repos/${{ github.repository }}/environments/$ENV_NAME
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
