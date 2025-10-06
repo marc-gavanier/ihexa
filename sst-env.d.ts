@@ -4,12 +4,7 @@
 /* deno-fmt-ignore-file */
 
 declare module 'sst' {
-  export interface Resource {
-    IHexa: {
-      type: 'sst.aws.Nextjs';
-      url: string;
-    };
-  }
+  export interface Resource {}
 }
 /// <reference path="sst-env.d.ts" />
 
