@@ -38,12 +38,12 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{ secrets.EPHEMERAL_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.EPHEMERAL_AWS_SECRET_ACCESS_KEY }}
         run: |
-          STAGE_NAME=$(echo "${{ github.ref_name }}" | tr '/' '-')
+          STAGE_NAME=$(echo "${{ github.event.ref }}" | tr '/' '-')
           echo "Removing stage: $STAGE_NAME"
           pnpm sst remove --stage "$STAGE_NAME"
       - name: Delete GitHub environment
         run: |
-          ENV_NAME=$(echo "${{ github.ref_name }}" | tr '/' '-')
+          ENV_NAME=$(echo "${{ github.event.ref }}" | tr '/' '-')
           echo "Deleting GitHub environment: $ENV_NAME"
           gh api \
             --method DELETE \
