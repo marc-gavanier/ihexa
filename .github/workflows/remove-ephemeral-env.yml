@@ -45,14 +45,10 @@ jobs:
   delete-github-environment:
     name: Delete GitHub environment
     runs-on: ubuntu-latest
-    needs: remove-deployment
-    permissions:
-      contents: read
-      deployments: write
+    env:
+      GITHUB_TOKEN: ${{ secrets.GH_ENVIRONMENTS_TOKEN }}
     steps:
       - name: Delete GitHub environment
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           ENV_NAME=$(echo "${{ github.event.ref }}" | tr '/' '-')
           echo "Deleting GitHub environment: $ENV_NAME"
