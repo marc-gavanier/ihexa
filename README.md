@@ -11,7 +11,8 @@ Here are some of my choices:
 - **Versioning & repo**: GitLab → GitHub
 - **Code organization**: Hexagonal architecture “primary/secondary” → Features & Use Cases based organization (similar to “ducks” pattern)
 - **Project setup**: JHipster → tools official documentations (Sorry Colin! 😉)
-
+- **Deployment**: Clever Cloud → AWS with SST (Serverless Stack) for Next.js applications with OpenNext
+- 
 This approach keeps me close to the training while exploring practical alternatives with others technologies.
 
 ## 📑 Table of Contents
@@ -30,6 +31,7 @@ Here is a more detailed explanation of the choices I made while following the IH
 - **GitHub instead of GitLab**: purely for the pleasure of doing things differently and exploring an **alternative setup for CI/CD pipelines**. This allows me to compare approaches.
 - **Feature / Use Case-based organization**: this is a personal preference that makes navigating the code much easier. While I fully understand hexagonal architecture and its primary/secondary ports, translating the concept directly into folders often confuses me. I’m excessively sensitive to folder organization, so **this structure keeps the code readable and maintainable for me**.  
 - **No JHipster**: I have a habit of **enjoying setups that are *slightly inconvenient***, forcing me to spend an unreasonable amount of time reading documentation and getting frustrated when things don’t work.
+- **AWS with SST instead of Clever Cloud**: I’ve been wanting to try **SST (Serverless Stack)** for a while, as it is an **open alternative to Vercel**, offering similar simplicity while keeping full control over the infrastructure. Using it for this project was the perfect occasion to **experiment with modern serverless deployment**. As a bonus, it **stays entirely within AWS’s free tier**, so it costs nothing to run.
 
 <h2 id="contributing">🤗 Contributing</h2>
 
