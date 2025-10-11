@@ -1,8 +1,7 @@
-import type { InvoiceId } from '../invoice';
+import type { InvoiceId } from '../invoice-id';
 
 export class InvoiceNotFoundError extends Error {
   constructor(public readonly id: InvoiceId) {
     super(`Invoice id ${id} not found`);
-    this.name = 'InvoiceNotFoundError';
   }
 }

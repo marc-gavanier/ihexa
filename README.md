@@ -12,7 +12,7 @@ Here are some of my choices:
 - **Code organization**: Hexagonal architecture “primary/secondary” → Features & Use Cases based organization (similar to “ducks” pattern)
 - **Project setup**: JHipster → tools official documentations (Sorry Colin! 😉)
 - **Deployment**: Clever Cloud → AWS with SST (Serverless Stack) for Next.js applications with OpenNext
-- 
+
 This approach keeps me close to the training while exploring practical alternatives with others technologies.
 
 ## 📑 Table of Contents

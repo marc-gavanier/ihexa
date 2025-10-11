@@ -1,4 +1,4 @@
-import type { InvoiceId } from '@/features/invoice/domain';
+import type { InvoiceId } from '@/features/invoice/domain/invoice-id';
 import { invoiceById } from '@/features/invoice/implementations/in-memory';
 import {
   INVOICE_BY_ID,
