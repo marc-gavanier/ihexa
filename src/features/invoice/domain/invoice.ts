@@ -1,5 +1,10 @@
 import { pipe } from 'effect';
 import { all, type Effect, flatMap, forEach, map } from 'effect/Effect';
+import {
+  type AggregateRoot,
+  toAggregateRoot,
+  toValueObject,
+} from '@/libraries/ddd';
 import { Amount, type InvalidAmountError } from './amount';
 import type { InvalidInvoiceIdError, InvoiceId } from './invoice-id';
 import type { InvalidLineError, Line, Lines } from './line';
@@ -10,7 +15,7 @@ export type InvalidInvoiceError =
   | InvalidRecipientError
   | InvalidLineError;
 
-export type Invoice = Readonly<{
+export type Invoice = AggregateRoot<{
   id: InvoiceId;
   recipient: Recipient;
   lines: Lines;
@@ -23,13 +28,9 @@ const toInvoiceTotal = (
 ): Effect<Amount, InvalidAmountError> =>
   flatMap(total, (amount: Amount) => Amount(amount + line.total));
 
-const toLines = ([firstLine, ...restLines]: Lines): Lines => [
-  firstLine,
-  ...restLines,
-];
+const toLines = (lines: [Line, ...Line[]]): Lines => toValueObject(lines);
 
-const totalFrom = (lines: [Line, ...Line[]]) =>
-  lines.reduce(toInvoiceTotal, Amount(0n));
+const totalFrom = (lines: Lines) => lines.reduce(toInvoiceTotal, Amount(0n));
 
 export const Invoice = (
   invoiceIdEffect: Effect<InvoiceId, InvalidInvoiceIdError>,
@@ -45,7 +46,9 @@ export const Invoice = (
     flatMap((lines: Lines) =>
       pipe(
         all([invoiceIdEffect, recipientEffect, totalFrom(lines)]),
-        map(([id, recipient, total]) => ({ id, lines, recipient, total })),
+        map(([id, recipient, total]) =>
+          toAggregateRoot({ id, lines, recipient, total }),
+        ),
       ),
     ),
   );

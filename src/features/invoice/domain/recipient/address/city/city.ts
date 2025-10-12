@@ -1,8 +1,8 @@
 import { type Effect, fail, succeed } from 'effect/Effect';
-import type { WrapPrimitive } from '@/libraries/ddd/wrap-primitive';
+import type { ValueObject } from '@/libraries/ddd';
 import { InvalidCityError } from './invalid-city.error';
 
-export type City = WrapPrimitive<string>;
+export type City = ValueObject<string>;
 
 const isCity = (value: string): value is City => value.length > 0;
 

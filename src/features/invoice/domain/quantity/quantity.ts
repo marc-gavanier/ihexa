@@ -1,8 +1,8 @@
 import { type Effect, fail, succeed } from 'effect/Effect';
-import type { WrapPrimitive } from '@/libraries/ddd/wrap-primitive';
+import type { ValueObject } from '@/libraries/ddd';
 import { InvalidQuantityError } from './invalid-quantity.error';
 
-export type Quantity = WrapPrimitive<number>;
+export type Quantity = ValueObject<number>;
 
 export const isQuantity = (value: number): value is Quantity => value >= 0;
 

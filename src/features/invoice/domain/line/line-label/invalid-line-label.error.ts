@@ -6,6 +6,6 @@ export type InvalidLineLabelError = {
 export const InvalidLineLabelError = (
   value: string,
 ): InvalidLineLabelError => ({
-  _tag: 'InvalidLineLabelError',
+  _tag: 'InvalidLineLabelError' as const,
   value,
 });

@@ -6,6 +6,6 @@ export type InvalidInvoiceIdError = {
 export const InvalidInvoiceIdError = (
   value: string,
 ): InvalidInvoiceIdError => ({
-  _tag: 'InvalidInvoiceIdError',
+  _tag: 'InvalidInvoiceIdError' as const,
   value,
 });

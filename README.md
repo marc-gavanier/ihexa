@@ -10,6 +10,7 @@ Here are some of my choices:
 - **E2E tests tool**: Cypress → Playwright
 - **Versioning & repo**: GitLab → GitHub
 - **Code organization**: Hexagonal architecture “primary/secondary” → Features & Use Cases based organization (similar to “ducks” pattern)
+- **Domain modeling**: plain objects → functional domain model
 - **Project setup**: JHipster → tools official documentations (Sorry Colin! 😉)
 - **Deployment**: Clever Cloud → AWS with SST (Serverless Stack) for Next.js applications with OpenNext
 
@@ -25,11 +26,11 @@ This approach keeps me close to the training while exploring practical alternati
 <h2 id="approach">✨ My Approach & Choices</h2>
 
 Here is a more detailed explanation of the choices I made while following the IHexa training:
-
 - **React instead of Vue.js**: React is the most widely used tool for building web interfaces. However, it is also heavily influenced by practices that, in my opinion, can diverge from a clean architecture. I see this project as an opportunity to experiment with **alternatives that work without relying on the usual “messy” patterns** commonly found in React projects.
 - **Playwright instead of Cypress**: I’m familiar with Cypress, but I’ve never used Playwright. This is a great opportunity to **discover a new tool** and compare approaches for end-to-end testing.
 - **GitHub instead of GitLab**: purely for the pleasure of doing things differently and exploring an **alternative setup for CI/CD pipelines**. This allows me to compare approaches.
-- **Feature / Use Case-based organization**: this is a personal preference that makes navigating the code much easier. While I fully understand hexagonal architecture and its primary/secondary ports, translating the concept directly into folders often confuses me. I’m excessively sensitive to folder organization, so **this structure keeps the code readable and maintainable for me**.  
+- **Feature / Use Case-based organization**: this is a personal preference that makes navigating the code much easier. While I fully understand hexagonal architecture and its primary/secondary ports, translating the concept directly into folders often confuses me. I’m excessively sensitive to folder organization, so **this structure keeps the code readable and maintainable for me**.
+- **Functional domain modeling**: I usually model the domain in a functional style, but for this project I wanted to **go one step further** by learning how to use the **Effect** library and building a **purely functional domain model**. This allows encoding business rules in the type system and handling errors in a composable, effectful way rather than relying on runtime `throw`s.
 - **No JHipster**: I have a habit of **enjoying setups that are *slightly inconvenient***, forcing me to spend an unreasonable amount of time reading documentation and getting frustrated when things don’t work.
 - **AWS with SST instead of Clever Cloud**: I’ve been wanting to try **SST (Serverless Stack)** for a while, as it is an **open alternative to Vercel**, offering similar simplicity while keeping full control over the infrastructure. Using it for this project was the perfect occasion to **experiment with modern serverless deployment**. As a bonus, it **stays entirely within AWS’s free tier**, so it costs nothing to run.
 

@@ -1,8 +1,8 @@
 import { type Effect, fail, succeed } from 'effect/Effect';
-import type { WrapPrimitive } from '@/libraries/ddd/wrap-primitive';
+import type { ValueObject } from '@/libraries/ddd';
 import { InvalidLastNameError } from './invalid-last-name.error';
 
-export type LastName = WrapPrimitive<string>;
+export type LastName = ValueObject<string>;
 
 const isLastName = (value: string): value is LastName => value.length > 0;
 

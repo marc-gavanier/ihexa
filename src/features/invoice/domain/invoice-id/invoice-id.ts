@@ -1,8 +1,8 @@
 import { type Effect, fail, succeed } from 'effect/Effect';
-import type { WrapPrimitive } from '@/libraries/ddd/wrap-primitive';
+import type { ValueObject } from '@/libraries/ddd';
 import { InvalidInvoiceIdError } from './invalid-invoice-id.error';
 
-export type InvoiceId = WrapPrimitive<string>;
+export type InvoiceId = ValueObject<string>;
 
 export const isInvoiceId = (value: string): value is InvoiceId =>
   value.length > 0;

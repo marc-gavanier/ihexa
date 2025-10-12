@@ -4,6 +4,6 @@ export type InvalidAmountError = {
 };
 
 export const InvalidAmountError = (value: bigint): InvalidAmountError => ({
-  _tag: 'InvalidAmountError',
+  _tag: 'InvalidAmountError' as const,
   value,
 });
