@@ -2,34 +2,45 @@ import { pipe } from 'effect';
 import { fail, flatMap, map, runPromise, sleep, succeed } from 'effect/Effect';
 import { fromNullable, match } from 'effect/Option';
 import {
-  type Invoice,
+  Amount,
+  Invoice,
   type InvoiceById,
-  type InvoiceId,
   InvoiceNotFoundError,
+  Quantity,
 } from '@/features/invoice/domain';
+import { InvoiceId } from '@/features/invoice/domain/invoice-id';
+import { Line, LineLabel } from '@/features/invoice/domain/line';
+import {
+  Address,
+  City,
+  FirstName,
+  LastName,
+  Name,
+  PostalCode,
+  Recipient,
+  Street,
+} from '@/features/invoice/domain/recipient';
 
-const INVOICE = {
-  id: '36916dcd-ccd1-46ef-972d-377db546014a',
-  recipient: {
-    name: { firstName: 'John', lastName: 'Doe' },
-    address: {
-      street: '123 Main St',
-      city: 'Anytown',
-      postalCode: '12345',
-    },
-  },
-  lines: [
-    { label: 'Item 1', unitPrice: 100, quantity: 2 },
-    { label: 'Item 2', unitPrice: 50, quantity: 1 },
+const INVOICE = Invoice(
+  InvoiceId('36916dcd-ccd1-46ef-972d-377db546014a'),
+  [
+    Line(LineLabel('Item 1'), Quantity(2), Amount(100_00n)),
+    Line(LineLabel('Item 2'), Quantity(1), Amount(50_00n)),
   ],
-  total: 250,
-} as Invoice;
+  Recipient(
+    Name(FirstName('John'), LastName('Doe')),
+    Address(Street('123 Main St'), City('Anytown'), PostalCode('12345')),
+  ),
+);
 
 const INVOICES: Map<InvoiceId, Invoice> = new Map([
-  ['36916dcd-ccd1-46ef-972d-377db546014a' as InvoiceId, INVOICE],
+  [
+    await runPromise(InvoiceId('36916dcd-ccd1-46ef-972d-377db546014a')),
+    await runPromise(INVOICE),
+  ],
 ]);
 
-const toInvoiceMatching = (id: string & { isInvoiceId: true }) => () =>
+const toInvoiceMatching = (id: InvoiceId) => () =>
   fromNullable(INVOICES.get(id));
 
 export const invoiceById: InvoiceById = (id: InvoiceId): Promise<Invoice> =>

@@ -1,2 +1,2 @@
 export * from './invoices.key';
-export * from './presentation';
+export * from './web';

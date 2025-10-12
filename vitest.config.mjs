@@ -11,6 +11,6 @@ export default defineConfig({
     fs: { strict: false },
   },
   test: {
-    environment: 'jsdom',
+    environment: 'node',
   },
 });
