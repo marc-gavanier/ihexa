@@ -1,5 +1,6 @@
 import { pipe } from 'effect';
 import { all, type Effect, flatMap, map } from 'effect/Effect';
+import { toValueObject, type ValueObject } from '@/libraries/ddd';
 import { Amount, type InvalidAmountError } from '../amount';
 import type { InvalidQuantityError, Quantity } from '../quantity';
 import type { InvalidLineLabelError, LineLabel } from './line-label';
@@ -9,14 +10,14 @@ export type InvalidLineError =
   | InvalidAmountError
   | InvalidLineLabelError;
 
-export type Line = Readonly<{
+export type Line = ValueObject<{
   label: LineLabel;
   quantity: Quantity;
   unitPrice: Amount;
   total: Amount;
 }>;
 
-export type Lines = [Line, ...Line[]];
+export type Lines = ValueObject<[Line, ...Line[]]>;
 
 const computeTotal = (
   quantity: Quantity,
@@ -33,7 +34,10 @@ export const Line = (
     flatMap(([label, quantity, unitPrice]: [LineLabel, Quantity, Amount]) =>
       pipe(
         computeTotal(quantity, unitPrice),
-        map((total: Amount): Line => ({ label, quantity, unitPrice, total })),
+        map(
+          (total: Amount): Line =>
+            toValueObject({ label, quantity, unitPrice, total }),
+        ),
       ),
     ),
   );

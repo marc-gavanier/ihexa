@@ -6,6 +6,6 @@ export type InvalidFirstNameError = {
 export const InvalidFirstNameError = (
   value: string,
 ): InvalidFirstNameError => ({
-  _tag: 'InvalidFirstNameError',
+  _tag: 'InvalidFirstNameError' as const,
   value,
 });

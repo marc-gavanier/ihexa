@@ -6,6 +6,6 @@ export type InvalidPostalCodeError = {
 export const InvalidPostalCodeError = (
   value: string,
 ): InvalidPostalCodeError => ({
-  _tag: 'InvalidPostalCodeError',
+  _tag: 'InvalidPostalCodeError' as const,
   value,
 });

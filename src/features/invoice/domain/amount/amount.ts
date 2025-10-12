@@ -1,8 +1,8 @@
 import { type Effect, fail, succeed } from 'effect/Effect';
-import type { WrapPrimitive } from '@/libraries/ddd/wrap-primitive';
+import type { ValueObject } from '@/libraries/ddd';
 import { InvalidAmountError } from './invalid-amount.error';
 
-export type Amount = WrapPrimitive<bigint>;
+export type Amount = ValueObject<bigint>;
 
 export const isAmount = (value: bigint): value is Amount => value >= 0;
 

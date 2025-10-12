@@ -4,6 +4,6 @@ export type InvalidCityError = {
 };
 
 export const InvalidCityError = (value: string): InvalidCityError => ({
-  _tag: 'InvalidCityError',
+  _tag: 'InvalidCityError' as const,
   value,
 });

@@ -4,6 +4,6 @@ export type InvalidStreetError = {
 };
 
 export const InvalidStreetError = (value: string): InvalidStreetError => ({
-  _tag: 'InvalidStreetError',
+  _tag: 'InvalidStreetError' as const,
   value,
 });

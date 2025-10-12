@@ -1,8 +1,8 @@
 import { type Effect, fail, succeed } from 'effect/Effect';
-import type { WrapPrimitive } from '@/libraries/ddd/wrap-primitive';
+import type { ValueObject } from '@/libraries/ddd';
 import { InvalidLineLabelError } from './invalid-line-label.error';
 
-export type LineLabel = WrapPrimitive<string>;
+export type LineLabel = ValueObject<string>;
 
 const isLineLabel = (value: string): value is LineLabel => value.length > 0;
 

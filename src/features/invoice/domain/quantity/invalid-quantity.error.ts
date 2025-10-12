@@ -4,6 +4,6 @@ export type InvalidQuantityError = {
 };
 
 export const InvalidQuantityError = (value: number): InvalidQuantityError => ({
-  _tag: 'InvalidQuantityError',
+  _tag: 'InvalidQuantityError' as const,
   value,
 });

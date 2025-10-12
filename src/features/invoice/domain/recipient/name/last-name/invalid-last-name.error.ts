@@ -4,6 +4,6 @@ export type InvalidLastNameError = {
 };
 
 export const InvalidLastNameError = (value: string): InvalidLastNameError => ({
-  _tag: 'InvalidLastNameError',
+  _tag: 'InvalidLastNameError' as const,
   value,
 });
