@@ -10,6 +10,7 @@
     "start": "next start",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
+    "test:cucumber": "NODE_OPTIONS='--import tsx/esm' cucumber-js src/features/**/*.feature --import src/features/**/*.feature.ts",
     "test:e2e": "playwright test",
     "lint:code:fix": "pnpm exec biome check --write",
     "lint:code:ci": "pnpm exec biome ci",
@@ -37,6 +38,7 @@
     "@biomejs/biome": "2.2.5",
     "@commitlint/cli": "^20.1.0",
     "@commitlint/config-conventional": "^20.0.0",
+    "@cucumber/cucumber": "^12.2.0",
     "@playwright/test": "^1.55.1",
     "@types/node": "^24.6.2",
     "@types/react": "^19.2.0",
@@ -44,6 +46,7 @@
     "@vitejs/plugin-react": "^5.0.4",
     "husky": "^9.1.7",
     "lint-staged": "^16.2.3",
+    "tsx": "^4.20.6",
     "typescript": "^5.9.3",
     "vitest": "^3.2.4"
   },

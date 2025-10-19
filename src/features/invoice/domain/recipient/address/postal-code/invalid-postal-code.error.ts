@@ -1,7 +1,9 @@
-export type InvalidPostalCodeError = {
-  readonly _tag: 'InvalidPostalCodeError';
-  readonly value: string;
-};
+import type { DomainError } from '@/libraries/ddd';
+
+export type InvalidPostalCodeError = DomainError<
+  'InvalidPostalCodeError',
+  string
+>;
 
 export const InvalidPostalCodeError = (
   value: string,

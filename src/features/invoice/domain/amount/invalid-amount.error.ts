@@ -1,7 +1,6 @@
-export type InvalidAmountError = {
-  readonly _tag: 'InvalidAmountError';
-  readonly value: bigint;
-};
+import type { DomainError } from '@/libraries/ddd';
+
+export type InvalidAmountError = DomainError<'InvalidAmountError', bigint>;
 
 export const InvalidAmountError = (value: bigint): InvalidAmountError => ({
   _tag: 'InvalidAmountError' as const,

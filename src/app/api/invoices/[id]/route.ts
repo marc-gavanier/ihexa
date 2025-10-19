@@ -7,47 +7,40 @@ import {
   succeed,
 } from 'effect/Effect';
 import { decodeUnknown } from 'effect/Schema';
-import type { ReactNode } from 'react';
+import type { NextRequest } from 'next/server';
 import {
   type ConsultInvoiceError,
   consultInvoice,
   consultInvoiceValidation,
-  InvoiceError,
-  InvoicePage,
 } from '@/features/invoice/abilities/consult';
 import { InvalidInvoiceIdError, InvoiceId } from '@/features/invoice/domain';
 import { INVOICE_BY_ID } from '@/features/invoice/implementations';
 import { invoiceById } from '@/features/invoice/implementations/in-memory';
-import {
-  type ComponentErrorHandler,
-  componentErrorFor,
-} from '@/libraries/app-router';
+import { toInvoiceTransfer } from '@/features/invoice/transfers';
+import { type ResponseErrorHandler, responseErrorFor } from '@/libraries/api';
 import { hasDomainError } from '@/libraries/ddd';
 import { provide } from '@/libraries/injection';
 
-const ERRORS: ComponentErrorHandler<
+const ERRORS: ResponseErrorHandler<
   ConsultInvoiceError | InvalidInvoiceIdError
 > = {
   InvoiceByIdNotFoundError: {
-    render: (): ReactNode => <InvoiceError message="Invoice not found" />,
+    message: (): string => 'Invoice not found',
+    status: 404,
   },
   InvalidInvoiceIdError: {
-    render: (value: string): ReactNode => (
-      <InvoiceError message={`Invoice id ${value} is not valid`} />
-    ),
+    message: (value: string): string => `Invoice id ${value} is not valid`,
+    status: 400,
   },
 };
 
-interface PageProps {
-  params: Promise<{
-    id: InvoiceId;
-  }>;
-}
-
-const Page = async (props: PageProps) => {
+export const GET = async (
+  _: NextRequest,
+  ctx: RouteContext<'/api/invoices/[id]'>,
+) => {
   provide(INVOICE_BY_ID, invoiceById);
 
-  const params = await props.params;
+  const params = await ctx.params;
 
   const invoice = await runPromise(
     decodeUnknown(consultInvoiceValidation)(params).pipe(
@@ -58,11 +51,7 @@ const Page = async (props: PageProps) => {
     ),
   );
 
-  return hasDomainError(invoice) ? (
-    componentErrorFor(invoice)(ERRORS)
-  ) : (
-    <InvoicePage invoice={invoice} />
-  );
+  return hasDomainError(invoice)
+    ? responseErrorFor(invoice)(ERRORS)
+    : Response.json(toInvoiceTransfer(invoice));
 };
-
-export default Page;
