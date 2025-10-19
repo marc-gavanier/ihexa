@@ -1,11 +1,19 @@
 import { pipe } from 'effect';
-import { fail, flatMap, map, runPromise, sleep, succeed } from 'effect/Effect';
+import {
+  type Effect,
+  fail,
+  flatMap,
+  runPromise,
+  sleep,
+  succeed,
+} from 'effect/Effect';
 import { fromNullable, match } from 'effect/Option';
 import {
   Amount,
   Invoice,
   type InvoiceById,
-  InvoiceNotFoundError,
+  type InvoiceByIdError,
+  InvoiceByIdNotFoundError,
   Quantity,
 } from '@/features/invoice/domain';
 import { InvoiceId } from '@/features/invoice/domain/invoice-id';
@@ -22,7 +30,7 @@ import {
 } from '@/features/invoice/domain/recipient';
 
 const INVOICE = Invoice(
-  InvoiceId('36916dcd-ccd1-46ef-972d-377db546014a'),
+  InvoiceId('b06f2a21-d137-4557-80e1-6e6d44669cf6'),
   [
     Line(LineLabel('Item 1'), Quantity(2), Amount(100_00n)),
     Line(LineLabel('Item 2'), Quantity(1), Amount(50_00n)),
@@ -35,23 +43,22 @@ const INVOICE = Invoice(
 
 const INVOICES: Map<InvoiceId, Invoice> = new Map([
   [
-    await runPromise(InvoiceId('36916dcd-ccd1-46ef-972d-377db546014a')),
+    await runPromise(InvoiceId('b06f2a21-d137-4557-80e1-6e6d44669cf6')),
     await runPromise(INVOICE),
   ],
 ]);
 
-const toInvoiceMatching = (id: InvoiceId) => () =>
-  fromNullable(INVOICES.get(id));
-
-export const invoiceById: InvoiceById = (id: InvoiceId): Promise<Invoice> =>
-  runPromise(
-    pipe(
-      sleep(1000),
-      map(toInvoiceMatching(id)),
-      flatMap(
+export const invoiceById: InvoiceById = (
+  id: InvoiceId,
+): Effect<Invoice, InvoiceByIdError> =>
+  pipe(
+    sleep(1000),
+    flatMap(() =>
+      pipe(
+        fromNullable(INVOICES.get(id)),
         match({
           onSome: succeed,
-          onNone: () => fail(new InvoiceNotFoundError(id)),
+          onNone: () => fail(InvoiceByIdNotFoundError()),
         }),
       ),
     ),

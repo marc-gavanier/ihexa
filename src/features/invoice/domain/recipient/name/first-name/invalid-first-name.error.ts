@@ -1,7 +1,9 @@
-export type InvalidFirstNameError = {
-  readonly _tag: 'InvalidFirstNameError';
-  readonly value: string;
-};
+import type { DomainError } from '@/libraries/ddd';
+
+export type InvalidFirstNameError = DomainError<
+  'InvalidFirstNameError',
+  string
+>;
 
 export const InvalidFirstNameError = (
   value: string,

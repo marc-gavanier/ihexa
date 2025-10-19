@@ -1,7 +1,9 @@
-export type InvalidLineLabelError = {
-  readonly _tag: 'InvalidLineLabelError';
-  readonly value: string;
-};
+import type { DomainError } from '@/libraries/ddd';
+
+export type InvalidLineLabelError = DomainError<
+  'InvalidLineLabelError',
+  string
+>;
 
 export const InvalidLineLabelError = (
   value: string,

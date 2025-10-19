@@ -1,7 +1,9 @@
-export type InvalidInvoiceIdError = {
-  readonly _tag: 'InvalidInvoiceIdError';
-  readonly value: string;
-};
+import type { DomainError } from '@/libraries/ddd';
+
+export type InvalidInvoiceIdError = DomainError<
+  'InvalidInvoiceIdError',
+  string
+>;
 
 export const InvalidInvoiceIdError = (
   value: string,

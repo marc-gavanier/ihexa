@@ -1,14 +1,14 @@
 import { expect, test } from '@playwright/test';
 
 test('consult invoice shows loader', async ({ page }) => {
-  await page.goto('/invoices/36916dcd-ccd1-46ef-972d-377db546014a', {
+  await page.goto('/invoices/b06f2a21-d137-4557-80e1-6e6d44669cf6', {
     waitUntil: 'commit',
   });
   await expect(page.getByTestId('invoice-loader')).toBeVisible();
 });
 
 test('consult invoice shows invoice', async ({ page }) => {
-  await page.goto('/invoices/36916dcd-ccd1-46ef-972d-377db546014a');
+  await page.goto('/invoices/b06f2a21-d137-4557-80e1-6e6d44669cf6');
   await expect(page.getByTestId('invoice-loader')).toBeHidden();
   await expect(page.getByTestId('invoice-recipient.name')).toContainText(
     'John Doe',
@@ -40,6 +40,6 @@ test('consult invoice shows invoice', async ({ page }) => {
 });
 
 test('consult unknown invoice shows error', async ({ page }) => {
-  await page.goto('/invoices/74a9493e-5ca5-4f7d-91d6-8041760511b5');
+  await page.goto('/invoices/b06f2a21-d137-4557-80e1-6e6d44669cf5');
   await expect(page.getByTestId('invoice-error')).toBeVisible();
 });
