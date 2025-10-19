@@ -10,7 +10,7 @@ Feature: Invoice Consultation
     Then I should see the invoice details
       | Field                                | Value                                |
       | id                                   | b06f2a21-d137-4557-80e1-6e6d44669cf6 |
-      | total                                | 250                                  |
+      | total                                | 25000                                |
     And I should see the invoice recipient
       | Field                                | Value                                |
       | recipient.name.firstName             | John                                 |
@@ -22,5 +22,5 @@ Feature: Invoice Consultation
       | Field                                | Value                                |
       | lines[0].label                       | Item 1                               |
       | lines[0].quantity                    | 2                                    |
-      | lines[0].unitPrice                   | 100                                  |
-      | lines[0].total                       | 200                                  |
+      | lines[0].unitPrice                   | 10000                                |
+      | lines[0].total                       | 20000                                |

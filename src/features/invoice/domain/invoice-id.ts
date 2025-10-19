@@ -1,6 +1,17 @@
 import { type Effect, fail, succeed } from 'effect/Effect';
-import type { ValueObject } from '@/libraries/ddd';
-import { InvalidInvoiceIdError } from './invalid-invoice-id.error';
+import type { DomainError, ValueObject } from '@/libraries/ddd';
+
+export type InvalidInvoiceIdError = DomainError<
+  'InvalidInvoiceIdError',
+  string
+>;
+
+export const InvalidInvoiceIdError = (
+  value: string,
+): InvalidInvoiceIdError => ({
+  _tag: 'InvalidInvoiceIdError',
+  value,
+});
 
 export type InvoiceId = ValueObject<string>;
 

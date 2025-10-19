@@ -2,6 +2,7 @@ import { pipe } from 'effect';
 import { all, type Effect, flatMap, forEach, map } from 'effect/Effect';
 import {
   type AggregateRoot,
+  type DomainError,
   toAggregateRoot,
   toValueObject,
 } from '@/libraries/ddd';
@@ -52,3 +53,17 @@ export const Invoice = (
       ),
     ),
   );
+
+export type InvoiceByIdNotFoundError = DomainError<
+  'InvoiceByIdNotFoundError',
+  never
+>;
+
+export const InvoiceByIdNotFoundError = (): InvoiceByIdNotFoundError => ({
+  _tag: 'InvoiceByIdNotFoundError',
+  value: undefined as never,
+});
+
+export type InvoiceByIdError = InvoiceByIdNotFoundError;
+
+export type InvoiceById = (id: InvoiceId) => Effect<Invoice, InvoiceByIdError>;

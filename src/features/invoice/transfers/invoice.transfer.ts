@@ -26,8 +26,8 @@ export const toInvoiceTransfer = (invoice: Invoice): InvoiceTransfer => ({
   ...invoice,
   lines: invoice.lines.map((line) => ({
     ...line,
-    unitPrice: Number(line.unitPrice) / 100,
-    total: Number(line.total) / 100,
+    unitPrice: Number(line.unitPrice),
+    total: Number(line.total),
   })),
-  total: Number(invoice.total) / 100,
+  total: Number(invoice.total),
 });

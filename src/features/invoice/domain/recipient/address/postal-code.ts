@@ -1,6 +1,17 @@
 import { type Effect, fail, succeed } from 'effect/Effect';
-import type { ValueObject } from '@/libraries/ddd';
-import { InvalidPostalCodeError } from './invalid-postal-code.error';
+import type { DomainError, ValueObject } from '@/libraries/ddd';
+
+export type InvalidPostalCodeError = DomainError<
+  'InvalidPostalCodeError',
+  string
+>;
+
+export const InvalidPostalCodeError = (
+  value: string,
+): InvalidPostalCodeError => ({
+  _tag: 'InvalidPostalCodeError',
+  value,
+});
 
 export type PostalCode = ValueObject<string>;
 

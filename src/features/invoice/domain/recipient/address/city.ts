@@ -1,6 +1,12 @@
 import { type Effect, fail, succeed } from 'effect/Effect';
-import type { ValueObject } from '@/libraries/ddd';
-import { InvalidCityError } from './invalid-city.error';
+import type { DomainError, ValueObject } from '@/libraries/ddd';
+
+export type InvalidCityError = DomainError<'InvalidCityError', string>;
+
+export const InvalidCityError = (value: string): InvalidCityError => ({
+  _tag: 'InvalidCityError',
+  value,
+});
 
 export type City = ValueObject<string>;
 
