@@ -1,6 +1,12 @@
 import { type Effect, fail, succeed } from 'effect/Effect';
-import type { ValueObject } from '@/libraries/ddd';
-import { InvalidAmountError } from './invalid-amount.error';
+import type { DomainError, ValueObject } from '@/libraries/ddd';
+
+export type InvalidAmountError = DomainError<'InvalidAmountError', bigint>;
+
+export const InvalidAmountError = (value: bigint): InvalidAmountError => ({
+  _tag: 'InvalidAmountError',
+  value,
+});
 
 export type Amount = ValueObject<bigint>;
 

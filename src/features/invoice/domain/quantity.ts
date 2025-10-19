@@ -1,6 +1,12 @@
 import { type Effect, fail, succeed } from 'effect/Effect';
-import type { ValueObject } from '@/libraries/ddd';
-import { InvalidQuantityError } from './invalid-quantity.error';
+import type { DomainError, ValueObject } from '@/libraries/ddd';
+
+export type InvalidQuantityError = DomainError<'InvalidQuantityError', number>;
+
+export const InvalidQuantityError = (value: number): InvalidQuantityError => ({
+  _tag: 'InvalidQuantityError',
+  value,
+});
 
 export type Quantity = ValueObject<number>;
 

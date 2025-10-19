@@ -1,6 +1,12 @@
 import { type Effect, fail, succeed } from 'effect/Effect';
-import type { ValueObject } from '@/libraries/ddd';
-import { InvalidLastNameError } from './invalid-last-name.error';
+import type { DomainError, ValueObject } from '@/libraries/ddd';
+
+export type InvalidLastNameError = DomainError<'InvalidLastNameError', string>;
+
+export const InvalidLastNameError = (value: string): InvalidLastNameError => ({
+  _tag: 'InvalidLastNameError',
+  value,
+});
 
 export type LastName = ValueObject<string>;
 
