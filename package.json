@@ -15,7 +15,9 @@
     "lint:code:fix": "pnpm exec biome check --write",
     "lint:code:ci": "pnpm exec biome ci",
     "lint:commit": "commitlint --from origin/main",
-    "prepare": "husky"
+    "i18n:interface": "i18next-resources-for-ts interface -i public/locales/en-US -o @types/resources.d.ts",
+    "prepare": "husky",
+    "postinstall": "pnpm i18n:interface"
   },
   "keywords": [
     "ihexa",
@@ -45,6 +47,7 @@
     "@types/react-dom": "^19.2.0",
     "@vitejs/plugin-react": "^5.0.4",
     "husky": "^9.1.7",
+    "i18next-resources-for-ts": "^1.7.4",
     "lint-staged": "^16.2.3",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3",
@@ -53,6 +56,7 @@
   "dependencies": {
     "dotenv": "^17.2.3",
     "effect": "^3.18.2",
+    "i18next": "^25.6.0",
     "next": "^15.5.4",
     "piqure": "^2.1.2",
     "react": "^19.2.0",
