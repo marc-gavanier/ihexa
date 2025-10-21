@@ -7,6 +7,7 @@ on:
       - 'build/*'
       - 'chore/*'
       - 'ci/*'
+      - 'dependabot/*'
       - 'docs/*'
       - 'feat/*'
       - 'fix/*'
@@ -121,7 +122,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     container:
-      image: mcr.microsoft.com/playwright:v1.55.1
+      image: mcr.microsoft.com/playwright:v1.56.1
     env:
         HOME: /root
     steps:
