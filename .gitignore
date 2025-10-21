@@ -145,3 +145,6 @@ dist
 
 # open-next
 .open-next
+
+# generated types
+@types/resources.d.ts

@@ -7,6 +7,7 @@ import {
   succeed,
 } from 'effect/Effect';
 import { decodeUnknown } from 'effect/Schema';
+import { headers } from 'next/headers';
 import type { ReactNode } from 'react';
 import {
   type ConsultInvoiceError,
@@ -23,18 +24,23 @@ import {
   componentErrorFor,
 } from '@/libraries/app-router';
 import { hasDomainError } from '@/libraries/ddd';
+import { INVOICES_FEATURE, loadI18n, translationsFor } from '@/libraries/i18n';
 import { provide } from '@/libraries/injection';
 
 const ERRORS: ComponentErrorHandler<
   ConsultInvoiceError | InvalidInvoiceIdError
 > = {
   InvoiceByIdNotFoundError: {
-    render: (): ReactNode => <InvoiceError message="Invoice not found" />,
+    render: (): ReactNode => {
+      const t = translationsFor(INVOICES_FEATURE);
+      return <InvoiceError message={t('error.notFound')} />;
+    },
   },
   InvalidInvoiceIdError: {
-    render: (value: string): ReactNode => (
-      <InvoiceError message={`Invoice id ${value} is not valid`} />
-    ),
+    render: (value: string): ReactNode => {
+      const t = translationsFor(INVOICES_FEATURE);
+      return <InvoiceError message={t('error.invalidId', { value })} />;
+    },
   },
 };
 
@@ -46,6 +52,7 @@ interface PageProps {
 
 const Page = async (props: PageProps) => {
   provide(INVOICE_BY_ID, invoiceById);
+  await loadI18n(headers())(INVOICES_FEATURE);
 
   const params = await props.params;
 

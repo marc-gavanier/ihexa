@@ -1,0 +1,12 @@
+{
+  "loading": "Loading",
+  "error": {
+    "notFound": "Invoice not found",
+    "invalidId": "Invoice id {{value}} is not valid"
+  },
+  "details": {
+    "label": "Label",
+    "quantity": "Quantity",
+    "unitPrice": "Unit price (€)"
+  }
+}
