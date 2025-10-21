@@ -7,6 +7,7 @@ on:
       - 'build/*'
       - 'chore/*'
       - 'ci/*'
+      - 'dependabot/*'
       - 'docs/*'
       - 'feat/*'
       - 'fix/*'
