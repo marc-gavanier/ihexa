@@ -15,7 +15,9 @@
     "lint:code:fix": "pnpm exec biome check --write",
     "lint:code:ci": "pnpm exec biome ci",
     "lint:commit": "commitlint --from origin/main",
+    "lint:architecture": "depcruise src && folderslint",
     "i18n:interface": "i18next-resources-for-ts interface -i public/locales/en-US -o @types/resources.d.ts",
+    "doc:architecture": "depcruise src --include-only \"^src\" --output-type dot | dot -T svg > dependency-graph.svg",
     "prepare": "husky",
     "postinstall": "pnpm i18n:interface"
   },
@@ -46,6 +48,8 @@
     "@types/react": "^19.2.2",
     "@types/react-dom": "^19.2.2",
     "@vitejs/plugin-react": "^5.0.4",
+    "dependency-cruiser": "^17.1.0",
+    "folderslint": "^1.2.0",
     "husky": "^9.1.7",
     "i18next-resources-for-ts": "^1.7.4",
     "lint-staged": "^16.2.5",

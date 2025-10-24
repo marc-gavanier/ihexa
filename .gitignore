@@ -148,3 +148,6 @@ dist
 
 # generated types
 @types/resources.d.ts
+
+# generated docs
+dependency-graph.svg

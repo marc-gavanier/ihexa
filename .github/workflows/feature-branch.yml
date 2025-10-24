@@ -64,6 +64,28 @@ jobs:
       - name: Lint commit
         run: pnpm lint:commit
 
+  architecture-check:
+    name: Architecture check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: latest
+          cache: 'pnpm'
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Lint architecture
+        run: pnpm lint:architecture
+
   test:
     name: Test
     runs-on: ubuntu-latest

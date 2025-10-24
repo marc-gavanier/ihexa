@@ -4,7 +4,7 @@ import type {
   InvoiceByIdError,
   InvoiceId,
 } from '@/features/invoice/domain';
-import { INVOICE_BY_ID } from '@/features/invoice/implementations';
+import { INVOICE_BY_ID } from '@/features/invoice/keys';
 import { inject } from '@/libraries/injection';
 
 export type ConsultInvoiceError = InvoiceByIdError;

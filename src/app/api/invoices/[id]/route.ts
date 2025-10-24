@@ -14,8 +14,8 @@ import {
   consultInvoiceValidation,
 } from '@/features/invoice/abilities/consult';
 import { InvalidInvoiceIdError, InvoiceId } from '@/features/invoice/domain';
-import { INVOICE_BY_ID } from '@/features/invoice/implementations';
 import { invoiceById } from '@/features/invoice/implementations/in-memory';
+import { INVOICE_BY_ID } from '@/features/invoice/keys';
 import { toInvoiceTransfer } from '@/features/invoice/transfers';
 import { type ResponseErrorHandler, responseErrorFor } from '@/libraries/api';
 import { hasDomainError } from '@/libraries/ddd';
