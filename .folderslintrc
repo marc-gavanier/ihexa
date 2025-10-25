@@ -1,0 +1,16 @@
+{
+  "root": "src",
+  "rules": [
+    "app/api/**",
+    "app/**",
+    "features/*/abilities/*/command",
+    "features/*/abilities/*/query",
+    "features/*/abilities/*/ui",
+    "features/*/abilities/*/validations",
+    "features/*/domain/**",
+    "features/*/implementations/**",
+    "features/*/keys",
+    "features/*/transfers",
+    "libraries/*/**"
+  ]
+}
