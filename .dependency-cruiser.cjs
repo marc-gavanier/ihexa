@@ -9,8 +9,8 @@ const FORBIDDEN_GLOBAL = [
       'your solution (i.e. use dependency inversion, make sure the modules have a single responsibility) ',
     from: {},
     to: {
-      circular: true,
-    },
+      circular: true
+    }
   },
   {
     name: 'no-orphans',
@@ -27,10 +27,10 @@ const FORBIDDEN_GLOBAL = [
         '(^|/)[.][^/]+[.](?:js|cjs|mjs|ts|cts|mts|json)$', // dot files
         '[.]d[.]ts$', // TypeScript declaration files
         '(^|/)tsconfig[.]json$', // TypeScript config
-        '(^|/)(?:babel|webpack)[.]config[.](?:js|cjs|mjs|ts|cts|mts|json)$', // other configs
-      ],
+        '(^|/)(?:babel|webpack)[.]config[.](?:js|cjs|mjs|ts|cts|mts|json)$' // other configs
+      ]
     },
-    to: {},
+    to: {}
   },
   {
     name: 'no-deprecated-core',
@@ -61,9 +61,9 @@ const FORBIDDEN_GLOBAL = [
         '^constants$',
         '^sys$',
         '^_linklist$',
-        '^_stream_wrap$',
-      ],
-    },
+        '^_stream_wrap$'
+      ]
+    }
   },
   {
     name: 'not-to-deprecated',
@@ -73,8 +73,8 @@ const FORBIDDEN_GLOBAL = [
     severity: 'warn',
     from: {},
     to: {
-      dependencyTypes: ['deprecated'],
-    },
+      dependencyTypes: ['deprecated']
+    }
   },
   {
     name: 'no-non-package-json',
@@ -86,8 +86,8 @@ const FORBIDDEN_GLOBAL = [
       'in your package.json.',
     from: {},
     to: {
-      dependencyTypes: ['npm-no-pkg', 'npm-unknown'],
-    },
+      dependencyTypes: ['npm-no-pkg', 'npm-unknown']
+    }
   },
   {
     name: 'not-to-unresolvable',
@@ -97,8 +97,8 @@ const FORBIDDEN_GLOBAL = [
     severity: 'error',
     from: {},
     to: {
-      couldNotResolve: true,
-    },
+      couldNotResolve: true
+    }
   },
   {
     name: 'no-duplicate-dep-types',
@@ -113,8 +113,8 @@ const FORBIDDEN_GLOBAL = [
       // as it's pretty common to have a type import be a type only import
       // _and_ (e.g.) a devDependency - don't consider type-only dependency
       // types for this rule
-      dependencyTypesNot: ['type-only'],
-    },
+      dependencyTypesNot: ['type-only']
+    }
   },
   {
     name: 'not-to-spec',
@@ -125,8 +125,8 @@ const FORBIDDEN_GLOBAL = [
     severity: 'error',
     from: {},
     to: {
-      path: '[.](?:spec|test|e2e|feature)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$',
-    },
+      path: '[.](?:spec|test|e2e|feature|stories)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$'
+    }
   },
   {
     name: 'not-to-dev-dep',
@@ -139,16 +139,15 @@ const FORBIDDEN_GLOBAL = [
       'from.pathNot re of the not-to-dev-dep rule in the dependency-cruiser configuration',
     from: {
       path: '^(src)',
-      pathNot:
-        '[.](?:spec|test|e2e|feature)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$',
+      pathNot: '[.](?:spec|test|e2e|feature|stories)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$'
     },
     to: {
       dependencyTypes: ['npm-dev'],
       // type only dependencies are not a problem as they don't end up in the
       // production code or are ignored by the runtime.
       dependencyTypesNot: ['type-only'],
-      pathNot: ['node_modules/@types/'],
-    },
+      pathNot: ['node_modules/@types/']
+    }
   },
   {
     name: 'optional-deps-used',
@@ -160,8 +159,8 @@ const FORBIDDEN_GLOBAL = [
       'dependency-cruiser configuration.',
     from: {},
     to: {
-      dependencyTypes: ['npm-optional'],
-    },
+      dependencyTypes: ['npm-optional']
+    }
   },
   {
     name: 'peer-deps-used',
@@ -173,9 +172,9 @@ const FORBIDDEN_GLOBAL = [
     severity: 'warn',
     from: {},
     to: {
-      dependencyTypes: ['npm-peer'],
-    },
-  },
+      dependencyTypes: ['npm-peer']
+    }
+  }
 ];
 
 const FORBIDDEN_APP = [
@@ -185,12 +184,12 @@ const FORBIDDEN_APP = [
       'Each file inside the `src/app` folder represents a primary entry point, such as a page or an API route. These entry points define the system’s external boundaries and must remain isolated from one another. This isolation prevents hidden coupling between entry points and keeps orchestration minimal and explicit. The only allowed dependencies are `src/features`, which host business capabilities, and `src/libraries` for shared technical utilities. This ensures the application layer remains declarative, composable, and free of cross-entry logic.',
     severity: 'error',
     from: {
-      path: ['^src/app'],
+      path: ['^src/app']
     },
     to: {
-      pathNot: ['node_modules', 'src/libraries', 'src/features'],
-    },
-  },
+      pathNot: ['node_modules', 'src/libraries', 'src/features', 'src/styles/globals.css']
+    }
+  }
 ];
 
 const FORBIDDEN_FEATURES = {
@@ -201,11 +200,11 @@ const FORBIDDEN_FEATURES = {
         'Features represent self-contained, business-oriented capabilities that model a specific aspect of the domain. They encapsulate all domain logic, abilities, and related implementations needed to fulfill their purpose. Features must never depend on application code, the `src/app` folder defines framework-specific entry points, while `src/features` hosts the autonomous business-oriented capabilities. This one-way dependency flow ensures that features remain focused on the specific aspect of the problem they address.',
       severity: 'error',
       from: {
-        path: ['^src/features'],
+        path: ['^src/features']
       },
       to: {
-        path: ['^src/app'],
-      },
+        path: ['^src/app']
+      }
     },
     {
       name: 'no-interdependencies-between-features',
@@ -213,8 +212,8 @@ const FORBIDDEN_FEATURES = {
         'Features must never depend on other features. Each feature under `src/features` encapsulates its own domain, abilities, and supporting implementations, forming a fully autonomous unit of business capability. This strict isolation prevents coupling, simplifies reasoning about the system, and enables each feature to evolve independently without impacting other features.',
       severity: 'error',
       from: { path: '^src/features/([^/]+)/' },
-      to: { path: '^src/features', pathNot: '^src/features/$1' },
-    },
+      to: { path: '^src/features', pathNot: '^src/features/$1' }
+    }
   ],
   ABILITIES: [
     {
@@ -225,8 +224,8 @@ const FORBIDDEN_FEATURES = {
       from: { path: 'src/features/([^/]+)/abilities/([^/]+)/' },
       to: {
         path: 'src/features/$1/abilities/',
-        pathNot: 'src/features/$1/abilities/$2',
-      },
+        pathNot: 'src/features/$1/abilities/$2'
+      }
     },
     {
       name: 'no-dependencies-between-ability-operations',
@@ -235,17 +234,11 @@ const FORBIDDEN_FEATURES = {
       severity: 'error',
       from: {
         path: ['^src/features/([^/]+)/abilities/([^/]+)/(?:command|query)/'],
-        pathNot:
-          '[.](?:spec|test|e2e|feature)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$',
+        pathNot: '[.](?:spec|test|e2e|feature|stories)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$'
       },
       to: {
-        pathNot: [
-          '^node_modules/[^/]+/effect',
-          '^src/libraries/injection',
-          'src/features/$1/domain',
-          'src/features/$1/keys',
-        ],
-      },
+        pathNot: ['^node_modules/[^/]+/effect', '^src/libraries/injection', 'src/features/$1/domain', 'src/features/$1/keys']
+      }
     },
     {
       name: 'no-external-dependencies-in-ability-ui',
@@ -254,16 +247,11 @@ const FORBIDDEN_FEATURES = {
       severity: 'error',
       from: {
         path: ['^src/features/([^/]+)/abilities/([^/]+)/ui'],
-        pathNot:
-          '[.](?:spec|test|e2e|feature)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$',
+        pathNot: '[.](?:spec|test|e2e|feature|stories)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$'
       },
       to: {
-        pathNot: [
-          '^src/libraries/i18n',
-          '^src/features/$1/abilities/$2/ui',
-          '^src/features/$1/domain',
-        ],
-      },
+        pathNot: ['^src/libraries/i18n', '^src/libraries/ui', '^src/features/$1/abilities/$2/ui', '^src/features/$1/domain']
+      }
     },
     {
       name: 'no-external-dependencies-in-ability-validations',
@@ -272,12 +260,12 @@ const FORBIDDEN_FEATURES = {
       severity: 'error',
       from: {
         path: ['^src/features/([^/]+)/abilities/([^/]+)/validations'],
-        pathNot: 'index[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$',
+        pathNot: 'index[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$'
       },
       to: {
-        pathNot: ['^node_modules/[^/]+/effect', '^src/features/$1/domain'],
-      },
-    },
+        pathNot: ['^node_modules/[^/]+/effect', '^src/features/$1/domain']
+      }
+    }
   ],
   DOMAIN: [
     {
@@ -287,17 +275,12 @@ const FORBIDDEN_FEATURES = {
       severity: 'error',
       from: {
         path: ['^src/features/([^/]+)/domain'],
-        pathNot:
-          '[.](?:spec|test|e2e|feature)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$',
+        pathNot: '[.](?:spec|test|e2e|feature|stories)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$'
       },
       to: {
-        pathNot: [
-          '^node_modules/[^/]+/effect',
-          '^src/libraries/ddd',
-          '^src/features/$1/domain',
-        ],
-      },
-    },
+        pathNot: ['^node_modules/[^/]+/effect', '^src/libraries/ddd', '^src/features/$1/domain']
+      }
+    }
   ],
   IMPLEMENTATIONS: [
     {
@@ -307,12 +290,12 @@ const FORBIDDEN_FEATURES = {
       severity: 'error',
       from: {
         path: '^src/features/([^/]+)/implementations',
-        pathNot: 'index[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$',
+        pathNot: 'index[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$'
       },
       to: {
-        pathNot: ['^src/features/$1/domain', '^node_modules/[^/]+/effect'],
-      },
-    },
+        pathNot: ['^src/features/$1/domain', '^node_modules/[^/]+/effect']
+      }
+    }
   ],
   KEYS: [
     {
@@ -322,12 +305,12 @@ const FORBIDDEN_FEATURES = {
       severity: 'error',
       from: {
         path: '^src/features/([^/]+)/keys',
-        pathNot: 'index[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$',
+        pathNot: 'index[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$'
       },
       to: {
-        pathNot: ['^src/features/$1/domain', '^node_modules/[^/]+/piqure'],
-      },
-    },
+        pathNot: ['^src/features/$1/domain', '^node_modules/[^/]+/piqure']
+      }
+    }
   ],
   TRANSFER: [
     {
@@ -337,35 +320,34 @@ const FORBIDDEN_FEATURES = {
       severity: 'error',
       from: {
         path: '^src/features/([^/]+)/transfers',
-        pathNot: 'index[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$',
+        pathNot: 'index[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$'
       },
       to: {
-        pathNot: ['^src/features/$1/domain'],
-      },
-    },
-  ],
+        pathNot: ['^src/features/$1/domain']
+      }
+    }
+  ]
 };
 
 const FORBIDDEN_LIBRARIES = [
   {
     name: 'no-app-or-features-dependencies-in-libraries',
-    comment:
-      'Libraries should be self-contained and not depend on other modules, except for specific allowed node modules.',
+    comment: 'Libraries should be self-contained and not depend on other modules, except for specific allowed node modules.',
     severity: 'error',
     from: {
-      path: ['^src/libraries'],
+      path: ['^src/libraries']
     },
     to: {
-      pathNot: ['^src/libraries', '^node_modules', 'assert'],
-    },
+      pathNot: ['^src/libraries', '^node_modules', 'assert']
+    }
   },
   {
     name: 'no-interdependencies-between-libraries',
     comment: 'No interdependencies allowed between libraries.',
     severity: 'error',
     from: { path: 'src/libraries/([^/]+)/' },
-    to: { path: 'src/libraries', pathNot: 'src/libraries/$1' },
-  },
+    to: { path: 'src/libraries', pathNot: ['src/libraries/$1', 'src/libraries/utils'] }
+  }
 ];
 
 module.exports = {
@@ -378,21 +360,21 @@ module.exports = {
     ...FORBIDDEN_FEATURES.IMPLEMENTATIONS,
     ...FORBIDDEN_FEATURES.KEYS,
     ...FORBIDDEN_FEATURES.TRANSFER,
-    ...FORBIDDEN_LIBRARIES,
+    ...FORBIDDEN_LIBRARIES
   ],
   required: [
     {
       name: 'must-initialize-i18n-in-pages',
       severity: 'error',
       module: { path: '^src/app/.*/page.tsx$' },
-      to: { path: '/libraries/i18n' },
-    },
+      to: { path: '/libraries/i18n' }
+    }
   ],
   options: {
     /* Which modules not to follow further when encountered */
     doNotFollow: {
       /* path: an array of regular expressions in strings to match against */
-      path: ['node_modules'],
+      path: ['node_modules']
     },
 
     /* Which modules to exclude */
@@ -465,7 +447,7 @@ module.exports = {
        defaults to './tsconfig.json'.
      */
     tsConfig: {
-      fileName: 'tsconfig.json',
+      fileName: 'tsconfig.json'
     },
 
     /* Webpack configuration to use to get resolve options from.
@@ -520,7 +502,7 @@ module.exports = {
        */
       // extensions: [".js", ".jsx", ".ts", ".tsx", ".d.ts"],
       /* What to consider a 'main' field in package.json */
-      mainFields: ['module', 'main', 'types', 'typings'],
+      mainFields: ['module', 'main', 'types', 'typings']
       /* A list of alias fields in package.jsons
 
          See [this specification](https://github.com/defunctzombie/package-browser-field-spec) and
@@ -547,7 +529,7 @@ module.exports = {
            collapses everything in node_modules to one folder deep so you see
            the external modules, but their innards.
          */
-        collapsePattern: 'node_modules/(?:@[^/]+/[^/]+|[^/]+)',
+        collapsePattern: 'node_modules/(?:@[^/]+/[^/]+|[^/]+)'
 
         /* Options to tweak the appearance of your graph.See
            https://github.com/sverweij/dependency-cruiser/blob/main/doc/options-reference.md#reporteroptions
@@ -569,8 +551,7 @@ module.exports = {
            dependency graph reporter (`archi`) you probably want to tweak
            this collapsePattern to your situation.
         */
-        collapsePattern:
-          '^(?:packages|src|lib(s?)|app(s?)|bin|test(s?)|spec(s?))/[^/]+|node_modules/(?:@[^/]+/[^/]+|[^/]+)',
+        collapsePattern: '^(?:packages|src|lib(s?)|app(s?)|bin|test(s?)|spec(s?))/[^/]+|node_modules/(?:@[^/]+/[^/]+|[^/]+)'
 
         /* Options to tweak the appearance of your graph. If you don't specify a
            theme for 'archi' dependency-cruiser will use the one specified in the
@@ -579,9 +560,9 @@ module.exports = {
         // theme: { },
       },
       text: {
-        highlightFocused: true,
-      },
-    },
-  },
+        highlightFocused: true
+      }
+    }
+  }
 };
 // generated: dependency-cruiser@17.1.0 on 2025-10-23T22:57:17.403Z

@@ -151,3 +151,6 @@ dist
 
 # generated docs
 dependency-graph.svg
+
+*storybook.log
+storybook-static

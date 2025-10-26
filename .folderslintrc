@@ -5,12 +5,14 @@
     "app/**",
     "features/*/abilities/*/command",
     "features/*/abilities/*/query",
-    "features/*/abilities/*/ui",
+    "features/*/abilities/*/ui/components",
+    "features/*/abilities/*/ui/pages",
     "features/*/abilities/*/validations",
     "features/*/domain/**",
     "features/*/implementations/**",
     "features/*/keys",
     "features/*/transfers",
-    "libraries/*/**"
+    "libraries/*/**",
+    "styles/*/**"
   ]
 }

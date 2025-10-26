@@ -12,6 +12,5 @@ export type Name = ValueObject<{
 
 export const Name = (
   firstNameEffect: Effect<FirstName, InvalidFirstNameError>,
-  lastNameEffect: Effect<LastName, InvalidLastNameError>,
-): Effect<Name, InvalidNameError> =>
-  all(toValueObject({ firstName: firstNameEffect, lastName: lastNameEffect }));
+  lastNameEffect: Effect<LastName, InvalidLastNameError>
+): Effect<Name, InvalidNameError> => all(toValueObject({ firstName: firstNameEffect, lastName: lastNameEffect }));

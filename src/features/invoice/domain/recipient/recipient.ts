@@ -9,6 +9,5 @@ export type Recipient = ValueObject<{ name: Name; address: Address }>;
 
 export const Recipient = (
   nameEffect: Effect<Name, InvalidNameError>,
-  addressEffect: Effect<Address, InvalidAddressError>,
-): Effect<Recipient, InvalidRecipientError> =>
-  all(toValueObject({ name: nameEffect, address: addressEffect }));
+  addressEffect: Effect<Address, InvalidAddressError>
+): Effect<Recipient, InvalidRecipientError> => all(toValueObject({ name: nameEffect, address: addressEffect }));
