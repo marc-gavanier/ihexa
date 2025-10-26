@@ -5,7 +5,7 @@ export type InvalidCityError = DomainError<'InvalidCityError', string>;
 
 export const InvalidCityError = (value: string): InvalidCityError => ({
   _tag: 'InvalidCityError',
-  value,
+  value
 });
 
 export type City = ValueObject<string>;

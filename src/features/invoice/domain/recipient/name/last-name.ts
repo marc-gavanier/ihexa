@@ -5,16 +5,12 @@ export type InvalidLastNameError = DomainError<'InvalidLastNameError', string>;
 
 export const InvalidLastNameError = (value: string): InvalidLastNameError => ({
   _tag: 'InvalidLastNameError',
-  value,
+  value
 });
 
 export type LastName = ValueObject<string>;
 
 const isLastName = (value: string): value is LastName => value.length > 0;
 
-export const LastName = (
-  lastName: string,
-): Effect<LastName, InvalidLastNameError> =>
-  isLastName(lastName)
-    ? succeed(lastName)
-    : fail(InvalidLastNameError(lastName));
+export const LastName = (lastName: string): Effect<LastName, InvalidLastNameError> =>
+  isLastName(lastName) ? succeed(lastName) : fail(InvalidLastNameError(lastName));

@@ -5,7 +5,7 @@ export type InvalidStreetError = DomainError<'InvalidStreetError', string>;
 
 export const InvalidStreetError = (value: string): InvalidStreetError => ({
   _tag: 'InvalidStreetError',
-  value,
+  value
 });
 
 export type Street = ValueObject<string>;

@@ -5,14 +5,12 @@ export type InvalidQuantityError = DomainError<'InvalidQuantityError', number>;
 
 export const InvalidQuantityError = (value: number): InvalidQuantityError => ({
   _tag: 'InvalidQuantityError',
-  value,
+  value
 });
 
 export type Quantity = ValueObject<number>;
 
 export const isQuantity = (value: number): value is Quantity => value >= 0;
 
-export const Quantity = (
-  count: number,
-): Effect<Quantity, InvalidQuantityError> =>
+export const Quantity = (count: number): Effect<Quantity, InvalidQuantityError> =>
   isQuantity(count) ? succeed(count) : fail(InvalidQuantityError(count));

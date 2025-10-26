@@ -12,7 +12,7 @@ interface TestContext {
 
 const context: TestContext = {
   response: undefined,
-  invoice: undefined,
+  invoice: undefined
 };
 
 Before(() => {

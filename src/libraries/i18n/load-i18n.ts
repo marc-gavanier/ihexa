@@ -3,7 +3,7 @@ export const toI18nConfig =
   <T>(translations: T) => ({
     lng,
     ns: [ns],
-    resources: { [lng]: { [ns]: translations } },
+    resources: { [lng]: { [ns]: translations } }
   });
 
 export const translationUrl =

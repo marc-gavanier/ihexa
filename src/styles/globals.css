@@ -1,0 +1,58 @@
+/* biome-ignore-all lint: Biome does not support custom properties in CSS*/
+
+@import "tailwindcss";
+
+@plugin "tailwindcss-animate";
+
+@plugin "@tailwindcss/typography";
+
+@plugin "daisyui" {
+  themes:
+    light --default,
+    dark --prefersdark;
+  root: ":root";
+  logs: false;
+}
+
+@theme {
+  --color-muted: oklch(0.7 0 90);
+  --color-base-400: oklch(0.85 0 90);
+  --color-base-500: oklch(0.8 0 90);
+  --color-primary-subtle: oklch(0.6 0.19 260);
+  --color-input: oklch(0.99 0.01 260);
+  --color-navbar: oklch(1 0 90);
+}
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+
+  --color-base-100: oklch(1 0 90);
+  --color-base-200: oklch(0.95 0 90);
+  --color-base-300: oklch(0.9 0 90);
+  --color-base-400: oklch(0.85 0 90);
+  --color-base-500: oklch(0.8 0 90);
+  --color-base-content: oklch(0.015 0 90);
+  --color-primary: oklch(0.5 0.2 260);
+  --color-primary-subtle: oklch(0.6 0.19 260);
+  --color-muted: oklch(0.5 0 17);
+  --color-input: oklch(0.99 0.01 260);
+  --color-navbar: oklch(1 0 90);
+}
+
+@plugin "daisyui/theme" {
+  name: "dark";
+  default: true;
+
+  --color-base-100: oklch(0.2 0 0);
+  --color-base-200: oklch(0.25 0 0);
+  --color-base-300: oklch(0.3 0 0);
+  --color-base-400: oklch(0.35 0 0);
+  --color-base-500: oklch(0.4 0 0);
+  --color-base-content: oklch(0.985 0 0);
+  --color-primary: oklch(0.6 0.2 280);
+  --color-primary-subtle: oklch(0.54 0.2 280);
+  --color-muted: oklch(0.7 0 90);
+  --color-input: oklch(0.17 0 0);
+  --color-navbar: oklch(0.23 0 0);
+}
