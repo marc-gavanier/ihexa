@@ -228,6 +228,19 @@ const FORBIDDEN_FEATURES = {
       }
     },
     {
+      name: 'no-dependencies-in-ability-domain',
+      comment:
+        "Each ability can define its own local domain to encapsulate business rules and models that are specific to that ability alone. Code under `src/features/<feature>/abilities/<ability>/domain` represents pure domain logic, isolated from frameworks, implementations, or other abilities. It must remain fully self-contained and can only depend on itself or specific allowed libraries such as `effect` and `ddd`. This localized domain design ensures that each ability has the autonomy to express its unique business rules without polluting or depending on the broader feature domain.",
+      severity: 'error',
+      from: {
+        path: ['^src/features/([^/]+)/abilities/([^/]+)/domain'],
+        pathNot: '[.](?:spec|test|e2e|feature|stories)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$'
+      },
+      to: {
+        pathNot: ['^node_modules/[^/]+/effect', '^src/libraries/ddd', '^src/features/$1/domain/abilities/$2']
+      }
+    },
+    {
       name: 'no-dependencies-between-ability-operations',
       comment:
         "Commands and queries represent the fundamental operations of an ability. A command performs a specific business action that may change state, while a query retrieves information without side effects. Each command or query within an ability must remain fully isolated. They live under `src/features/<feature>/abilities/<ability>/command` or `query` and represent the smallest self-contained business actions or reads. Commands and queries can only depend on the feature's domain and adapter implementations through dependency injection.",
@@ -278,7 +291,7 @@ const FORBIDDEN_FEATURES = {
         pathNot: '[.](?:spec|test|e2e|feature|stories)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$'
       },
       to: {
-        pathNot: ['^node_modules/[^/]+/effect', '^src/libraries/ddd', '^src/features/$1/domain']
+        pathNot: ['^node_modules/[^/]+/effect', '^src/libraries/ddd', '^src/libraries/utils/string', '^src/features/$1/domain']
       }
     }
   ],
