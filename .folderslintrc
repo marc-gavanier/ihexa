@@ -4,6 +4,7 @@
     "app/api/**",
     "app/**",
     "features/*/abilities/*/command",
+    "features/*/abilities/*/domain",
     "features/*/abilities/*/query",
     "features/*/abilities/*/ui/components",
     "features/*/abilities/*/ui/pages",
