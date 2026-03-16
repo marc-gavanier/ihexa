@@ -23,15 +23,7 @@
     "prepare": "husky",
     "postinstall": "pnpm i18n:interface"
   },
-  "keywords": [
-    "ihexa",
-    "training",
-    "feature-based",
-    "clean-architecture",
-    "react",
-    "nextjs",
-    "typescript"
-  ],
+  "keywords": ["ihexa", "training", "feature-based", "clean-architecture", "react", "nextjs", "typescript"],
   "contributors": [
     {
       "name": "Marc Gavanier",
@@ -77,6 +69,7 @@
   "dependencies": {
     "@tailwindcss/postcss": "^4.1.16",
     "@tailwindcss/typography": "^0.5.19",
+    "@tanstack/react-form": "^1.23.8",
     "clsx": "^2.1.1",
     "daisyui": "^5.3.9",
     "dotenv": "^17.2.3",

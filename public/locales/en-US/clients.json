@@ -1,0 +1,12 @@
+{
+  "register-client": {
+    "form": {
+      "first-name": "First Name",
+      "errors": {
+        "first-name": {
+          "required": "First name is required"
+        }
+      }
+    }
+  }
+}
