@@ -1,0 +1,243 @@
+@import "tailwindcss";
+@import "./components/components.css";
+
+@plugin "tailwindcss-animate";
+
+@plugin "@tailwindcss/typography";
+
+@plugin "daisyui" {
+  themes: false;
+  root: ":root";
+  logs: false;
+}
+
+/*
+ * ═══════════════════════════════════════════════════════════════════════════
+ * COLOR SYSTEM - Semantic color scale
+ * ═══════════════════════════════════════════════════════════════════════════
+ *
+ * Each semantic color follows this gradient (lightest → darkest):
+ *
+ *   surface    tint      subtle     (base)     deep
+ *      ·        ○          ●          ●●        ●●●
+ *
+ * - surface  : Background for themed zones (cards, callouts, selections)
+ * - tint     : Subtle presence (light borders, soft separators)
+ * - subtle   : Attenuated variant (gradients, secondary icons, light accents)
+ * - (base)   : The main color (buttons, links, primary elements)
+ * - deep     : Reinforced variant (active states, focus, emphasis)
+ *
+ * Additionally, each color has:
+ * - content  : Contrasted text/icon color for accessibility (on base color)
+ *
+ * ═══════════════════════════════════════════════════════════════════════════
+ */
+
+@theme {
+  --color-base-400: #d1d5dc;
+  --color-base-500: #9ca3af;
+
+  --color-primary-surface: #eff6ff;
+  --color-primary-tint: #bfdbfe;
+  --color-primary-subtle: #3b82f6;
+  --color-primary-deep: #1d4ed8;
+
+  --color-secondary-surface: #f5f3ff;
+  --color-secondary-tint: #ddd6fe;
+  --color-secondary-subtle: #a78bfa;
+  --color-secondary-deep: #5b21b6;
+
+  --color-accent-surface: #f0fdfa;
+  --color-accent-tint: #99f6e4;
+  --color-accent-subtle: #2dd4bf;
+  --color-accent-deep: #0f766e;
+
+  --color-neutral-surface: #f8fafc;
+  --color-neutral-tint: #e2e8f0;
+  --color-neutral-subtle: #64748b;
+  --color-neutral-deep: #334155;
+
+  --color-success-surface: #ecfdf5;
+  --color-success-tint: #a7f3d0;
+  --color-success-subtle: #34d399;
+  --color-success-deep: #059669;
+
+  --color-warning-surface: #fffbeb;
+  --color-warning-tint: #fde68a;
+  --color-warning-subtle: #fbbf24;
+  --color-warning-deep: #d97706;
+
+  --color-error-surface: #fef2f2;
+  --color-error-tint: #fecaca;
+  --color-error-subtle: #f87171;
+  --color-error-deep: #dc2626;
+
+  --color-info-surface: #f0f9ff;
+  --color-info-tint: #bae6fd;
+  --color-info-subtle: #38bdf8;
+  --color-info-deep: #0284c7;
+}
+
+@plugin "daisyui/theme" {
+  name: "light";
+  default: true;
+
+  /* Base scale */
+  --color-base-100: #ffffff;
+  --color-base-200: #f4f6f9;
+  --color-base-300: #e8ebf0;
+  --color-base-400: #d1d5dc;
+  --color-base-500: #9ca3af;
+  --color-base-content: #1e293b;
+
+  /* Primary */
+  --color-primary: #0068fe;
+  --color-primary-content: #ffffff;
+  --color-primary-surface: #e5f0ff;
+  --color-primary-tint: #c6ddff;
+  --color-primary-subtle: #3b82f6;
+  --color-primary-deep: #1d4ed8;
+
+  /* Secondary */
+  --color-secondary: #7c3aed;
+  --color-secondary-content: #ffffff;
+  --color-secondary-surface: #f5f3ff;
+  --color-secondary-tint: #ddd6fe;
+  --color-secondary-subtle: #a78bfa;
+  --color-secondary-deep: #5b21b6;
+
+  /* Accent */
+  --color-accent: #0d9488;
+  --color-accent-content: #ffffff;
+  --color-accent-surface: #f0fdfa;
+  --color-accent-tint: #99f6e4;
+  --color-accent-subtle: #2dd4bf;
+  --color-accent-deep: #0f766e;
+
+  /* Neutral */
+  --color-neutral: #475569;
+  --color-neutral-content: #ffffff;
+  --color-neutral-surface: #f8fafc;
+  --color-neutral-tint: #e2e8f0;
+  --color-neutral-subtle: #64748b;
+  --color-neutral-deep: #334155;
+
+  /* Success */
+  --color-success: #10b981;
+  --color-success-content: #ffffff;
+  --color-success-surface: #ecfdf5;
+  --color-success-tint: #a7f3d0;
+  --color-success-subtle: #34d399;
+  --color-success-deep: #059669;
+
+  /* Warning */
+  --color-warning: #f59e0b;
+  --color-warning-content: #1e293b;
+  --color-warning-surface: #fffbeb;
+  --color-warning-tint: #fde68a;
+  --color-warning-subtle: #fbbf24;
+  --color-warning-deep: #d97706;
+
+  /* Error */
+  --color-error: #ef4444;
+  --color-error-content: #ffffff;
+  --color-error-surface: #fef2f2;
+  --color-error-tint: #fecaca;
+  --color-error-subtle: #f87171;
+  --color-error-deep: #dc2626;
+
+  /* Info */
+  --color-info: #0ea5e9;
+  --color-info-content: #ffffff;
+  --color-info-surface: #f0f9ff;
+  --color-info-tint: #bae6fd;
+  --color-info-subtle: #38bdf8;
+  --color-info-deep: #0284c7;
+
+  /* Component-specific */
+  --color-input: #f8fafc;
+  --color-textarea: #f8fafc;
+  --color-navbar: #ffffff;
+}
+
+@plugin "daisyui/theme" {
+  name: "dark";
+  prefersdark: true;
+
+  /* Base scale */
+  --color-base-100: #09090b;
+  --color-base-200: #18181b;
+  --color-base-300: #27272a;
+  --color-base-400: #3f3f46;
+  --color-base-500: #52525b;
+  --color-base-content: #fafafa;
+
+  /* Primary */
+  --color-primary: #3b82f6;
+  --color-primary-content: #ffffff;
+  --color-primary-surface: #13223f;
+  --color-primary-tint: #1b3462;
+  --color-primary-subtle: #60a5fa;
+  --color-primary-deep: #93c5fd;
+
+  /* Secondary */
+  --color-secondary: #a78bfa;
+  --color-secondary-content: #0f172a;
+  --color-secondary-surface: #2e1065;
+  --color-secondary-tint: #4c1d95;
+  --color-secondary-subtle: #c4b5fd;
+  --color-secondary-deep: #ddd6fe;
+
+  /* Accent */
+  --color-accent: #2dd4bf;
+  --color-accent-content: #0f172a;
+  --color-accent-surface: #134e4a;
+  --color-accent-tint: #115e59;
+  --color-accent-subtle: #5eead4;
+  --color-accent-deep: #99f6e4;
+
+  /* Neutral */
+  --color-neutral: #a1a1aa;
+  --color-neutral-content: #09090b;
+  --color-neutral-surface: #18181b;
+  --color-neutral-tint: #27272a;
+  --color-neutral-subtle: #d4d4d8;
+  --color-neutral-deep: #e4e4e7;
+
+  /* Success */
+  --color-success: #34d399;
+  --color-success-content: #0f172a;
+  --color-success-surface: #064e3b;
+  --color-success-tint: #065f46;
+  --color-success-subtle: #6ee7b7;
+  --color-success-deep: #a7f3d0;
+
+  /* Warning */
+  --color-warning: #fbbf24;
+  --color-warning-content: #0f172a;
+  --color-warning-surface: #78350f;
+  --color-warning-tint: #92400e;
+  --color-warning-subtle: #fcd34d;
+  --color-warning-deep: #fde68a;
+
+  /* Error */
+  --color-error: #f87171;
+  --color-error-content: #0f172a;
+  --color-error-surface: #7f1d1d;
+  --color-error-tint: #991b1b;
+  --color-error-subtle: #fca5a5;
+  --color-error-deep: #fecaca;
+
+  /* Info */
+  --color-info: #38bdf8;
+  --color-info-content: #0f172a;
+  --color-info-surface: #0c4a6e;
+  --color-info-tint: #075985;
+  --color-info-subtle: #7dd3fc;
+  --color-info-deep: #bae6fd;
+
+  /* Component-specific */
+  --color-input: #18181b;
+  --color-textarea: #18181b;
+  --color-navbar: #09090b;
+}

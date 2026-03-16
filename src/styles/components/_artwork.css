@@ -1,0 +1,7 @@
+.artwork-minor {
+  fill: var(--color-secondary);
+}
+
+.artwork-major {
+  fill: var(--color-primary);
+}

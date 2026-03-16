@@ -412,15 +412,7 @@ const FORBIDDEN_FEATURES = {
 
 // Define allowed library dependencies graph
 // Each library can only depend on libraries explicitly listed here
-const LIBRARY_DEPENDENCIES = {
-  ui: ['utils', 'injection'],
-  form: ['ui', 'utils'],
-  map: ['reactivity', 'utils', 'ui', 'implementations'],
-  'server-action': ['injection', 'pipe'],
-  next: ['server-action', 'pipe'],
-  i18n: ['injection'],
-  bluemapping: ['aws']
-};
+const LIBRARY_DEPENDENCIES = {};
 
 // Libraries that can access env.ts
 const LIBRARIES_WITH_ENV_ACCESS = ['i18n'];

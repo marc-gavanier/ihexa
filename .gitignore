@@ -1,3 +1,4 @@
+### Node template
 # Logs
 logs
 *.log
@@ -6,7 +7,6 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 .pnpm-debug.log*
-*storybook.log
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
@@ -23,6 +23,15 @@ lib-cov
 # Coverage directory used by tools like istanbul
 coverage
 *.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Grunt intermediate storage (https://gruntjs.com/creating-plugins#storing-task-files)
+.grunt
+
+# Bower dependency directory (https://bower.io/)
+bower_components
 
 # node-waf configuration
 .lock-wscript
@@ -42,6 +51,12 @@ web_modules/
 
 # Optional npm cache directory
 .npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional stylelint cache
+.stylelintcache
 
 # Microbundle cache
 .rpt2_cache/
@@ -65,6 +80,31 @@ web_modules/
 .env.production.local
 .env.local
 
+# parcel-bundler cache (https://parceljs.org/)
+.cache
+.parcel-cache
+
+# Next.js build output
+.next
+out
+
+# Nuxt.js build / generate output
+.nuxt
+dist
+
+# Gatsby files
+.cache/
+# Comment in the public line in if your project uses Gatsby and not Next.js
+# https://nextjs.org/blog/next-9-1#public-directory-support
+# public
+
+# vuepress build output
+.vuepress/dist
+
+# vuepress v2.x temp and cache directory
+.temp
+.cache
+
 # Docusaurus cache and generated files
 .docusaurus
 
@@ -83,20 +123,15 @@ web_modules/
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
 
-# Yarn v2
+# yarn v2
 .yarn/cache
 .yarn/unplugged
 .yarn/build-state.yml
 .yarn/install-state.gz
 .pnp.*
 
-# IDEs
+# JetBrains IDEs
 .idea/
-.vscode/
-
-# AI tools
-.agents/
-.claude/
 
 # Playwright
 /test-results/
@@ -105,30 +140,17 @@ web_modules/
 /playwright/.cache/
 /playwright/.auth/
 
-# Build output
-.next
-out
-/dist
+# sst
 .sst
+
+# open-next
 .open-next
 
-# Generated types
+# generated types
 @types/resources.d.ts
 
-# Generated docs
+# generated docs
 dependency-graph.svg
+
+*storybook.log
 storybook-static
-
-# Example/debug data snapshots
-public/data/example_*
-
-# docker data
-.database
-/data
-
-# Implementations — ignore non-default profiles (local/personal)
-**/implementations/current
-src/configuration/implementations/implementations.*.json
-!src/configuration/implementations/implementations.default.json
-!src/configuration/implementations/implementations.feature-branch.json
-!src/configuration/implementations/implementations.production.json

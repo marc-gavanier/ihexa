@@ -1,0 +1,25 @@
+/*
+ * Performance utilities for long lists
+ * Uses content-visibility to skip rendering of off-screen items
+ * https://web.dev/content-visibility/
+ */
+
+.virtual-list-item {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 4rem;
+}
+
+.virtual-list-item-sm {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 2.5rem;
+}
+
+.virtual-list-item-lg {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 6rem;
+}
+
+.virtual-list-item-xl {
+  content-visibility: auto;
+  contain-intrinsic-size: 0 8rem;
+}
