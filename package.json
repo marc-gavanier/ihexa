@@ -5,6 +5,9 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
+    "generate:implementations": "./scripts/generate-implementations.sh",
+    "predev": "pnpm generate:implementations",
+    "prebuild": "pnpm generate:implementations",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

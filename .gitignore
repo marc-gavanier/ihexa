@@ -154,3 +154,6 @@ dependency-graph.svg
 
 *storybook.log
 storybook-static
+
+# generated implementations (DI)
+**/implementations/index.ts
