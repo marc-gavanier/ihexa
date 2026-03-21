@@ -1,42 +1,16 @@
-type InvoiceId = string;
+import { Schema } from 'effect';
+import { type Amount, amountFromCents, Line } from './line';
+import { Recipient } from './recipient';
 
-type Name = {
-  firstname: string;
-  lastname: string;
-};
+export const InvoiceId = Schema.UUID.pipe(Schema.brand('InvoiceId'));
+export type InvoiceId = typeof InvoiceId.Type;
 
-type Street = string;
+export const Invoice = Schema.Struct({
+  id: InvoiceId,
+  recipient: Recipient,
+  lines: Schema.NonEmptyArray(Line)
+});
+export type Invoice = typeof Invoice.Type;
 
-type City = string;
-
-type Zipcode = string;
-
-type Address = {
-  street: Street;
-  city: City;
-  zipcode: Zipcode;
-};
-
-type Recipient = {
-  name: Name;
-  address: Address;
-};
-
-type Label = string;
-
-type Amount = number;
-
-type Quantity = number;
-
-type Line = {
-  label: Label;
-  quantity: Quantity;
-  amount: Amount;
-};
-
-export type Invoice = {
-  id: InvoiceId;
-  recipient: Recipient;
-  lines: Line[];
-  total: Amount;
-};
+export const invoiceTotal = (invoice: Invoice): Amount =>
+  amountFromCents(invoice.lines.reduce((sum, line) => sum + line.quantity * line.amount, 0) / 100);
