@@ -8,4 +8,10 @@ test.describe('Consult invoice page', () => {
     await expect(loader).toBeVisible();
     await expect(loader).not.toBeVisible();
   });
+
+  test('should display 404 page when invoice id is unknown', async ({ page }) => {
+    await page.goto('/invoices/unknown-id');
+
+    await expect(page.getByText('This page could not be found.')).toBeVisible();
+  });
 });
