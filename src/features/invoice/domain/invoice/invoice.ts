@@ -1,6 +1,6 @@
 import { Schema } from 'effect';
-import { type Amount, Line, totalOfAll } from './line';
-import { Recipient } from './recipient';
+import { type Amount, Line, totalOfAll } from '../line';
+import { Recipient } from '../recipient';
 
 export const InvoiceId = Schema.UUID.pipe(Schema.brand('InvoiceId'));
 export type InvoiceId = typeof InvoiceId.Type;
