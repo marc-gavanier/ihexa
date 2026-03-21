@@ -23,3 +23,5 @@ export const Line = Schema.Struct({
   amount: Amount
 });
 export type Line = typeof Line.Type;
+
+export const amountOf = (line: Line): number => line.amount / 100;
