@@ -1,11 +1,11 @@
 import { amountOf, type Invoice, invoiceTotal } from '@/features/invoice/domain';
-import { withTranslation } from '@/libraries/i18n';
+import { type TranslationProps, withTranslation } from '@/libraries/i18n';
 
 type ConsultInvoicePageProps = {
   invoice: Invoice;
 };
 
-export const ConsultInvoicePage = withTranslation<ConsultInvoicePageProps>(({ invoice, t }) => (
+export const ConsultInvoicePageContent = ({ invoice, t }: ConsultInvoicePageProps & TranslationProps) => (
   <div>
     <div data-testid='recipient-name'>
       {invoice.recipient.name.firstname} {invoice.recipient.name.lastname}
@@ -37,4 +37,6 @@ export const ConsultInvoicePage = withTranslation<ConsultInvoicePageProps>(({ in
       {t('details.totalPrice')} : {invoiceTotal(invoice)} €
     </div>
   </div>
-));
+);
+
+export const ConsultInvoicePage = withTranslation<ConsultInvoicePageProps>(ConsultInvoicePageContent);
