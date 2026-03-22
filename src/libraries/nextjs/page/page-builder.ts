@@ -42,7 +42,8 @@ export const pageBuilder = (): PageBuilder<object> => {
   const createBuilder = <TCtx extends object>(entries: MiddlewareEntry[]): PageBuilder<TCtx> =>
     ({
       use: (...middlewares: AnyMiddleware[]) => {
-        const entry: MiddlewareEntry = middlewares.length === 1 ? middlewares[0]! : middlewares;
+        const [single] = middlewares;
+        const entry: MiddlewareEntry = middlewares.length === 1 && single ? single : middlewares;
         return createBuilder([...entries, entry]);
       },
 

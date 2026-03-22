@@ -14,14 +14,14 @@ export const fromHeader =
       .split(',')
       .map((part) => {
         const [lang, q] = part.trim().split(';q=');
-        return { lang: lang!, quality: q ? Number.parseFloat(q) : 1 };
+        return { lang: lang, quality: q ? Number.parseFloat(q) : 1 };
       })
       .sort((a, b) => b.quality - a.quality)
       .map(({ lang }) => lang);
 
     for (const lang of languages) {
       const match = supportedLngs.find(
-        (supported) => supported === lang || supported.startsWith(`${lang}-`) || lang.startsWith(`${supported}-`)
+        (supported) => supported === lang || supported.startsWith(`${lang}-`) || lang?.startsWith(`${supported}-`)
       );
       if (match) return match;
     }

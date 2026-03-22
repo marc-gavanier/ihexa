@@ -11,7 +11,7 @@ const executeParallel = async <TExtra>(
   extra: TExtra
 ): Promise<Record<string, unknown>> => {
   const results = await Promise.all(middlewares.map((middleware) => middleware(ctx, extra)));
-  return results.reduce<Record<string, unknown>>((acc, result) => ({ ...acc, ...result.ctx }), ctx);
+  return Object.assign({}, ctx, ...results.map((result) => result.ctx));
 };
 
 const toResolvedMiddleware =

@@ -10,13 +10,7 @@ const getNestedValue = (obj: unknown, path: string): unknown =>
     .reduce((current: unknown, key: string) => (current == null ? undefined : (current as Record<string, unknown>)[key]), obj);
 
 const extractFields = (obj: unknown, fields: string[]): Record<string, unknown> =>
-  fields.reduce(
-    (extractedFields: Record<string, unknown>, field: string) => ({
-      ...extractedFields,
-      [field]: String(getNestedValue(obj, field))
-    }),
-    {}
-  );
+  Object.fromEntries(fields.map((field) => [field, String(getNestedValue(obj, field))]));
 
 export const assertMatchesDataTable = (dataTable: DataTable) => (actual: unknown, options?: { message?: string }) => {
   assert.ok(actual, options?.message || 'Object should be defined');
