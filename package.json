@@ -13,7 +13,7 @@
     "start": "next start",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:cucumber": "NODE_OPTIONS='--import tsx/esm' cucumber-js src/features/**/*.feature --import src/features/**/*.feature.ts",
+    "test:cucumber": "NODE_OPTIONS='--import tsx/esm' cucumber-js src/features/**/*.feature --import src/features/**/*.steps.ts",
     "test:e2e": "playwright test",
     "lint:code:fix": "pnpm exec biome check --write",
     "lint:code:ci": "pnpm exec biome ci",

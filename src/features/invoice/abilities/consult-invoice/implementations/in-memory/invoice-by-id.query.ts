@@ -1,26 +1,32 @@
 import { Either, Schema } from 'effect';
 import { Invoice, type InvoiceById, InvoiceId, InvoiceNotFound } from '@/features/invoice/domain';
 
+const ID = '550e8400-e29b-41d4-a716-446655440000';
+
+const RECIPIENT = {
+  name: {
+    firstname: 'Jean',
+    lastname: 'Dupont'
+  },
+  address: {
+    street: '123 Rue de la Paix',
+    city: 'Paris',
+    zipcode: '75001'
+  }
+} as const;
+
+const LINES = [
+  { label: 'Prestation de conseil', quantity: 2, amount: 150 },
+  { label: 'Développement logiciel', quantity: 1, amount: 500 }
+] as const;
+
 const INVOICES = new Map<InvoiceId, Invoice>([
   [
-    Schema.decodeSync(InvoiceId)('550e8400-e29b-41d4-a716-446655440000'),
+    Schema.decodeSync(InvoiceId)(ID),
     Schema.decodeSync(Invoice)({
-      id: '550e8400-e29b-41d4-a716-446655440000',
-      recipient: {
-        name: {
-          firstname: 'Jean',
-          lastname: 'Dupont'
-        },
-        address: {
-          street: '123 Rue de la Paix',
-          city: 'Paris',
-          zipcode: '75001'
-        }
-      },
-      lines: [
-        { label: 'Prestation de conseil', quantity: 2, amount: 150 },
-        { label: 'Développement logiciel', quantity: 1, amount: 500 }
-      ]
+      id: ID,
+      recipient: RECIPIENT,
+      lines: LINES
     })
   ]
 ]);
