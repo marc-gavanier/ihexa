@@ -1,10 +1,10 @@
-import { readFile } from 'node:fs/promises';
-import { join } from 'node:path';
 import i18next, { type i18n } from 'i18next';
 import { headers } from 'next/headers';
 import { cache } from 'react';
+import { inject } from '@/libraries/injection';
 import type { PageProps } from '@/libraries/nextjs/page';
 import { detectLng } from './detect-lng';
+import { RESOURCE_LOADER } from './resource-loader';
 import type { I18nConfig, Namespace, TypedTFunction } from './types';
 
 type I18nInstance = {
@@ -40,20 +40,6 @@ const buildRequest = async (): Promise<Request> => {
   return new Request('http://localhost', { headers: headersInit });
 };
 
-const loadNamespaceResources = async (
-  lng: string,
-  namespaces: Namespace[]
-): Promise<Record<Namespace, Record<string, unknown>>> => {
-  const entries = await Promise.all(
-    namespaces.map(async (ns) => {
-      const localePath = join(process.cwd(), 'public', 'locales', lng, `${ns}.json`);
-      const content = await readFile(localePath, 'utf-8');
-      return [ns, JSON.parse(content) as Record<string, unknown>] as const;
-    })
-  );
-  return Object.fromEntries(entries) as Record<Namespace, Record<string, unknown>>;
-};
-
 export const initI18n =
   (config: I18nConfig) =>
   async <N extends Namespace>(defaultNS: N, ...otherNamespaces: Namespace[]): Promise<void> => {
@@ -64,7 +50,8 @@ export const initI18n =
       fallbackLng: config.fallbackLng
     });
 
-    const resources = await loadNamespaceResources(lng, namespaces);
+    const loadResources = inject(RESOURCE_LOADER);
+    const resources = await loadResources(lng, namespaces);
 
     const instance = i18next.createInstance();
 

@@ -413,7 +413,9 @@ const FORBIDDEN_FEATURES = {
 // Define allowed library dependencies graph
 // Each library can only depend on libraries explicitly listed here
 const LIBRARY_DEPENDENCIES = {
-  i18n: ['nextjs']
+  i18n: ['nextjs', 'injection'],
+  storybook: ['i18n'],
+  ui: ['injection']
 };
 
 // Libraries that can access env.ts

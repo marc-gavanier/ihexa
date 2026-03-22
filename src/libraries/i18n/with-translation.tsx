@@ -2,7 +2,7 @@ import type { ReactNode } from 'react';
 import type { Namespace, TypedTFunction } from './types';
 import { getTranslation } from './with-i18n';
 
-type TranslationProps = {
+export type TranslationProps = {
   t: TypedTFunction<Namespace[]>;
 };
 

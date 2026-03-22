@@ -1,4 +1,5 @@
 import type { ReactNode } from 'react';
+import '@/libraries/i18n/resource-loader.node';
 import '@/styles/globals.css';
 
 const RootLayout = async ({ children }: { children: ReactNode }) => {
