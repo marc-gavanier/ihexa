@@ -1,3 +1,5 @@
-import { withTranslation } from '@/libraries/i18n';
+import { type TranslationProps, withTranslation } from '@/libraries/i18n';
 
-export const ConsultInvoiceLoading = withTranslation(({ t }) => <output>{t('loading')}</output>);
+export const ConsultInvoiceLoadingContent = ({ t }: TranslationProps) => <output>{t('loading')}</output>;
+
+export const ConsultInvoiceLoading = withTranslation(ConsultInvoiceLoadingContent);

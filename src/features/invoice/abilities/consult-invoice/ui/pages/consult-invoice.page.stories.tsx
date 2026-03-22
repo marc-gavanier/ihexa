@@ -3,18 +3,25 @@ import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Schema } from 'effect';
 import { Invoice } from '@/features/invoice/domain';
 import { translation } from '@/libraries/storybook';
+import { ConsultInvoiceLoadingContent } from './consult-invoice.loading';
 import { ConsultInvoicePageContent } from './consult-invoice.page';
+
+const t = translation('en-US', { invoices });
 
 const meta = {
   title: 'Features/Invoice/ConsultInvoice',
   component: ConsultInvoicePageContent,
   parameters: { layout: 'padded' },
-  args: { t: translation('en-US', { invoices }) }
+  args: { t }
 } satisfies Meta<typeof ConsultInvoicePageContent>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
+
+export const Loading: StoryObj = {
+  render: () => <ConsultInvoiceLoadingContent t={t} />
+};
 
 export const SingleLine: Story = {
   args: {
