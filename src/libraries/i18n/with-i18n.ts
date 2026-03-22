@@ -1,10 +1,11 @@
 import i18next, { type i18n } from 'i18next';
 import { headers } from 'next/headers';
 import { cache } from 'react';
-import { inject } from '@/libraries/injection';
+import { inject, provide } from '@/libraries/injection';
 import type { PageProps } from '@/libraries/nextjs/page';
 import { detectLng } from './detect-lng';
 import { RESOURCE_LOADER } from './resource-loader';
+import { TRANSLATION } from './translation';
 import type { I18nConfig, Namespace, TypedTFunction } from './types';
 
 type I18nInstance = {
@@ -16,9 +17,11 @@ const getI18nInstance = cache((): { current: I18nInstance | null } => ({ current
 
 export const setI18nInstance = (instance: I18nInstance): void => {
   getI18nInstance().current = instance;
+  const { i18n, namespaces } = instance;
+  provide(TRANSLATION, i18n.getFixedT(i18n.language, namespaces) as TypedTFunction<Namespace[]>);
 };
 
-export const getTranslation = cache(async () => {
+export const getTranslation = cache(() => {
   const holder = getI18nInstance();
   if (!holder.current) {
     throw new Error('i18n not initialized. Did you forget to use withI18n middleware?');

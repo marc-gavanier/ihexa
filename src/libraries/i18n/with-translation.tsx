@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
+import { inject } from '@/libraries/injection';
+import { TRANSLATION } from './translation';
 import type { Namespace, TypedTFunction } from './types';
-import { getTranslation } from './with-i18n';
 
 export type TranslationProps = {
   t: TypedTFunction<Namespace[]>;
@@ -8,7 +9,7 @@ export type TranslationProps = {
 
 export const withTranslation =
   <P extends object>(Component: (props: P & TranslationProps) => ReactNode) =>
-  async (props: P): Promise<ReactNode> => {
-    const { t } = await getTranslation();
+  (props: P): ReactNode => {
+    const t = inject(TRANSLATION);
     return <Component {...props} t={t} />;
   };

@@ -1,42 +1,20 @@
-import { amountOf, type Invoice, invoiceTotal } from '@/features/invoice/domain';
+import { RiFileTextLine } from 'react-icons/ri';
+import type { Invoice } from '@/features/invoice/domain';
 import { type TranslationProps, withTranslation } from '@/libraries/i18n';
+import { PageHeader } from '@/libraries/ui/blocks/page-header';
+import { ICON_LG } from '@/libraries/ui/icons/sizes';
+import { InvoiceLines, InvoiceRecipient } from '../components';
 
 type ConsultInvoicePageProps = {
   invoice: Invoice;
 };
 
-export const ConsultInvoicePageContent = ({ invoice, t }: ConsultInvoicePageProps & TranslationProps) => (
-  <div>
-    <div data-testid='recipient-name'>
-      {invoice.recipient.name.firstname} {invoice.recipient.name.lastname}
+export const ConsultInvoicePage = withTranslation<ConsultInvoicePageProps>(
+  ({ invoice, t }: ConsultInvoicePageProps & TranslationProps) => (
+    <div className='flex flex-col gap-8'>
+      <PageHeader title={t('title')} icon={<RiFileTextLine size={ICON_LG} />} />
+      <InvoiceRecipient {...invoice} />
+      <InvoiceLines {...invoice} />
     </div>
-    <div data-testid='recipient-address'>
-      {invoice.recipient.address.street}, {invoice.recipient.address.zipcode} {invoice.recipient.address.city}
-    </div>
-    <br />
-    <table>
-      <thead>
-        <tr>
-          <th>{t('details.label')}</th>
-          <th>{t('details.unitPrice')}</th>
-          <th>{t('details.quantity')}</th>
-        </tr>
-      </thead>
-      <tbody>
-        {invoice.lines.map((line) => (
-          <tr key={line.label}>
-            <td data-testid='line-label'>{line.label}</td>
-            <td data-testid='line-amount'>{amountOf(line)} €</td>
-            <td data-testid='line-quantity'>{line.quantity}</td>
-          </tr>
-        ))}
-      </tbody>
-    </table>
-    <br />
-    <div data-testid='invoice-total'>
-      {t('details.totalPrice')} : {invoiceTotal(invoice)} €
-    </div>
-  </div>
+  )
 );
-
-export const ConsultInvoicePage = withTranslation<ConsultInvoicePageProps>(ConsultInvoicePageContent);

@@ -2,25 +2,30 @@ import invoices from '@public/locales/en-US/invoices.json';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { Schema } from 'effect';
 import { Invoice } from '@/features/invoice/domain';
-import { translation } from '@/libraries/storybook';
-import { ConsultInvoiceLoadingContent } from './consult-invoice.loading';
-import { ConsultInvoicePageContent } from './consult-invoice.page';
-
-const t = translation('en-US', { invoices });
+import { withI18nProvider } from '@/libraries/storybook';
+import { ConsultInvoiceLoading } from './consult-invoice.loading';
+import { ConsultInvoicePage } from './consult-invoice.page';
 
 const meta = {
   title: 'Features/Invoice/ConsultInvoice',
-  component: ConsultInvoicePageContent,
+  component: ConsultInvoicePage,
   parameters: { layout: 'padded' },
-  args: { t }
-} satisfies Meta<typeof ConsultInvoicePageContent>;
+  decorators: [
+    withI18nProvider('en-US', { invoices }),
+    (Story) => (
+      <div className='mx-auto w-full max-w-7xl px-4 py-6'>
+        <Story />
+      </div>
+    )
+  ]
+} satisfies Meta<typeof ConsultInvoicePage>;
 
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 export const Loading: StoryObj = {
-  render: () => <ConsultInvoiceLoadingContent t={t} />
+  render: () => <ConsultInvoiceLoading />
 };
 
 export const SingleLine: Story = {

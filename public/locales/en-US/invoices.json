@@ -1,10 +1,12 @@
 {
+  "title": "Invoice",
   "loading": "Loading invoice details...",
   "notFound": "Invoice not found",
   "details": {
     "label": "Label",
     "quantity": "Quantity",
-    "unitPrice": "Unit price (€)",
-    "totalPrice": "Total"
+    "unitPrice": "Unit price",
+    "lineTotal": "Total",
+    "totalLabel": "Total"
   }
 }

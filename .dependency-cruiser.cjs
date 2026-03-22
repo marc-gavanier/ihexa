@@ -414,7 +414,7 @@ const FORBIDDEN_FEATURES = {
 // Each library can only depend on libraries explicitly listed here
 const LIBRARY_DEPENDENCIES = {
   i18n: ['nextjs', 'injection'],
-  storybook: ['i18n'],
+  storybook: ['i18n', 'injection'],
   ui: ['injection']
 };
 

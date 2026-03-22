@@ -12,8 +12,8 @@ export type Line = typeof Line.Type;
 
 export const amountOf = ({ amount }: Line): number => Schema.encodeSync(Amount)(amount);
 
-const totalOfSingle = (line: Line) => line.quantity * amountOf(line);
+export const lineTotal = (line: Line): number => line.quantity * amountOf(line);
 
-const toTotalLines = (total: number, line: Line) => total + totalOfSingle(line);
+const toTotalLines = (total: number, line: Line) => total + lineTotal(line);
 
 export const totalOfAll = (lines: readonly Line[]): Amount => amountFromMinorUnit(lines.reduce(toTotalLines, 0));
