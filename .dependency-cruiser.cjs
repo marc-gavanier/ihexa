@@ -412,7 +412,9 @@ const FORBIDDEN_FEATURES = {
 
 // Define allowed library dependencies graph
 // Each library can only depend on libraries explicitly listed here
-const LIBRARY_DEPENDENCIES = {};
+const LIBRARY_DEPENDENCIES = {
+  i18n: ['nextjs']
+};
 
 // Libraries that can access env.ts
 const LIBRARIES_WITH_ENV_ACCESS = ['i18n'];
