@@ -32,6 +32,14 @@ const buildRequest = async (): Promise<Request> => {
   return new Request('http://localhost', { headers: headersInit });
 };
 
+export const getLang = async (config: I18nConfig): Promise<string> => detectLng(await buildRequest(), config);
+
+export const withLang =
+  (config: I18nConfig) =>
+  async <TContext extends object>(_ctx: TContext): Promise<{ ctx: { lang: string } }> => ({
+    ctx: { lang: await getLang(config) }
+  });
+
 type I18nInitResult = {
   locale: string;
   namespaces: Namespace[];
