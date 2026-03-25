@@ -36,47 +36,47 @@ export const CreateClientForm = () => {
       <form onSubmit={handleSubmit(form)} className='flex flex-col gap-4'>
         <form.AppField name='firstname'>
           {(field) => (
-            <field.Group>
+            <div>
               <field.Label>{t('form.firstname.label')}</field.Label>
               <field.Input isPending={isPending} />
               <field.Info formatMessage={t} />
-            </field.Group>
+            </div>
           )}
         </form.AppField>
         <form.AppField name='lastname'>
           {(field) => (
-            <field.Group>
+            <div>
               <field.Label>{t('form.lastname.label')}</field.Label>
               <field.Input isPending={isPending} />
               <field.Info formatMessage={t} />
-            </field.Group>
+            </div>
           )}
         </form.AppField>
         <form.AppField name='street'>
           {(field) => (
-            <field.Group>
+            <div>
               <field.Label>{t('form.street.label')}</field.Label>
               <field.Input isPending={isPending} />
               <field.Info formatMessage={t} />
-            </field.Group>
+            </div>
           )}
         </form.AppField>
         <form.AppField name='city'>
           {(field) => (
-            <field.Group>
+            <div>
               <field.Label>{t('form.city.label')}</field.Label>
               <field.Input isPending={isPending} />
               <field.Info formatMessage={t} />
-            </field.Group>
+            </div>
           )}
         </form.AppField>
         <form.AppField name='zipcode'>
           {(field) => (
-            <field.Group>
+            <div>
               <field.Label>{t('form.zipcode.label')}</field.Label>
               <field.Input isPending={isPending} />
               <field.Info formatMessage={t} />
-            </field.Group>
+            </div>
           )}
         </form.AppField>
         <form.Submit isPending={isPending}>{t('form.submit')}</form.Submit>

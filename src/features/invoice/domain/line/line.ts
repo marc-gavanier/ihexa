@@ -6,8 +6,8 @@ import { Quantity } from './quantity';
 
 export const Line = defineModel(
   Schema.Struct({
-    label: Label,
-    quantity: Quantity,
+    label: Label.schema,
+    quantity: Quantity.schema,
     amount: Amount
   })
 );

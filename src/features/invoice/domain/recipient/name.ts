@@ -5,8 +5,8 @@ import { Lastname } from './lastname';
 
 export const Name = defineModel(
   Schema.Struct({
-    firstname: Firstname,
-    lastname: Lastname
+    firstname: Firstname.schema,
+    lastname: Lastname.schema
   })
 );
 export type Name = Model.TypeOf<typeof Name>;

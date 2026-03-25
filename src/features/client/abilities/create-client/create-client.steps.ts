@@ -8,7 +8,7 @@ import { clearClients, createClient } from './implementations';
 
 let client: Client | undefined;
 
-const dataTableToInput = (dataTable: DataTable) => Object.fromEntries(dataTable.rows<CreateClientFormData>());
+const dataTableToInput = (dataTable: DataTable) => Object.fromEntries(dataTable.rows()) as CreateClientFormData;
 
 Given(/^I am a user with the ability to create clients$/, () => {
   client = undefined;

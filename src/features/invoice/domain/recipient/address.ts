@@ -6,9 +6,9 @@ import { Zipcode } from './zipcode';
 
 export const Address = defineModel(
   Schema.Struct({
-    street: Street,
-    city: City,
-    zipcode: Zipcode
+    street: Street.schema,
+    city: City.schema,
+    zipcode: Zipcode.schema
   })
 );
 export type Address = Model.TypeOf<typeof Address>;
