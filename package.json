@@ -6,8 +6,8 @@
   "main": "index.js",
   "scripts": {
     "generate:implementations": "./scripts/generate-implementations.sh",
-    "predev": "pnpm generate:implementations",
-    "prebuild": "pnpm generate:implementations",
+    "predev": "pnpm generate:implementations && pnpm i18n:interface",
+    "prebuild": "pnpm generate:implementations && pnpm i18n:interface",
     "dev": "next dev",
     "build": "next build",
     "start": "next start",

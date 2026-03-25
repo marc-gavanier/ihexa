@@ -12,7 +12,7 @@ import { createClientValidation } from '../../create-client.validation';
 import { CREATE_CLIENT_ACTION_KEY } from '../../injection';
 
 export const CreateClientForm = () => {
-  const { t } = useTranslation('create-client');
+  const { t } = useTranslation('clients/create');
   const router = useRouter();
   const [action, isPending] = useServerAction(inject(CREATE_CLIENT_ACTION_KEY), {
     onSuccess: () => router.push('/')

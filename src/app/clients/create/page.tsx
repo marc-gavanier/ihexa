@@ -6,5 +6,5 @@ import { pageBuilder } from '@/libraries/nextjs/page';
 
 export default pageBuilder()
   .use(withClientBinder(CREATE_CLIENT_ACTION_KEY, createClientAction))
-  .use(withI18n(i18n)('create-client'))
+  .use(withI18n(i18n)('clients/create'))
   .render(async () => <CreateClientPage />);

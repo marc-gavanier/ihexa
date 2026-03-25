@@ -1,4 +1,4 @@
-import createClient from '@public/locales/en-US/create-client.json';
+import translations from '@public/locales/en-US/clients/create.json';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { provide } from '@/libraries/injection';
 import { ServerActionSuccess } from '@/libraries/nextjs/action';
@@ -11,7 +11,7 @@ const meta = {
   component: CreateClientPage,
   parameters: { layout: 'padded' },
   decorators: [
-    withI18nProvider('en-US', { 'create-client': createClient }),
+    withI18nProvider('en-US', { 'clients/create': translations }),
     (Story) => {
       provide(CREATE_CLIENT_ACTION_KEY, async () => ServerActionSuccess());
       return (
