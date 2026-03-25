@@ -1,7 +1,5 @@
 {
   "title": "Facture",
-  "loading": "Chargement de la facture...",
-  "notFound": "Facture non trouvée",
   "details": {
     "label": "Désignation",
     "quantity": "Quantité",

@@ -1,4 +1,4 @@
-import { Either, Schema } from 'effect';
+import { Either } from 'effect';
 import { Invoice, type InvoiceById, InvoiceId, InvoiceNotFound } from '@/features/invoice/domain';
 
 const ID = '550e8400-e29b-41d4-a716-446655440000';
@@ -20,16 +20,7 @@ const LINES = [
   { label: 'Développement logiciel', quantity: 1, amount: 500 }
 ] as const;
 
-const INVOICES = new Map<InvoiceId, Invoice>([
-  [
-    Schema.decodeSync(InvoiceId)(ID),
-    Schema.decodeSync(Invoice)({
-      id: ID,
-      recipient: RECIPIENT,
-      lines: LINES
-    })
-  ]
-]);
+const INVOICES = new Map<InvoiceId, Invoice>([[InvoiceId(ID), Invoice({ id: ID, recipient: RECIPIENT, lines: LINES })]]);
 
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 

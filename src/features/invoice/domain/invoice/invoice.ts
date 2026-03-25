@@ -1,15 +1,18 @@
 import { Schema } from 'effect';
+import { defineModel, type Model } from '@/libraries/effect';
 import { type Amount, Line, totalOfAll } from '../line';
 import { Recipient } from '../recipient';
 
-export const InvoiceId = Schema.UUID.pipe(Schema.brand('InvoiceId'));
-export type InvoiceId = typeof InvoiceId.Type;
+export const InvoiceId = defineModel(Schema.UUID.pipe(Schema.brand('InvoiceId')));
+export type InvoiceId = Model.TypeOf<typeof InvoiceId>;
 
-export const Invoice = Schema.Struct({
-  id: InvoiceId,
-  recipient: Recipient,
-  lines: Schema.NonEmptyArray(Line)
-});
-export type Invoice = typeof Invoice.Type;
+export const Invoice = defineModel(
+  Schema.Struct({
+    id: InvoiceId.schema,
+    recipient: Recipient.schema,
+    lines: Schema.NonEmptyArray(Line.schema)
+  })
+);
+export type Invoice = Model.TypeOf<typeof Invoice>;
 
 export const invoiceTotal = ({ lines }: Invoice): Amount => totalOfAll(lines);

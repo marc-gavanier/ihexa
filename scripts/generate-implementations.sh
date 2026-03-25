@@ -3,24 +3,21 @@ set -e
 
 ENV="${ENV:-dev}"
 SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
-FEATURES_DIR="$SCRIPT_DIR/../src/features"
+SRC_DIR="$SCRIPT_DIR/../src"
 
 count=0
 
-for impl_dir in "$FEATURES_DIR"/*/abilities/*/implementations; do
-  [ -d "$impl_dir" ] || continue
-
-  source_file="$impl_dir/index.$ENV.ts"
-  target_file="$impl_dir/index.ts"
-
-  if [ ! -f "$source_file" ]; then
-    available=$(ls "$impl_dir"/index.*.ts 2>/dev/null | xargs -n1 basename | sed 's/index\.//;s/\.ts//' | tr '\n' ' ')
-    echo "Error: $source_file not found. Available: $available" >&2
-    exit 1
-  fi
+# Find all directories containing an index.$ENV.ts file
+while IFS= read -r source_file; do
+  target_file="${source_file%index.$ENV.ts}index.ts"
 
   cp "$source_file" "$target_file"
   count=$((count + 1))
-done
+done < <(find "$SRC_DIR" -name "index.$ENV.ts" -type f)
 
-echo "Copied index.$ENV.ts → index.ts for $count ability(ies)"
+if [ "$count" -eq 0 ]; then
+  echo "Warning: No index.$ENV.ts files found" >&2
+  exit 0
+fi
+
+echo "Copied index.$ENV.ts → index.ts for $count module(s)"

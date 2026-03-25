@@ -6,7 +6,7 @@ import { pageBuilder, withDecode, withEither, withParams } from '@/libraries/nex
 
 export default pageBuilder()
   .use(withParams('id'))
-  .use(withDecode('id', InvoiceId))
+  .use(withDecode('id', InvoiceId.schema))
   .use(withEither('invoice', ({ id }) => invoiceById(id)))
   .use(withI18n(i18n)('invoices'))
   .render(async ({ invoice }) => <ConsultInvoicePage invoice={invoice} />);

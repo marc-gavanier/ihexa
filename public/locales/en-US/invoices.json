@@ -1,7 +1,5 @@
 {
   "title": "Invoice",
-  "loading": "Loading invoice details...",
-  "notFound": "Invoice not found",
   "details": {
     "label": "Label",
     "quantity": "Quantity",

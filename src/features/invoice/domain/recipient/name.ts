@@ -1,9 +1,12 @@
 import { Schema } from 'effect';
+import { defineModel, type Model } from '@/libraries/effect';
 import { Firstname } from './firstname';
 import { Lastname } from './lastname';
 
-export const Name = Schema.Struct({
-  firstname: Firstname,
-  lastname: Lastname
-});
-export type Name = typeof Name.Type;
+export const Name = defineModel(
+  Schema.Struct({
+    firstname: Firstname,
+    lastname: Lastname
+  })
+);
+export type Name = Model.TypeOf<typeof Name>;

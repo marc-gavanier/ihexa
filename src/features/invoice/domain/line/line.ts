@@ -1,14 +1,17 @@
 import { Schema } from 'effect';
+import { defineModel, type Model } from '@/libraries/effect';
 import { Amount, amountFromMinorUnit } from './amount';
 import { Label } from './label';
 import { Quantity } from './quantity';
 
-export const Line = Schema.Struct({
-  label: Label,
-  quantity: Quantity,
-  amount: Amount
-});
-export type Line = typeof Line.Type;
+export const Line = defineModel(
+  Schema.Struct({
+    label: Label,
+    quantity: Quantity,
+    amount: Amount
+  })
+);
+export type Line = Model.TypeOf<typeof Line>;
 
 export const amountOf = ({ amount }: Line): number => Schema.encodeSync(Amount)(amount);
 

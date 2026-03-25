@@ -1,6 +1,5 @@
 import invoices from '@public/locales/en-US/invoices.json';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
-import { Schema } from 'effect';
 import { Invoice } from '@/features/invoice/domain';
 import { withI18nProvider } from '@/libraries/storybook';
 import { ConsultInvoiceLoading } from './consult-invoice.loading';
@@ -30,7 +29,7 @@ export const Loading: StoryObj = {
 
 export const SingleLine: Story = {
   args: {
-    invoice: Schema.decodeSync(Invoice)({
+    invoice: Invoice({
       id: '550e8400-e29b-41d4-a716-446655440000',
       recipient: {
         name: { firstname: 'Jean', lastname: 'Dupont' },
@@ -43,7 +42,7 @@ export const SingleLine: Story = {
 
 export const MultipleLines: Story = {
   args: {
-    invoice: Schema.decodeSync(Invoice)({
+    invoice: Invoice({
       id: '550e8400-e29b-41d4-a716-446655440001',
       recipient: {
         name: { firstname: 'Marie', lastname: 'Martin' },

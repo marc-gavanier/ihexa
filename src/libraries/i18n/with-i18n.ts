@@ -1,8 +1,10 @@
-import i18next, { type i18n } from 'i18next';
+import i18next, { type i18n, type Resource } from 'i18next';
 import { headers } from 'next/headers';
 import { cache } from 'react';
 import { inject, provide } from '@/libraries/injection';
 import type { PageProps } from '@/libraries/nextjs/page';
+import type { Provider } from '@/libraries/nextjs/shared/types';
+import { I18nProvider } from './client';
 import { detectLng } from './detect-lng';
 import { RESOURCE_LOADER } from './resource-loader';
 import { TRANSLATION } from './translation';
@@ -21,19 +23,6 @@ export const setI18nInstance = (instance: I18nInstance): void => {
   provide(TRANSLATION, i18n.getFixedT(i18n.language, namespaces) as TypedTFunction<Namespace[]>);
 };
 
-export const getTranslation = cache(() => {
-  const holder = getI18nInstance();
-  if (!holder.current) {
-    throw new Error('i18n not initialized. Did you forget to use withI18n middleware?');
-  }
-  const { i18n, namespaces } = holder.current;
-  return {
-    t: i18n.getFixedT(i18n.language, namespaces) as TypedTFunction<Namespace[]>,
-    i18n,
-    namespaces
-  };
-});
-
 const buildRequest = async (): Promise<Request> => {
   const headersList = await headers();
   const headersInit: HeadersInit = {};
@@ -43,9 +32,15 @@ const buildRequest = async (): Promise<Request> => {
   return new Request('http://localhost', { headers: headersInit });
 };
 
+type I18nInitResult = {
+  locale: string;
+  namespaces: Namespace[];
+  resources: Resource;
+};
+
 export const initI18n =
   (config: I18nConfig) =>
-  async <N extends Namespace>(defaultNS: N, ...otherNamespaces: Namespace[]): Promise<void> => {
+  async <N extends Namespace>(defaultNS: N, ...otherNamespaces: Namespace[]): Promise<I18nInitResult> => {
     const namespaces = [defaultNS, ...otherNamespaces];
     const request = await buildRequest();
     const lng = await detectLng(request, {
@@ -54,9 +49,13 @@ export const initI18n =
     });
 
     const loadResources = inject(RESOURCE_LOADER);
-    const resources = await loadResources(lng, namespaces);
+    const namespaceResources = await loadResources(lng, namespaces);
 
     const instance = i18next.createInstance();
+
+    const i18nResources: Resource = {
+      [lng]: namespaceResources
+    };
 
     await instance.init({
       lng,
@@ -64,18 +63,24 @@ export const initI18n =
       supportedLngs: config.supportedLngs,
       ns: namespaces,
       defaultNS,
-      resources: {
-        [lng]: resources
-      }
+      resources: i18nResources
     });
 
     setI18nInstance({ i18n: instance, namespaces });
+
+    return { locale: lng, namespaces, resources: i18nResources };
   };
 
 export const withI18n =
   (config: I18nConfig) =>
   <N extends Namespace>(defaultNS: N, ...otherNamespaces: Namespace[]) =>
-  async <TContext extends object>(_ctx: TContext, _props: PageProps): Promise<{ ctx: object }> => {
-    await initI18n(config)(defaultNS, ...otherNamespaces);
-    return { ctx: {} };
+  async <TContext extends object>(_ctx: TContext, _props: PageProps): Promise<{ ctx: object; provider: Provider }> => {
+    const { locale, namespaces, resources } = await initI18n(config)(defaultNS, ...otherNamespaces);
+    return {
+      ctx: {},
+      provider: {
+        component: I18nProvider as Provider['component'],
+        props: { locale, namespaces, resources }
+      }
+    };
   };

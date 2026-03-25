@@ -1,0 +1,42 @@
+{
+  "title": "Create Client",
+  "error": {
+    "clientAlreadyExists": "A client with this ID already exists"
+  },
+  "form": {
+    "firstname": {
+      "label": "First name",
+      "error": {
+        "required": "First name is required",
+        "maxLength": "First name must not exceed 100 characters"
+      }
+    },
+    "lastname": {
+      "label": "Last name",
+      "error": {
+        "required": "Last name is required",
+        "maxLength": "Last name must not exceed 100 characters"
+      }
+    },
+    "street": {
+      "label": "Street",
+      "error": {
+        "required": "Street is required"
+      }
+    },
+    "city": {
+      "label": "City",
+      "error": {
+        "required": "City is required"
+      }
+    },
+    "zipcode": {
+      "label": "Zip code",
+      "error": {
+        "required": "Zip code is required",
+        "invalid": "Zip code must contain 5 digits"
+      }
+    },
+    "submit": "Create client"
+  }
+}

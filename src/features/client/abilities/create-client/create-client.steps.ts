@@ -1,0 +1,37 @@
+import type { DataTable } from '@cucumber/cucumber';
+import { Given, Then, When } from '@cucumber/cucumber';
+import { Either } from 'effect';
+import type { Client } from '@/features/client/domain';
+import { assertMatchesDataTable } from '@/libraries/cucumber';
+import { clearClients, createClient } from './implementations';
+
+let client: Client | undefined;
+
+const dataTableToInput = (dataTable: DataTable) =>
+  Object.fromEntries(dataTable.rows()) as {
+    firstname: string;
+    lastname: string;
+    street: string;
+    city: string;
+    zipcode: string;
+  };
+
+Given(/^I am a user with the ability to create clients$/, () => {
+  client = undefined;
+  clearClients();
+});
+
+When(/^I create a client with the following data$/, async (dataTable: DataTable) => {
+  const input = dataTableToInput(dataTable);
+
+  const result = await createClient({
+    id: crypto.randomUUID(),
+    name: input,
+    address: input
+  });
+  client = Either.getOrThrow(result);
+});
+
+Then(/^the client should be created with formatted data$/, (dataTable: DataTable) => {
+  assertMatchesDataTable(dataTable)(client);
+});

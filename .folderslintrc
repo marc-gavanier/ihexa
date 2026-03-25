@@ -5,6 +5,7 @@
     "app/**",
     "configuration/**",
     "scripts/**",
+    "features/*/abilities/*/actions",
     "features/*/abilities/*/emails",
     "features/*/abilities/*/guards",
     "features/*/abilities/*/mutation",

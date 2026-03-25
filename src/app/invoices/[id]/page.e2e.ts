@@ -4,9 +4,9 @@ test.describe('Consult invoice page', () => {
   test('should display invoice', async ({ page }) => {
     await page.goto('/invoices/550e8400-e29b-41d4-a716-446655440000', { waitUntil: 'commit' });
 
-    const loader = page.locator('output');
-    await expect(loader).toBeVisible();
-    await expect(loader).not.toBeVisible();
+    const skeleton = page.locator('.skeleton').first();
+    await expect(skeleton).toBeVisible();
+    await expect(skeleton).not.toBeVisible();
 
     // Recipient
     await expect(page.getByTestId('recipient-name')).toHaveText('Jean Dupont');

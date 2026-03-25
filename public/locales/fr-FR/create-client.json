@@ -1,0 +1,42 @@
+{
+  "title": "Créer un client",
+  "error": {
+    "clientAlreadyExists": "Il existe déjà un client avec cet identifiant"
+  },
+  "form": {
+    "firstname": {
+      "label": "Prénom",
+      "error": {
+        "required": "Le prénom est requis",
+        "maxLength": "Le prénom ne doit pas dépasser 100 caractères"
+      }
+    },
+    "lastname": {
+      "label": "Nom",
+      "error": {
+        "required": "Le nom est requis",
+        "maxLength": "Le nom ne doit pas dépasser 100 caractères"
+      }
+    },
+    "street": {
+      "label": "Rue",
+      "error": {
+        "required": "La rue est requise"
+      }
+    },
+    "city": {
+      "label": "Ville",
+      "error": {
+        "required": "La ville est requise"
+      }
+    },
+    "zipcode": {
+      "label": "Code postal",
+      "error": {
+        "required": "Le code postal est requis",
+        "invalid": "Le code postal doit contenir 5 chiffres"
+      }
+    },
+    "submit": "Créer le client"
+  }
+}
