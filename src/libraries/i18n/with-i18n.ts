@@ -2,7 +2,6 @@ import i18next, { type i18n, type Resource } from 'i18next';
 import { headers } from 'next/headers';
 import { cache } from 'react';
 import { inject, provide } from '@/libraries/injection';
-import type { PageProps } from '@/libraries/nextjs/page';
 import type { Provider } from '@/libraries/nextjs/shared/types';
 import { I18nProvider } from './client';
 import { detectLng } from './detect-lng';
@@ -82,7 +81,7 @@ export const initI18n =
 export const withI18n =
   (config: I18nConfig) =>
   <N extends Namespace>(defaultNS: N, ...otherNamespaces: Namespace[]) =>
-  async <TContext extends object>(_ctx: TContext, _props: PageProps): Promise<{ ctx: object; provider: Provider }> => {
+  async <TContext extends object>(_ctx: TContext): Promise<{ ctx: object; provider: Provider }> => {
     const { locale, namespaces, resources } = await initI18n(config)(defaultNS, ...otherNamespaces);
     return {
       ctx: {},

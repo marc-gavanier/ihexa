@@ -33,18 +33,15 @@ const buildPipeline = <TResult>(
   const execute =
     (index: number) =>
     async (ctx: Record<string, unknown>, rawInput: unknown): Promise<ServerActionResult<TResult>> => {
-      if (index >= middlewares.length) {
-        return toSuccessResult(await handler(ctx));
-      }
+      if (index >= middlewares.length) return toSuccessResult(await handler(ctx));
 
       const middleware = middlewares[index];
-      if (!middleware) {
-        return toSuccessResult(await handler(ctx));
-      }
 
-      return middleware(ctx, rawInput, (nextCtx) => execute(index + 1)({ ...ctx, ...nextCtx }, rawInput)) as Promise<
-        ServerActionResult<TResult>
-      >;
+      return middleware
+        ? (middleware(ctx, rawInput, (nextCtx) => execute(index + 1)({ ...ctx, ...nextCtx }, rawInput)) as Promise<
+            ServerActionResult<TResult>
+          >)
+        : toSuccessResult(await handler(ctx));
     };
 
   return execute(0);
