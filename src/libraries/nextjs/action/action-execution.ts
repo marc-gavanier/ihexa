@@ -12,7 +12,7 @@ const executeParallel = async (
   rawInput: unknown
 ): Promise<Record<string, unknown>> => {
   const results = await Promise.all(middlewares.map((middleware) => middleware(ctx, rawInput)));
-  return results.reduce((acc, result) => ({ ...acc, ...result.ctx }), ctx);
+  return Object.assign({}, ctx, ...results.map((r) => r.ctx));
 };
 
 const toResolvedMiddleware =
@@ -25,7 +25,7 @@ const toResolvedMiddleware =
     return { ...ctx, ...result.ctx };
   };
 
-const toSuccessResult = <TResult>(result: ServerActionResult<TResult> | void): ServerActionSuccess<TResult> =>
+const toSuccessResult = <TResult>(result: ServerActionResult<TResult> | undefined): ServerActionSuccess<TResult> =>
   result == null || !('success' in result)
     ? { success: true, data: undefined as TResult }
     : (result as ServerActionSuccess<TResult>);
@@ -33,7 +33,7 @@ const toSuccessResult = <TResult>(result: ServerActionResult<TResult> | void): S
 export const execute =
   <TCtx extends object, TExtra, TFin extends string>(pipeline: Pipeline<TCtx, TExtra, TFin>) =>
   <TResult = void>(
-    handler: (ctx: TCtx) => Promise<ServerActionResult<TResult> | void>
+    handler: (ctx: TCtx) => Promise<ServerActionResult<TResult> | undefined>
   ): ((rawInput?: unknown) => Promise<ServerActionResult<TResult>>) =>
   async (rawInput?: unknown): Promise<ServerActionResult<TResult>> => {
     try {

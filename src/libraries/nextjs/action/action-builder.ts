@@ -15,12 +15,12 @@ type AnyPipeMiddleware = PipeMiddleware<Record<string, unknown>, Record<string, 
 interface ActionBuilder<TCtx extends object> {
   use<TCtxOut extends object>(middleware: PipeMiddleware<TCtx, TCtxOut, unknown>): ActionBuilder<Merge<TCtx, TCtxOut>>;
 
-  execute<TResult = void>(
-    handler: (ctx: TCtx) => Promise<ServerActionResult<TResult> | TResult | void>
+  execute<TResult = undefined>(
+    handler: (ctx: TCtx) => Promise<ServerActionResult<TResult> | TResult | undefined>
   ): (input?: unknown) => Promise<ServerActionResult<TResult>>;
 }
 
-const toSuccessResult = <TResult>(result: ServerActionResult<TResult> | TResult | void): ServerActionResult<TResult> => {
+const toSuccessResult = <TResult>(result: ServerActionResult<TResult> | TResult | undefined): ServerActionResult<TResult> => {
   if (result == null) return { success: true, data: undefined as TResult };
   if (typeof result === 'object' && 'success' in result) return result;
   return { success: true, data: result };
@@ -28,7 +28,7 @@ const toSuccessResult = <TResult>(result: ServerActionResult<TResult> | TResult 
 
 const buildPipeline = <TResult>(
   middlewares: AnyPipeMiddleware[],
-  handler: (ctx: Record<string, unknown>) => Promise<ServerActionResult<TResult> | TResult | void>
+  handler: (ctx: Record<string, unknown>) => Promise<ServerActionResult<TResult> | TResult | undefined>
 ): ((ctx: Record<string, unknown>, rawInput: unknown) => Promise<ServerActionResult<TResult>>) => {
   const execute =
     (index: number) =>
@@ -51,10 +51,10 @@ export const actionBuilder = (): ActionBuilder<object> => {
   const createBuilder = <TCtx extends object>(middlewares: AnyPipeMiddleware[]): ActionBuilder<TCtx> => ({
     use: (middleware) => createBuilder([...middlewares, middleware as AnyPipeMiddleware]),
 
-    execute: <TResult = void>(handler: (ctx: TCtx) => Promise<ServerActionResult<TResult> | TResult | void>) => {
+    execute: <TResult = undefined>(handler: (ctx: TCtx) => Promise<ServerActionResult<TResult> | TResult | undefined>) => {
       const pipeline = buildPipeline<TResult>(
         middlewares,
-        handler as (ctx: Record<string, unknown>) => Promise<ServerActionResult<TResult> | TResult | void>
+        handler as (ctx: Record<string, unknown>) => Promise<ServerActionResult<TResult> | TResult | undefined>
       );
 
       return async (rawInput?: unknown): Promise<ServerActionResult<TResult>> => {
