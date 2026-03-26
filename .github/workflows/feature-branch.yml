@@ -252,6 +252,7 @@ jobs:
       - name: Build and Deploy
         id: deploy
         env:
+          ENV: ephemeral
           AWS_ACCESS_KEY_ID: ${{ secrets.EPHEMERAL_AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.EPHEMERAL_AWS_SECRET_ACCESS_KEY }}
         run: |

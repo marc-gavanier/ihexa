@@ -1,6 +1,6 @@
 import { Schema } from 'effect';
 import { defineModel, type Model } from '@/libraries/effect';
-import { type Amount, Line, totalOfAll } from '../line';
+import { Line, totalOfAll } from '../line';
 import { Recipient } from '../recipient';
 
 export const InvoiceId = defineModel(Schema.UUID.pipe(Schema.brand('InvoiceId')));
@@ -15,4 +15,4 @@ export const Invoice = defineModel(
 );
 export type Invoice = Model.TypeOf<typeof Invoice>;
 
-export const invoiceTotal = ({ lines }: Invoice): Amount => totalOfAll(lines);
+export const invoiceTotal = ({ lines }: Invoice): number => totalOfAll(lines);
