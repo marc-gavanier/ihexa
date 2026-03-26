@@ -1,5 +1,21 @@
 # My IHexa Training Progress
 
+[![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![TailwindCSS](https://img.shields.io/badge/TailwindCSS-4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![DaisyUI](https://img.shields.io/badge/DaisyUI-5-5A0EF8?logo=daisyui&logoColor=white)](https://daisyui.com/)
+[![Effect](https://img.shields.io/badge/Effect-3-black)](https://effect.website/)
+
+[![Playwright](https://img.shields.io/badge/Playwright-E2E-2EAD33?logo=playwright&logoColor=white)](https://playwright.dev/)
+[![Vitest](https://img.shields.io/badge/Vitest-Unit-6E9F18?logo=vitest&logoColor=white)](https://vitest.dev/)
+[![Cucumber](https://img.shields.io/badge/Cucumber-BDD-23D96C?logo=cucumber&logoColor=white)](https://cucumber.io/)
+[![Storybook](https://img.shields.io/badge/Storybook-10-FF4785?logo=storybook&logoColor=white)](https://storybook.js.org/)
+
+[![SST](https://img.shields.io/badge/SST-Serverless-E27152)](https://sst.dev/)
+[![AWS](https://img.shields.io/badge/AWS-Deploy-FF9900?logo=amazonwebservices&logoColor=white)](https://aws.amazon.com/)
+[![pnpm](https://img.shields.io/badge/pnpm-Package_Manager-F69220?logo=pnpm&logoColor=white)](https://pnpm.io/)
+
 <h2 id="about">🪧 About</h2>
 
 This repository contains my progress on the [**IHexa** training](https://www.ihexa.fr/), with a twist: I adapt the suggested path to my own technological choices and code organization.  
