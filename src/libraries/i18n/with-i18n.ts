@@ -12,14 +12,41 @@ import type { I18nConfig, Namespace, TypedTFunction } from './types';
 type I18nInstance = {
   i18n: i18n;
   namespaces: Namespace[];
+  resources: Resource;
 };
 
 const getI18nInstance = cache((): { current: I18nInstance | null } => ({ current: null }));
 
-export const setI18nInstance = (instance: I18nInstance): void => {
-  getI18nInstance().current = instance;
-  const { i18n, namespaces } = instance;
-  provide(TRANSLATION, i18n.getFixedT(i18n.language, namespaces) as TypedTFunction<Namespace[]>);
+const mergeResources = (a: Resource, b: Resource): Resource => {
+  const lng = Object.keys(b)[0] ?? Object.keys(a)[0];
+  if (!lng) return {};
+  return { [lng]: { ...a[lng], ...b[lng] } };
+};
+
+export const setI18nInstance = async (instance: I18nInstance): Promise<void> => {
+  const existing = getI18nInstance().current;
+
+  if (!existing) {
+    getI18nInstance().current = instance;
+    const { i18n: i18nInst, namespaces } = instance;
+    provide(TRANSLATION, i18nInst.getFixedT(i18nInst.language, namespaces) as TypedTFunction<Namespace[]>);
+    return;
+  }
+
+  const lng = instance.i18n.language;
+  const namespaces = [...new Set([...existing.namespaces, ...instance.namespaces])];
+  const resources = mergeResources(existing.resources, instance.resources);
+
+  const merged = i18next.createInstance();
+  await merged.init({
+    lng,
+    ns: namespaces,
+    defaultNS: namespaces[0],
+    resources
+  });
+
+  getI18nInstance().current = { i18n: merged, namespaces, resources };
+  provide(TRANSLATION, merged.getFixedT(lng, namespaces) as TypedTFunction<Namespace[]>);
 };
 
 const buildRequest = async (): Promise<Request> => {
@@ -73,7 +100,7 @@ export const initI18n =
       resources: i18nResources
     });
 
-    setI18nInstance({ i18n: instance, namespaces });
+    await setI18nInstance({ i18n: instance, namespaces, resources: i18nResources });
 
     return { locale: lng, namespaces, resources: i18nResources };
   };
