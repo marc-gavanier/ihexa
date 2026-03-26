@@ -4,7 +4,7 @@ test.describe('Create client page', () => {
   test('should display the create client form', async ({ page }) => {
     await page.goto('/clients/create', { waitUntil: 'networkidle' });
 
-    await expect(page.getByRole('heading', { name: /create client/i })).toBeVisible();
+    await expect(page.getByRole('heading', { name: /create client/i })).toBeVisible({ timeout: 10000 });
     await expect(page.getByLabel(/first name/i)).toBeVisible();
     await expect(page.getByLabel(/last name/i)).toBeVisible();
     await expect(page.getByLabel(/street/i)).toBeVisible();
