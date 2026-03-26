@@ -1,6 +1,6 @@
 import { Schema } from 'effect';
 import { defineModel, type Model } from '@/libraries/effect';
-import { Amount, amountFromMinorUnit } from './amount';
+import { Amount } from './amount';
 import { Label } from './label';
 import { Quantity } from './quantity';
 
@@ -19,4 +19,4 @@ export const lineTotal = (line: Line): number => line.quantity * amountOf(line);
 
 const toTotalLines = (total: number, line: Line) => total + lineTotal(line);
 
-export const totalOfAll = (lines: readonly Line[]): Amount => amountFromMinorUnit(lines.reduce(toTotalLines, 0));
+export const totalOfAll = (lines: readonly Line[]): number => lines.reduce(toTotalLines, 0);

@@ -83,6 +83,8 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Generate implementations
+        run: pnpm generate:implementations
       - name: Lint architecture
         run: pnpm lint:architecture
 
@@ -103,6 +105,8 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Generate implementations
+        run: pnpm generate:implementations
       - name: Run tests
         run: pnpm test
 
@@ -201,6 +205,8 @@ jobs:
           cache: 'pnpm'
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
+      - name: Generate implementations
+        run: pnpm generate:implementations
       - name: Start server
         run: pnpm start &
       - name: Run cucumber
