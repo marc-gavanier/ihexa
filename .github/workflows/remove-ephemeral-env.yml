@@ -38,7 +38,7 @@ jobs:
     name: Delete GitHub environment
     runs-on: ubuntu-latest
     env:
-      GITHUB_TOKEN: ${{ secrets.GH_ENVIRONMENTS_TOKEN }}
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
     steps:
       - name: Delete GitHub environment
         run: |
@@ -48,3 +48,25 @@ jobs:
             --method DELETE \
             -H "Accept: application/vnd.github+json" \
             /repos/${{ github.repository }}/environments/$ENV_NAME
+
+  delete-branch-caches:
+    name: Delete branch caches
+    runs-on: ubuntu-latest
+    env:
+      GH_TOKEN: ${{ secrets.GH_TOKEN }}
+    steps:
+      - name: Delete caches for deleted branch
+        run: |
+          BRANCH="${{ github.event.ref }}"
+          echo "Deleting caches for branch: $BRANCH"
+          gh api --paginate \
+            -H "Accept: application/vnd.github+json" \
+            /repos/${{ github.repository }}/actions/caches?ref=refs/heads/$BRANCH \
+            --jq '.actions_caches[].id' | \
+          while read -r CACHE_ID; do
+            echo "Deleting cache $CACHE_ID"
+            gh api \
+              --method DELETE \
+              -H "Accept: application/vnd.github+json" \
+              /repos/${{ github.repository }}/actions/caches/$CACHE_ID
+          done
