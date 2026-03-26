@@ -4,6 +4,16 @@ type FromHeaderOptions = {
   supportedLngs: string[];
 };
 
+const findMatch = (lang: string | undefined, supportedLngs: string[]): string | null => {
+  const exactMatch = supportedLngs.find((supported) => supported === lang);
+  if (exactMatch) return exactMatch;
+
+  const partialMatch = supportedLngs.find(
+    (supported) => supported.startsWith(`${lang}-`) || lang?.startsWith(`${supported.split('-')[0]}-`)
+  );
+  return partialMatch ?? null;
+};
+
 export const fromHeader =
   ({ supportedLngs }: FromHeaderOptions): LngDetector =>
   (request) => {
@@ -20,9 +30,7 @@ export const fromHeader =
       .map(({ lang }) => lang);
 
     for (const lang of languages) {
-      const match = supportedLngs.find(
-        (supported) => supported === lang || supported.startsWith(`${lang}-`) || lang?.startsWith(`${supported}-`)
-      );
+      const match = findMatch(lang, supportedLngs);
       if (match) return match;
     }
 
