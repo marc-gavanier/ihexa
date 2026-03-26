@@ -1,6 +1,7 @@
 {
   "root": "src",
   "rules": [
+    "env",
     "app/api/**",
     "app/**",
     "configuration/**",

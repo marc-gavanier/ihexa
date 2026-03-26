@@ -27,18 +27,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
-      - name: Set up Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: latest
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        uses: actions/checkout@v6
+      - name: Setup
+        uses: ./.github/actions/setup
       - name: Lint code
         run: pnpm lint:code:ci --reporter=github
 
@@ -47,20 +38,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           fetch-depth: 0
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
-      - name: Set up Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: latest
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup
+        uses: ./.github/actions/setup
       - name: Lint commit
         run: pnpm lint:commit
 
@@ -69,20 +51,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
-      - name: Set up Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: latest
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        uses: actions/checkout@v6
+      - name: Setup
+        uses: ./.github/actions/setup
       - name: Generate implementations
         run: pnpm generate:implementations
       - name: Lint architecture
@@ -93,18 +64,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
-      - name: Set up Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: latest
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        uses: actions/checkout@v6
+      - name: Setup
+        uses: ./.github/actions/setup
       - name: Generate implementations
         run: pnpm generate:implementations
       - name: Run tests
@@ -115,18 +77,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
-      - name: Set up Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: latest
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+        uses: actions/checkout@v6
+      - name: Setup
+        uses: ./.github/actions/setup
       - name: Build cache
         uses: actions/cache@v4
         with:
@@ -136,7 +89,7 @@ jobs:
       - name: Build
         run: pnpm build
       - name: Upload build artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: next-build
           include-hidden-files: true
@@ -150,12 +103,12 @@ jobs:
     container:
       image: mcr.microsoft.com/playwright:v1.58.2
     env:
-        HOME: /root
+      HOME: /root
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Download build artifact
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: next-build
           path: .next
@@ -164,7 +117,7 @@ jobs:
         with:
           version: latest
       - name: Set up Node.js
-        uses: actions/setup-node@v5
+        uses: actions/setup-node@v6
         with:
           node-version: latest
           cache: 'pnpm'
@@ -188,23 +141,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
       - name: Download build artifact
-        uses: actions/download-artifact@v5
+        uses: actions/download-artifact@v8
         with:
           name: next-build
           path: .next
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
-      - name: Set up Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: latest
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
+      - name: Setup
+        uses: ./.github/actions/setup
       - name: Generate implementations
         run: pnpm generate:implementations
       - name: Start server
@@ -228,39 +172,11 @@ jobs:
     name: Deploy to ephemeral environment
     needs:
       - ephemeral-env-name
-    runs-on: ubuntu-latest
-    environment:
-      name: ${{ needs.ephemeral-env-name.outputs.env-name }}
-      url: ${{ steps.deploy.outputs.cloudfront_url }}
-    steps:
-      - name: Show environment name
-        run: |
-          echo "Environment name: ${{ needs.ephemeral-env-name.outputs.env-name }}"
-      - name: Checkout repository
-        uses: actions/checkout@v5
-      - name: Install pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: latest
-      - name: Set up Node.js
-        uses: actions/setup-node@v5
-        with:
-          node-version: latest
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-      - name: Build and Deploy
-        id: deploy
-        env:
-          ENV: ephemeral
-          AWS_ACCESS_KEY_ID: ${{ secrets.EPHEMERAL_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.EPHEMERAL_AWS_SECRET_ACCESS_KEY }}
-        run: |
-          STAGE_NAME="${{ needs.ephemeral-env-name.outputs.env-name }}"
-          echo "Deploying stage: $STAGE_NAME"
-          DEPLOY_OUTPUT=$(pnpm sst deploy --stage "$STAGE_NAME")
-          CLOUDFRONT_URL=$(echo "$DEPLOY_OUTPUT" | grep -Eo 'https://[a-zA-Z0-9.-]+\.cloudfront\.net' | head -n 1)
-          echo "cloudfront_url=$CLOUDFRONT_URL" >> $GITHUB_OUTPUT
-      - name: Show deployment URL
-        run: |
-          echo "Deployment URL: ${{ steps.deploy.outputs.cloudfront_url }}"
+    uses: ./.github/workflows/deploy.reusable.yml
+    with:
+      stage: ${{ needs.ephemeral-env-name.outputs.env-name }}
+      environment: ${{ needs.ephemeral-env-name.outputs.env-name }}
+      env-type: ephemeral
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.EPHEMERAL_AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.EPHEMERAL_AWS_SECRET_ACCESS_KEY }}

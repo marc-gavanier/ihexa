@@ -1,0 +1,54 @@
+name: (Reusable) Deploy with SST
+
+on:
+  workflow_call:
+    inputs:
+      stage:
+        required: true
+        type: string
+      environment:
+        required: true
+        type: string
+      env-type:
+        required: true
+        type: string
+        description: 'Environment type: prod or ephemeral'
+    secrets:
+      AWS_ACCESS_KEY_ID:
+        required: true
+      AWS_SECRET_ACCESS_KEY:
+        required: true
+    outputs:
+      cloudfront_url:
+        description: 'The CloudFront URL of the deployment'
+        value: ${{ jobs.deploy.outputs.cloudfront_url }}
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    environment:
+      name: ${{ inputs.environment }}
+      url: ${{ steps.deploy.outputs.cloudfront_url }}
+    outputs:
+      cloudfront_url: ${{ steps.deploy.outputs.cloudfront_url }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Build and Deploy
+        id: deploy
+        env:
+          ENV: ${{ inputs.env-type }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        run: |
+          echo "Deploying stage: ${{ inputs.stage }}"
+          DEPLOY_OUTPUT=$(pnpm sst deploy --stage "${{ inputs.stage }}")
+          echo "$DEPLOY_OUTPUT"
+          CLOUDFRONT_URL=$(echo "$DEPLOY_OUTPUT" | grep -Eo 'https://[a-zA-Z0-9.-]+\.cloudfront\.net' | head -n 1)
+          echo "cloudfront_url=$CLOUDFRONT_URL" >> $GITHUB_OUTPUT
+      - name: Show deployment URL
+        run: |
+          echo "Deployment URL: ${{ steps.deploy.outputs.cloudfront_url }}"
