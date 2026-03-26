@@ -127,7 +127,7 @@ jobs:
         run: pnpm start &
       - name: Run E2E tests
         run: pnpm exec playwright test
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
         with:
           name: playwright-report
@@ -136,23 +136,14 @@ jobs:
 
   cucumber:
     name: Cucumber scenarios
-    needs: build
-    timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Download build artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: next-build
-          path: .next
       - name: Setup
         uses: ./.github/actions/setup
       - name: Generate implementations
         run: pnpm generate:implementations
-      - name: Start server
-        run: pnpm start &
       - name: Run cucumber
         run: pnpm test:cucumber
 
