@@ -11,8 +11,20 @@ permissions:
   pull-requests: write
 
 jobs:
+  deploy:
+    name: Deploy to production
+    uses: ./.github/workflows/deploy.reusable.yml
+    with:
+      stage: production
+      environment: production
+      env-type: prod
+    secrets:
+      AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
   release:
     name: Semantic Release
+    needs: deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -24,7 +36,11 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
 
+      - name: Generate implementations
+        run: pnpm generate:implementations
+
       - name: Release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HUSKY: 0
         run: pnpm exec semantic-release
