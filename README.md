@@ -26,7 +26,7 @@ Here are some of my choices:
 - **Backend**: Java API based → Next.js Server Components + Server Actions
 - **E2E tests tool**: Cypress → Playwright
 - **Versioning & repo**: GitLab → GitHub
-- **Code organization**: Hexagonal architecture “primary/secondary” → Features & Use Cases based organization (similar to “ducks” pattern)
+- **Code organization**: Hexagonal architecture “primary/secondary” → Feature-based Vertical Slices with colocated Abilities (Screaming Architecture principles)
 - **Domain modeling**: plain objects → functional domain model
 - **Project setup**: JHipster → tools official documentations (Sorry Colin! 😉)
 - **Deployment**: Clever Cloud → AWS with SST (Serverless Stack) for Next.js applications with OpenNext
