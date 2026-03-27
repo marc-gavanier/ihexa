@@ -1,12 +1,12 @@
 import type { DataTable } from '@cucumber/cucumber';
 import { Given, Then, When } from '@cucumber/cucumber';
 import { Either } from 'effect';
-import type { Client } from '@/features/client/domain';
+import type { ClientToCreate } from '@/features/client/domain';
 import { assertMatchesDataTable } from '@/libraries/cucumber';
 import type { CreateClientFormData } from './create-client.validation';
 import { clearClients, createClient } from './implementations';
 
-let client: Client | undefined;
+let client: ClientToCreate | undefined;
 
 const dataTableToInput = (dataTable: DataTable) => Object.fromEntries(dataTable.rows()) as CreateClientFormData;
 

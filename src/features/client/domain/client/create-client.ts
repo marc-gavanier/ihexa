@@ -6,20 +6,17 @@ import { Name } from '../name';
 export const ClientId = defineModel(Schema.UUID.pipe(Schema.brand('ClientId')));
 export type ClientId = Model.TypeOf<typeof ClientId>;
 
-const capitalizeWord = (word: string): string => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase();
+const FIRSTNAME_PATTERN = /(?<=^|[\s-])\p{L}/gu;
 
 const capitalizeCompoundName = (name: string): string =>
-  name
-    .split(' ')
-    .map((part) => part.split('-').map(capitalizeWord).join('-'))
-    .join(' ');
+  name.toLowerCase().replace(FIRSTNAME_PATTERN, (letter) => letter.toUpperCase());
 
 const formatName = ({ firstname, lastname }: Model.EncodedOf<typeof Name>) => ({
   firstname: capitalizeCompoundName(firstname),
   lastname: lastname.toUpperCase()
 });
 
-export const Client = defineModel(
+export const ClientToCreate = defineModel(
   Schema.Struct({
     id: ClientId.schema,
     name: Name.schema,
@@ -27,10 +24,12 @@ export const Client = defineModel(
   }),
   ({ name, ...input }) => ({ ...input, name: formatName(name) })
 );
-export type Client = Model.TypeOf<typeof Client>;
+export type ClientToCreate = Model.TypeOf<typeof ClientToCreate>;
 
 export class ClientAlreadyExists extends Data.TaggedError('ClientAlreadyExists')<{
   readonly clientId: ClientId;
 }> {}
 
-export type CreateClient = (client: Model.EncodedOf<typeof Client>) => Promise<Either.Either<Client, ClientAlreadyExists>>;
+export type CreateClient = (
+  clientToCreate: Model.EncodedOf<typeof ClientToCreate>
+) => Promise<Either.Either<ClientToCreate, ClientAlreadyExists>>;
