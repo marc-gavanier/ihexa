@@ -13,7 +13,7 @@ test.describe('Create client page', () => {
     await expect(page.getByRole('button', { name: /create client/i })).toBeVisible();
   });
 
-  test('should create a client and redirect to home', async ({ page }) => {
+  test('should create a client and reset form', async ({ page }) => {
     await page.goto('/clients/create', { waitUntil: 'networkidle' });
 
     await page.getByLabel(/first name/i).fill('jean-pierre');
@@ -24,7 +24,12 @@ test.describe('Create client page', () => {
 
     await page.getByRole('button', { name: /create client/i }).click();
 
-    await expect(page).toHaveURL('/');
+    await expect(page).toHaveURL('/clients/create');
+    await expect(page.getByLabel(/first name/i)).toHaveValue('');
+    await expect(page.getByLabel(/last name/i)).toHaveValue('');
+    await expect(page.getByLabel(/street/i)).toHaveValue('');
+    await expect(page.getByLabel(/city/i)).toHaveValue('');
+    await expect(page.getByLabel(/zip code/i)).toHaveValue('');
   });
 
   test('should show validation errors for empty fields', async ({ page }) => {

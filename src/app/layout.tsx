@@ -4,12 +4,12 @@ import '@/libraries/i18n/resource-loader.node';
 import { layoutBuilder } from '@/libraries/nextjs/layout';
 import '@/styles/globals.css';
 import { contentId, skipLinksId } from '@/libraries/ui/blocks/skip-links/skip-links';
-import { SkipLinksPortal } from '@/libraries/ui/blocks/skip-links/skip-links-portal';
+import { SkipLinksPortalClient } from '@/libraries/ui/blocks/skip-links/skip-links-portal-client';
 
 const SkipLinks = withTranslation(({ t }: TranslationProps) => (
-  <SkipLinksPortal links={[{ label: t('skip-links.content'), anchor: `#${contentId}` }]}>
+  <SkipLinksPortalClient links={[{ label: t('skip-links.content'), anchor: `#${contentId}` }]}>
     {t('skip-links.label')}
-  </SkipLinksPortal>
+  </SkipLinksPortalClient>
 ));
 
 export default layoutBuilder()

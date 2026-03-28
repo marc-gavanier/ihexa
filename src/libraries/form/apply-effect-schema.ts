@@ -29,7 +29,7 @@ const errorsFrom = <TFormData>(result: Left<ParseError, TFormData> | Right<Parse
   Either.isRight(result) ? {} : toStandardErrors(ParseResult.ArrayFormatter.formatErrorSync(result.left));
 
 export const applyEffectSchema =
-  <TFormData>(schema: Schema.Schema<TFormData>) =>
+  <TFormData>(schema: Schema.Schema.AnyNoContext) =>
   ({ value }: { value: TFormData }) => ({
     fields: errorsFrom(Schema.decodeEither(schema, { errors: 'all' })(value))
   });
