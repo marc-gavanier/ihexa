@@ -1,5 +1,6 @@
 'use client';
 
+import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
 import { applyEffectSchema } from '@/libraries/form/apply-effect-schema';
 import { fieldErrorTranslation } from '@/libraries/form/field-error-translation';
@@ -14,7 +15,10 @@ import { CREATE_CLIENT_ACTION_KEY } from '../../injection';
 export const CreateClientForm = () => {
   const { t } = useTranslation('clients.create');
   const [action, isPending] = useServerAction(inject(CREATE_CLIENT_ACTION_KEY), {
-    onSuccess: () => form.reset()
+    onSuccess: ({ data: { name } }) => {
+      toast.success(t('success.created', name));
+      form.reset();
+    }
   });
 
   const form = useAppForm({

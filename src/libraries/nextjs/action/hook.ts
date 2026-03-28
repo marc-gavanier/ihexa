@@ -3,20 +3,27 @@
 import { useActionState } from 'react';
 import type { ServerActionError, ServerActionResult, ServerActionSuccess } from './result';
 
-export const useServerAction = <
-  TResult,
-  TFormData extends Parameters<TAction>[0],
-  TAction extends (formData: Parameters<TAction>[0]) => Promise<ServerActionResult<TResult>>
->(
+type ExtractResult<T> = T extends (formData: never) => Promise<ServerActionResult<infer R>> ? R : never;
+
+type ExtractFormData<T> = T extends (formData: infer F) => Promise<ServerActionResult<unknown>> ? F : never;
+
+export const useServerAction = <TAction extends (formData: never) => Promise<ServerActionResult<unknown>>>(
   action: TAction,
   handlers?: {
-    onSuccess?: (state: ServerActionSuccess<TResult>) => void;
+    onSuccess?: (state: ServerActionSuccess<ExtractResult<TAction>>) => void;
     onError?: (state: ServerActionError) => void;
   }
-): [(formData: TFormData) => void | Promise<void>, boolean, ServerActionResult<TResult> | null] => {
+): [
+  (formData: ExtractFormData<TAction>) => void | Promise<void>,
+  boolean,
+  ServerActionResult<ExtractResult<TAction>> | null
+] => {
+  type TResult = ExtractResult<TAction>;
+  type TFormData = ExtractFormData<TAction>;
+
   const [state, dispatch, isPending] = useActionState<ServerActionResult<TResult> | null, TFormData>(
     async (_: ServerActionResult<TResult> | null, formData: TFormData): Promise<ServerActionResult<TResult>> => {
-      const result: ServerActionResult<TResult> = await action(formData);
+      const result = await (action as unknown as (formData: TFormData) => Promise<ServerActionResult<TResult>>)(formData);
       result.success ? handlers?.onSuccess?.(result) : handlers?.onError?.(result);
       return result;
     },

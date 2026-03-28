@@ -24,6 +24,7 @@ test.describe('Create client page', () => {
 
     await page.getByRole('button', { name: /create client/i }).click();
 
+    await expect(page.locator('.alert')).toContainText(/client Jean-Pierre DUPONT successfully created/i);
     await expect(page).toHaveURL('/clients/create');
     await expect(page.getByLabel(/first name/i)).toHaveValue('');
     await expect(page.getByLabel(/last name/i)).toHaveValue('');
