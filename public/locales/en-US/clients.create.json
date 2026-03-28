@@ -1,5 +1,8 @@
 {
   "title": "Create Client",
+  "success": {
+    "created": "Client {{firstname}} {{lastname}} successfully created"
+  },
   "error": {
     "clientAlreadyExists": "A client with this ID already exists"
   },

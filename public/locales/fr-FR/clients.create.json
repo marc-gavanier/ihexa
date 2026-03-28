@@ -1,5 +1,8 @@
 {
   "title": "Créer un client",
+  "success": {
+    "created": "Le client {{firstname}} {{lastname}} a bien été créé"
+  },
   "error": {
     "clientAlreadyExists": "Il existe déjà un client avec cet identifiant"
   },
