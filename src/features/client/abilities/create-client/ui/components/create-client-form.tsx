@@ -1,6 +1,5 @@
 'use client';
 
-import { useRef } from 'react';
 import { useTranslation } from 'react-i18next';
 import { applyEffectSchema } from '@/libraries/form/apply-effect-schema';
 import { fieldErrorTranslation } from '@/libraries/form/field-error-translation';
@@ -14,9 +13,8 @@ import { CREATE_CLIENT_ACTION_KEY } from '../../injection';
 
 export const CreateClientForm = () => {
   const { t } = useTranslation('clients.create');
-  const resetFormRef = useRef<() => void>(() => {});
   const [action, isPending] = useServerAction(inject(CREATE_CLIENT_ACTION_KEY), {
-    onSuccess: () => resetFormRef.current()
+    onSuccess: () => form.reset()
   });
 
   const form = useAppForm({
@@ -31,7 +29,6 @@ export const CreateClientForm = () => {
     validators: { onSubmit: applyEffectSchema(createClientValidation) },
     onSubmit: handleAction(action)
   });
-  resetFormRef.current = () => form.reset();
 
   return (
     <form.AppForm>
