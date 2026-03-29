@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/marc-gavanier/ihexa/compare/v1.1.0...v1.2.0) (2026-03-29)
+
+
+### Features
+
+* add get-client ability with shared in-memory store ([955e866](https://github.com/marc-gavanier/ihexa/commit/955e8660108342348d0e364a8a3c47d5ed0ef616))
+
 # [1.1.0](https://github.com/marc-gavanier/ihexa/compare/v1.0.0...v1.1.0) (2026-03-29)
 
 
