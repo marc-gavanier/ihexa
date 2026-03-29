@@ -1,3 +1,12 @@
+# [1.1.0](https://github.com/marc-gavanier/ihexa/compare/v1.0.0...v1.1.0) (2026-03-29)
+
+
+### Features
+
+* add technical error handling with errorPrefix injection ([29955e6](https://github.com/marc-gavanier/ihexa/commit/29955e604890f5cf805e05c5adc6cdd69b2a9076))
+* add TError generic to ServerActionResult for type-safe errors ([4b631ad](https://github.com/marc-gavanier/ihexa/commit/4b631ad60eee5824a3302043401664fc41b0a8ff))
+* add toast notification on client creation ([3089f97](https://github.com/marc-gavanier/ihexa/commit/3089f97e763402418969e5046f308aea1031ee9a))
+
 # 1.0.0 (2026-03-27)
 
 
