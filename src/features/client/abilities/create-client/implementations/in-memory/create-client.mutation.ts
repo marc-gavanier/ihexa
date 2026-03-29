@@ -1,18 +1,15 @@
 import { Either } from 'effect';
-import { ClientAlreadyExists, ClientId, ClientToCreate, type CreateClient } from '@/features/client/domain';
+import { Client, ClientAlreadyExists, ClientId, type CreateClient } from '@/features/client/domain';
+import { clientsStore } from '@/features/client/infrastructure/in-memory';
 
-const CLIENTS = new Map<ClientId, ClientToCreate>();
+export const createClient: CreateClient = async (clientToCreate) => {
+  const store = clientsStore();
 
-export const createClient: CreateClient = async (clientData) => {
-  const clientId = ClientId(clientData.id);
+  const clientId = ClientId(clientToCreate.id);
 
-  if (CLIENTS.has(clientId)) return Either.left(new ClientAlreadyExists({ clientId }));
+  if (store.has(clientId)) return Either.left(new ClientAlreadyExists({ clientId }));
 
-  const clientToCreate = ClientToCreate(clientData);
-  CLIENTS.set(clientId, clientToCreate);
-  return Either.right(clientToCreate);
-};
-
-export const clearClients = (): void => {
-  CLIENTS.clear();
+  const client = Client(clientToCreate);
+  store.set(clientId, client);
+  return Either.right(client);
 };

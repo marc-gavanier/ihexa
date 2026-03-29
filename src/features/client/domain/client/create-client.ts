@@ -2,9 +2,8 @@ import { Data, type Either, Schema } from 'effect';
 import { defineModel, type Model } from '@/libraries/effect';
 import { Address } from '../address';
 import { Name } from '../name';
-
-export const ClientId = defineModel(Schema.UUID.pipe(Schema.brand('ClientId')));
-export type ClientId = Model.TypeOf<typeof ClientId>;
+import type { Client } from './client';
+import { ClientId } from './client-id';
 
 const FIRSTNAME_PATTERN = /(?<=^|[\s-])\p{L}/gu;
 
@@ -30,6 +29,4 @@ export class ClientAlreadyExists extends Data.TaggedError('ClientAlreadyExists')
   readonly clientId: ClientId;
 }> {}
 
-export type CreateClient = (
-  clientToCreate: Model.EncodedOf<typeof ClientToCreate>
-) => Promise<Either.Either<ClientToCreate, ClientAlreadyExists>>;
+export type CreateClient = (clientToCreate: ClientToCreate) => Promise<Either.Either<Client, ClientAlreadyExists>>;
