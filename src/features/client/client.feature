@@ -18,20 +18,13 @@ Feature: Create Client
       | address.city       | Paris               |
       | address.zipcode    | 75001               |
 
-  Scenario: Create a client with compound firstname
-    Given I am a user with the ability to create clients
-    When I create a client with the following data
-      | Field     | Value                                |
-      | id        | 550e8400-e29b-41d4-a716-446655440001 |
-      | firstname | jean-pierre                          |
-      | lastname  | martin                               |
-      | street    | 456 Avenue Victor Hugo               |
-      | city      | Lyon                                 |
-      | zipcode   | 69001                                |
-    Then the client should be created with formatted data
-      | Field              | Value                  |
-      | name.firstname     | Jean-Pierre            |
-      | name.lastname      | MARTIN                 |
-      | address.street     | 456 Avenue Victor Hugo |
-      | address.city       | Lyon                   |
-      | address.zipcode    | 69001                  |
+  Scenario: List all clients
+    Given the following clients exist
+      | id                                   | firstname | lastname | street             | city   | zipcode |
+      | 550e8400-e29b-41d4-a716-446655440001 | jean      | dupont   | 123 Rue de la Paix | Paris  | 75001   |
+      | 550e8400-e29b-41d4-a716-446655440002 | marie     | martin   | 456 Avenue Foch    | Lyon   | 69001   |
+    When I list all clients
+    Then I should see the following clients
+      | id                                   | name.firstname | name.lastname | address.street     | address.city | address.zipcode |
+      | 550e8400-e29b-41d4-a716-446655440001 | Jean           | DUPONT        | 123 Rue de la Paix | Paris        | 75001           |
+      | 550e8400-e29b-41d4-a716-446655440002 | Marie          | MARTIN        | 456 Avenue Foch    | Lyon         | 69001           |

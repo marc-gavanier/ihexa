@@ -18,3 +18,5 @@ export class ClientNotFound extends Data.TaggedError('ClientNotFound')<{
 }> {}
 
 export type GetClientById = (id: ClientId) => Promise<Either.Either<Client, ClientNotFound>>;
+
+export type ListClients = () => Promise<Client[]>;
