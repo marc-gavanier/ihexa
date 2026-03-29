@@ -1,3 +1,11 @@
+# [1.3.0](https://github.com/marc-gavanier/ihexa/compare/v1.2.0...v1.3.0) (2026-03-29)
+
+
+### Features
+
+* add list-clients ability with transposed cucumber scenario ([5ef8e42](https://github.com/marc-gavanier/ihexa/commit/5ef8e428fc14883a1660a4f8e9614fb3f9dfb379))
+* add pagination support to ListClients ([ea9b502](https://github.com/marc-gavanier/ihexa/commit/ea9b5029bcfd8eba64db4719bd05759962c93c9f))
+
 # [1.2.0](https://github.com/marc-gavanier/ihexa/compare/v1.1.0...v1.2.0) (2026-03-29)
 
 
