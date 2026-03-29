@@ -2,6 +2,7 @@
 
 import toast from 'react-hot-toast';
 import { useTranslation } from 'react-i18next';
+import { RiCheckboxCircleLine, RiCloseCircleLine } from 'react-icons/ri';
 import { applyEffectSchema } from '@/libraries/form/apply-effect-schema';
 import { fieldErrorTranslation } from '@/libraries/form/field-error-translation';
 import { handleAction } from '@/libraries/form/handle-action';
@@ -9,15 +10,19 @@ import { handleSubmit } from '@/libraries/form/handle-submit';
 import { useAppForm } from '@/libraries/form/use-app-form';
 import { inject } from '@/libraries/injection';
 import { useServerAction } from '@/libraries/nextjs/action';
-import { createClientValidation } from '../../create-client.validation';
-import { CREATE_CLIENT_ACTION_KEY } from '../../injection';
+import { ICON_LG } from '@/libraries/ui/icons/sizes';
+import { CREATE_CLIENT_ACTION_KEY } from '../../action/create-client.action.key';
+import { createClientValidation } from '../../action/create-client.validation';
 
 export const CreateClientForm = () => {
   const { t } = useTranslation('clients.create');
   const [action, isPending] = useServerAction(inject(CREATE_CLIENT_ACTION_KEY), {
     onSuccess: ({ data: { name } }) => {
-      toast.success(t('success.created', name));
+      toast.success(t('success.created', name), { icon: <RiCheckboxCircleLine size={ICON_LG} /> });
       form.reset();
+    },
+    onError: ({ error }) => {
+      toast.error(t(error), { icon: <RiCloseCircleLine size={ICON_LG} /> });
     }
   });
 

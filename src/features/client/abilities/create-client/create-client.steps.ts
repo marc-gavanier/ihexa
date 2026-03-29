@@ -3,7 +3,7 @@ import { Given, Then, When } from '@cucumber/cucumber';
 import { Either } from 'effect';
 import type { ClientToCreate } from '@/features/client/domain';
 import { assertMatchesDataTable } from '@/libraries/cucumber';
-import type { CreateClientFormData } from './create-client.validation';
+import type { CreateClientFormData } from './action';
 import { clearClients, createClient } from './implementations';
 
 let client: ClientToCreate | undefined;
