@@ -314,16 +314,15 @@ const FORBIDDEN_FEATURES = {
       to: {
         pathNot: [
           '^src/features/$1/abilities/$2/ui',
-          '^src/features/$1/abilities/$2/injection',
-          '^src/features/$1/abilities/$2/[^/]+[.]validation[.]ts$',
+          '^src/features/$1/abilities/$2/.+[.]validation[.]ts$',
+          '^src/features/$1/abilities/$2/.+[.]action[.]key[.]ts$',
           '^src/features/$1/domain',
           '^src/features/$1/injection',
           '^src/features/$1/ui',
           '^src/features/$1/routes[.]ts$',
           '^src/libraries/',
           '^node_modules/',
-          '^src/features/$1/abilities/[^/]+/ui',
-          '^src/features/$1/abilities/[^/]+/injection'
+          '^src/features/$1/abilities/[^/]+/ui'
         ]
       }
     },
