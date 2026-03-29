@@ -76,4 +76,17 @@ test.describe('Create client page', () => {
     await expect(page.locator('.alert-error')).toBeVisible();
     await expect(page.locator('.alert-error')).toContainText(/a client with this id already exists/i);
   });
+
+  test('should show error toast on network failure', async ({ page }) => {
+    await fillForm(page);
+
+    await page.route('**/clients/create', (route) => {
+      return route.request().method() === 'POST' ? route.abort('failed') : route.continue();
+    });
+
+    await submitForm(page);
+
+    await expect(page.locator('.alert-error')).toBeVisible();
+    await expect(page.locator('.alert-error')).toContainText(/unable to connect|check your internet/i);
+  });
 });

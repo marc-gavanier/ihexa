@@ -1,4 +1,6 @@
 import type { ReactNode } from 'react';
+import { withClientBinder } from '@/libraries/injection';
+import { ERROR_PREFIX_KEY } from '../action/technical-error-formatter';
 import type { Pipeline } from '../shared/types';
 import { render } from './page-execution';
 import type { PageProps } from './types';
@@ -38,7 +40,11 @@ interface PageBuilder<TCtx extends object> {
   render(handler: (ctx: TCtx, props: PageProps) => Promise<ReactNode>): (props: PageProps) => Promise<ReactNode>;
 }
 
-export const pageBuilder = (): PageBuilder<object> => {
+type PageBuilderOptions = {
+  errorPrefix?: string;
+};
+
+export const pageBuilder = (options?: PageBuilderOptions): PageBuilder<object> => {
   const createBuilder = <TCtx extends object>(entries: MiddlewareEntry[]): PageBuilder<TCtx> =>
     ({
       use: (...middlewares: AnyMiddleware[]) => {
@@ -58,5 +64,5 @@ export const pageBuilder = (): PageBuilder<object> => {
       }
     }) as PageBuilder<TCtx>;
 
-  return createBuilder<object>([]);
+  return createBuilder<object>([withClientBinder(ERROR_PREFIX_KEY, options?.errorPrefix) as unknown as AnyMiddleware]);
 };

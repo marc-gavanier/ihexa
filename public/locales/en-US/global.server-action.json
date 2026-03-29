@@ -1,6 +1,6 @@
 {
   "error": {
-    "500": "An internal error occurred. Please try again later.",
+    "0": "Unable to connect. Please check your internet connection.",
     "400": "The operation is invalid. Please check the information provided.",
     "401": "You must be authenticated to perform this operation.",
     "403": "You do not have permission to access this resource.",
@@ -9,8 +9,9 @@
     "410": "The requested resource is no longer available.",
     "422": "The information provided is invalid.",
     "429": "Too many attempts. Please try again later.",
-    "502": "The service is temporarily unavailable. Please try again later.",
-    "503": "The service is temporarily unavailable. Please try again later.",
-    "504": "The service is temporarily unavailable. Please try again later."
+    "500": "An unexpected error occurred. Please try again later.",
+    "502": "A service is not responding correctly. Please try again.",
+    "503": "The service is under maintenance or overloaded. Please try again later.",
+    "504": "The request timed out. Please try again."
   }
 }

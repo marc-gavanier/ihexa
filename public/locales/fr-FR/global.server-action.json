@@ -1,5 +1,6 @@
 {
   "error": {
+    "0": "Impossible de se connecter. Vérifiez votre connexion internet.",
     "400": "L'opération n'est pas valide. Veuillez vérifier les informations envoyées.",
     "401": "Vous devez être authentifié pour effectuer cette opération.",
     "403": "Vous n'avez pas les droits nécessaires pour accéder à cette ressource.",
@@ -8,9 +9,9 @@
     "410": "La ressource demandée n'est plus disponible.",
     "422": "Les informations envoyées ne sont pas valides.",
     "429": "Trop de tentatives. Veuillez réessayer plus tard.",
-    "500": "Une erreur interne est survenue. Veuillez réessayer plus tard.",
-    "502": "Le service est temporairement indisponible. Veuillez réessayer ultérieurement.",
-    "503": "Le service est temporairement indisponible. Veuillez réessayer ultérieurement.",
-    "504": "Le service est temporairement indisponible. Veuillez réessayer ultérieurement."
+    "500": "Une erreur inattendue s'est produite. Veuillez réessayer plus tard.",
+    "502": "Un service ne répond pas correctement. Veuillez réessayer.",
+    "503": "Le service est en maintenance ou surchargé. Veuillez réessayer plus tard.",
+    "504": "La requête a expiré. Veuillez réessayer."
   }
 }

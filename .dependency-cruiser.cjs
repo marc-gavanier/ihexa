@@ -414,7 +414,7 @@ const FORBIDDEN_FEATURES = {
 const LIBRARY_DEPENDENCIES = {
   i18n: ['nextjs', 'injection'],
   logger: ['nextjs'],
-  nextjs: ['ui'],
+  nextjs: ['ui', 'injection'],
   storybook: ['i18n', 'injection'],
   ui: ['injection'],
   form: ['ui']
