@@ -1,15 +1,19 @@
 'use client';
 
 import { useActionState } from 'react';
+import { inject } from '@/libraries/injection';
 import type { ServerActionError, ServerActionResult, ServerActionSuccess } from './result';
+import { ERROR_PREFIX_KEY } from './technical-error-formatter';
 
-type ExtractResult<T> = T extends (formData: never) => Promise<ServerActionResult<infer R, string>> ? R : never;
+type ExtractResult<T> = T extends (formData: never) => Promise<ServerActionResult<infer R>> ? R : never;
 
 type ExtractError<T> = T extends (formData: never) => Promise<ServerActionResult<unknown, infer E>> ? E : never;
 
-type ExtractFormData<T> = T extends (formData: infer F) => Promise<ServerActionResult<unknown, string>> ? F : never;
+type ExtractFormData<T> = T extends (formData: infer F) => Promise<ServerActionResult<unknown>> ? F : never;
 
-export const useServerAction = <TAction extends (formData: never) => Promise<ServerActionResult<unknown, string>>>(
+const formatError = (prefix: string | undefined) => (prefix ? [prefix, '0'].join('.') : '0');
+
+export const useServerAction = <TAction extends (formData: never) => Promise<ServerActionResult<unknown>>>(
   action: TAction,
   handlers?: {
     onSuccess?: (state: ServerActionSuccess<ExtractResult<TAction>>) => void;
@@ -29,11 +33,17 @@ export const useServerAction = <TAction extends (formData: never) => Promise<Ser
       _: ServerActionResult<TResult, TError> | null,
       formData: TFormData
     ): Promise<ServerActionResult<TResult, TError>> => {
-      const result = await (action as unknown as (formData: TFormData) => Promise<ServerActionResult<TResult, TError>>)(
-        formData
-      );
-      result.success ? handlers?.onSuccess?.(result) : handlers?.onError?.(result);
-      return result;
+      try {
+        const result = await (action as unknown as (formData: TFormData) => Promise<ServerActionResult<TResult, TError>>)(
+          formData
+        );
+        result.success ? handlers?.onSuccess?.(result) : handlers?.onError?.(result);
+        return result;
+      } catch {
+        const errorResult = { success: false, error: formatError(inject(ERROR_PREFIX_KEY)) } as ServerActionError<TError>;
+        handlers?.onError?.(errorResult);
+        return errorResult;
+      }
     },
     null
   );

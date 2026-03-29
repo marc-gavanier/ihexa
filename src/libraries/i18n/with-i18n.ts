@@ -107,14 +107,14 @@ export const initI18n =
 
 export const withI18n =
   (config: I18nConfig) =>
-  <N extends Namespace>(defaultNS: N, ...otherNamespaces: Namespace[]) =>
+  <N extends Namespace>(namespace: N, ...namespaces: N[]) =>
   async <TContext extends object>(_ctx: TContext): Promise<{ ctx: object; provider: Provider }> => {
-    const { locale, namespaces, resources } = await initI18n(config)(defaultNS, ...otherNamespaces);
+    const { locale, namespaces: ns, resources } = await initI18n(config)(namespace, ...namespaces);
     return {
       ctx: {},
       provider: {
         component: I18nProvider as Provider['component'],
-        props: { locale, namespaces, resources }
+        props: { locale, namespaces: ns, resources }
       }
     };
   };

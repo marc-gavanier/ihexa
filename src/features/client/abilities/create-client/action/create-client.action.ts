@@ -1,12 +1,13 @@
 'use server';
 
+import { ERROR_PREFIX } from '@/configuration/errors';
 import { withLogger } from '@/configuration/logger';
 import { actionBuilder, fromEither, withInput } from '@/libraries/nextjs/action';
 import { createClient } from '../implementations';
 import { CREATE_CLIENT_ERRORS } from './create-client.errors';
 import { createClientValidation } from './create-client.validation';
 
-export const createClientAction = actionBuilder()
+export const createClientAction = actionBuilder(ERROR_PREFIX)
   .use(withInput(createClientValidation))
   .use(withLogger('createClientAction', { extractPayload: ({ input: { id } }) => ({ id }) }))
   .execute(

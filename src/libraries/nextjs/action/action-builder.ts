@@ -49,7 +49,16 @@ const buildPipeline = <TResult, TError extends string>(
   return execute(0);
 };
 
-export const actionBuilder = (): ActionBuilder<object> => {
+type ActionBuilderOptions = {
+  errorPrefix?: string;
+};
+
+const formatError =
+  <TError>(options?: ActionBuilderOptions) =>
+  (error: unknown): TError =>
+    (options?.errorPrefix ? [options.errorPrefix, error].join('.') : error) as TError;
+
+export const actionBuilder = (options?: ActionBuilderOptions): ActionBuilder<object> => {
   const createBuilder = <TCtx extends object>(middlewares: AnyPipeMiddleware[]): ActionBuilder<TCtx> => ({
     use: (middleware) => createBuilder([...middlewares, middleware as AnyPipeMiddleware]),
 
@@ -67,7 +76,7 @@ export const actionBuilder = (): ActionBuilder<object> => {
         } catch (error: unknown) {
           const { isRedirectError } = await import('./action-error');
           if (isRedirectError(error)) throw error;
-          return { success: false, error: 'error.500' as TError };
+          return { success: false, error: formatError<TError>(options)(error) };
         }
       };
     }
