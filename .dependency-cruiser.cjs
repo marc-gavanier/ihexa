@@ -351,7 +351,7 @@ const FORBIDDEN_FEATURES = {
         pathNot: '[.](?:spec|test|e2e|feature|stories)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$'
       },
       to: {
-        pathNot: ['^node_modules/[^/]+/effect', '^src/features/$1/domain', '^src/libraries/effect']
+        pathNot: ['^node_modules/[^/]+/effect', '^src/features/$1/domain', '^src/libraries/effect', '^src/libraries/pagination']
       }
     }
   ],
