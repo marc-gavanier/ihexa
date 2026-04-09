@@ -6,13 +6,14 @@ import { type Client, type ClientId, ClientToCreate } from '@/features/client/do
 import { clearClientsStore } from '@/features/client/infrastructure/in-memory';
 import { assertMatchesDataTable } from '@/libraries/cucumber';
 import type { Paginated } from '@/libraries/pagination';
-import type { CreateClientFormData } from './abilities/create-client/action';
-import { createClient } from './abilities/create-client/implementations';
+import { type CreateClientFormData, createClient } from './abilities/create-client';
 import { getClientById } from './abilities/get-client';
 import { listClients } from './abilities/list-clients';
+import { searchClients } from './abilities/search-clients';
 
 let clientId: ClientId | undefined;
 let paginatedClients: Paginated<Client> = { items: [], totalItems: 0, currentPage: 1, pageSize: 10 };
+let searchResults: Client[] = [];
 
 const dataTableToInput = (dataTable: DataTable) => Object.fromEntries(dataTable.rows()) as CreateClientFormData;
 
@@ -106,3 +107,13 @@ const getNestedValue = (obj: unknown, path: string): unknown =>
     .replace(/\[(\d+)]/g, '.$1')
     .split('.')
     .reduce((current: unknown, key: string) => (current == null ? undefined : (current as Record<string, unknown>)[key]), obj);
+
+When(/^I search for clients with "([^"]*)"$/, async (query: string) => {
+  searchResults = await searchClients(query);
+});
+
+Then(/^I should find clients with ids "([^"]*)"$/, (expectedIds: string) => {
+  const expected = expectedIds.split(',').sort();
+  const actual = searchResults.map((c) => c.id).sort();
+  assert.deepStrictEqual(actual, expected, `Expected ids ${expected.join(', ')}, got ${actual.join(', ')}`);
+});
