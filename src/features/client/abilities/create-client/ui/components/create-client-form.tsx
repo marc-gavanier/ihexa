@@ -7,6 +7,7 @@ import { handleAction } from '@/libraries/form/handle-action';
 import { handleSubmit } from '@/libraries/form/handle-submit';
 import { useAppForm } from '@/libraries/form/use-app-form';
 import { inject } from '@/libraries/injection';
+import { withValidationLogging } from '@/libraries/logger/with-validation-logging';
 import { useServerAction } from '@/libraries/nextjs/action';
 import { toastError, toastSuccess } from '@/libraries/nextjs/components';
 import { CREATE_CLIENT_ACTION_KEY } from '../../action/create-client.action.key';
@@ -31,7 +32,9 @@ export const CreateClientForm = () => {
       city: '',
       zipcode: ''
     },
-    validators: { onSubmit: applyEffectSchema(createClientValidation) },
+    validators: {
+      onSubmit: withValidationLogging(applyEffectSchema(createClientValidation), 'create-client')
+    },
     onSubmit: handleAction(action)
   });
 
