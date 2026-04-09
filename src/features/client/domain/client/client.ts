@@ -21,3 +21,5 @@ export class ClientNotFound extends Data.TaggedError('ClientNotFound')<{
 export type GetClientById = (id: ClientId) => Promise<Either.Either<Client, ClientNotFound>>;
 
 export type ListClients = (params?: PaginationParams) => Promise<Paginated<Client>>;
+
+export type SearchClients = (query: string) => Promise<Client[]>;
