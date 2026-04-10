@@ -39,6 +39,13 @@ Feature: Create Client
     Then I should see 2 clients on page 1 of 2 total pages
     And the total items count should be 3
 
+  Scenario: Search clients with no results
+    Given the following clients exist
+      | id                                   | firstname | lastname | street             | city      | zipcode |
+      | 550e8400-e29b-41d4-a716-446655440001 | jean      | dupont   | 12 Rue de la Paix  | Paris     | 75006   |
+    When I search for clients with "xyz"
+    Then I should find no clients
+
   Scenario Outline: Search clients by partial match on any field
     Given the following clients exist
       | id                                   | firstname | lastname | street             | city      | zipcode |

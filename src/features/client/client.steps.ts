@@ -5,15 +5,20 @@ import { Either } from 'effect';
 import { type Client, type ClientId, ClientToCreate } from '@/features/client/domain';
 import { clearClientsStore } from '@/features/client/infrastructure/in-memory';
 import { assertMatchesDataTable } from '@/libraries/cucumber';
-import type { Paginated } from '@/libraries/pagination';
+import type { Filtered } from '@/libraries/resultset';
+import { Page, PageSize, type Paginated } from '@/libraries/resultset';
 import { type CreateClientFormData, createClient } from './abilities/create-client';
 import { getClientById } from './abilities/get-client';
 import { listClients } from './abilities/list-clients';
-import { searchClients } from './abilities/search-clients';
 
 let clientId: ClientId | undefined;
-let paginatedClients: Paginated<Client> = { items: [], totalItems: 0, currentPage: 1, pageSize: 10 };
-let searchResults: Client[] = [];
+let result: Filtered<Paginated<Client>> = {
+  items: [],
+  totalItems: 0,
+  currentPage: Page(1),
+  pageSize: PageSize(10),
+  search: ''
+};
 
 const dataTableToInput = (dataTable: DataTable) => Object.fromEntries(dataTable.rows()) as CreateClientFormData;
 
@@ -25,14 +30,14 @@ Given(/^I am a user with the ability to create clients$/, () => {
 When(/^I create a client with the following data$/, async (dataTable: DataTable) => {
   const { id, ...input } = dataTableToInput(dataTable);
 
-  const result = await createClient(
+  const createResult = await createClient(
     ClientToCreate({
       id,
       name: input,
       address: input
     })
   );
-  clientId = Either.getOrThrow(result).id;
+  clientId = Either.getOrThrow(createResult).id;
 });
 
 Then(/^the client should be created with formatted data$/, async (dataTable: DataTable) => {
@@ -58,23 +63,23 @@ Given(/^the following clients exist$/, async (dataTable: DataTable) => {
 });
 
 When(/^I list all clients$/, async () => {
-  paginatedClients = await listClients();
+  result = await listClients();
 });
 
 When(/^I list clients with page (\d+) and page size (\d+)$/, async (page: string, pageSize: string) => {
-  paginatedClients = await listClients({ page: Number(page), pageSize: Number(pageSize) });
+  result = await listClients({ page: Page(Number(page)), pageSize: PageSize(Number(pageSize)) });
 });
 
 Then(/^I should see the following clients$/, (dataTable: DataTable) => {
   const expectedRows = dataTable.hashes() as ClientOutputRow[];
   assert.strictEqual(
-    paginatedClients.items.length,
+    result.items.length,
     expectedRows.length,
-    `Expected ${expectedRows.length} clients, got ${paginatedClients.items.length}`
+    `Expected ${expectedRows.length} clients, got ${result.items.length}`
   );
 
   for (const expected of expectedRows) {
-    const client = paginatedClients.items.find((c) => c.id === expected.id);
+    const client = result.items.find((c) => c.id === expected.id);
     assert.ok(client, `Client with id ${expected.id} not found`);
     for (const [key, value] of Object.entries(expected)) {
       const actualValue = getNestedValue(client, key);
@@ -84,22 +89,14 @@ Then(/^I should see the following clients$/, (dataTable: DataTable) => {
 });
 
 Then(/^I should see (\d+) clients on page (\d+) of (\d+) total pages$/, (count: string, page: string, totalPages: string) => {
-  assert.strictEqual(
-    paginatedClients.items.length,
-    Number(count),
-    `Expected ${count} items, got ${paginatedClients.items.length}`
-  );
-  assert.strictEqual(paginatedClients.currentPage, Number(page), `Expected page ${page}, got ${paginatedClients.currentPage}`);
-  const actualTotalPages = Math.ceil(paginatedClients.totalItems / paginatedClients.pageSize);
+  assert.strictEqual(result.items.length, Number(count), `Expected ${count} items, got ${result.items.length}`);
+  assert.strictEqual(result.currentPage, Number(page), `Expected page ${page}, got ${result.currentPage}`);
+  const actualTotalPages = Math.ceil(result.totalItems / result.pageSize);
   assert.strictEqual(actualTotalPages, Number(totalPages), `Expected ${totalPages} total pages, got ${actualTotalPages}`);
 });
 
 Then(/^the total items count should be (\d+)$/, (count: string) => {
-  assert.strictEqual(
-    paginatedClients.totalItems,
-    Number(count),
-    `Expected totalItems ${count}, got ${paginatedClients.totalItems}`
-  );
+  assert.strictEqual(result.totalItems, Number(count), `Expected totalItems ${count}, got ${result.totalItems}`);
 });
 
 const getNestedValue = (obj: unknown, path: string): unknown =>
@@ -109,11 +106,15 @@ const getNestedValue = (obj: unknown, path: string): unknown =>
     .reduce((current: unknown, key: string) => (current == null ? undefined : (current as Record<string, unknown>)[key]), obj);
 
 When(/^I search for clients with "([^"]*)"$/, async (query: string) => {
-  searchResults = await searchClients(query);
+  result = await listClients({ search: query });
+});
+
+Then(/^I should find no clients$/, () => {
+  assert.strictEqual(result.items.length, 0, `Expected no clients, got ${result.items.length}`);
 });
 
 Then(/^I should find clients with ids "([^"]*)"$/, (expectedIds: string) => {
   const expected = expectedIds.split(',').sort();
-  const actual = searchResults.map((c) => c.id).sort();
+  const actual = result.items.map((c) => c.id).sort();
   assert.deepStrictEqual(actual, expected, `Expected ids ${expected.join(', ')}, got ${actual.join(', ')}`);
 });
