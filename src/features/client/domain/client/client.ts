@@ -1,6 +1,6 @@
 import { Data, type Either, Schema } from 'effect';
 import { defineModel, type Model } from '@/libraries/effect';
-import type { Paginated, PaginationParams } from '@/libraries/pagination';
+import type { Filtered, FilterParams, Paginated, PaginationParams } from '@/libraries/resultset';
 import { Address } from '../address';
 import { Name } from '../name';
 import { ClientId } from './client-id';
@@ -20,6 +20,4 @@ export class ClientNotFound extends Data.TaggedError('ClientNotFound')<{
 
 export type GetClientById = (id: ClientId) => Promise<Either.Either<Client, ClientNotFound>>;
 
-export type ListClients = (params?: PaginationParams) => Promise<Paginated<Client>>;
-
-export type SearchClients = (query: string) => Promise<Client[]>;
+export type ListClients = (params?: PaginationParams & FilterParams) => Promise<Filtered<Paginated<Client>>>;
