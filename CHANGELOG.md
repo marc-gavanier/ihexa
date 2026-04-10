@@ -1,3 +1,11 @@
+# [1.4.0](https://github.com/marc-gavanier/ihexa/compare/v1.3.0...v1.4.0) (2026-04-10)
+
+
+### Features
+
+* add search clients cucumber scenario outline ([38161b2](https://github.com/marc-gavanier/ihexa/commit/38161b27b08d1c43d28ce379925562d340dfd1d1))
+* add search-clients ability with in-memory implementation ([7ca1d4c](https://github.com/marc-gavanier/ihexa/commit/7ca1d4c1d637a46ceb48e799e9c20edef4c10980))
+
 # [1.3.0](https://github.com/marc-gavanier/ihexa/compare/v1.2.0...v1.3.0) (2026-03-29)
 
 
