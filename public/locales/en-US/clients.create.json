@@ -24,13 +24,15 @@
     "street": {
       "label": "Street",
       "error": {
-        "required": "Street is required"
+        "required": "Street is required",
+        "maxLength": "Street must not exceed 255 characters"
       }
     },
     "city": {
       "label": "City",
       "error": {
-        "required": "City is required"
+        "required": "City is required",
+        "maxLength": "City must not exceed 255 characters"
       }
     },
     "zipcode": {
