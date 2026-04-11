@@ -181,13 +181,15 @@ jobs:
           echo "env-name=$ENV_NAME" >> $GITHUB_OUTPUT
 
   neon:
-    name: Create Neon branch
+    name: Setup Neon branch
     runs-on: ubuntu-latest
     needs:
       - ephemeral-env-name
-    outputs:
-      database_url: ${{ steps.neon.outputs.database_url }}
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Setup
+        uses: ./.github/actions/setup
       - name: Create Neon branch
         id: neon
         env:
@@ -239,9 +241,14 @@ jobs:
             exit 1
           fi
           echo "Connection URI retrieved successfully"
-
-          echo "::add-mask::$CONNECTION_URI"
-          echo "database_url=$CONNECTION_URI" >> $GITHUB_OUTPUT
+          echo "DATABASE_URL=$CONNECTION_URI" >> $GITHUB_ENV
+      - name: Run database migrations
+        run: pnpm db:migrate
+      - name: Set SST database secret
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.EPHEMERAL_AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.EPHEMERAL_AWS_SECRET_ACCESS_KEY }}
+        run: pnpm sst secret set DatabaseUrl "$DATABASE_URL" --stage "${{ needs.ephemeral-env-name.outputs.env-name }}"
 
   deploy:
     name: Deploy to ephemeral environment
@@ -253,8 +260,6 @@ jobs:
       stage: ${{ needs.ephemeral-env-name.outputs.env-name }}
       environment: ${{ needs.ephemeral-env-name.outputs.env-name }}
       env-type: ephemeral
-      with-database: true
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.EPHEMERAL_AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.EPHEMERAL_AWS_SECRET_ACCESS_KEY }}
-      DATABASE_URL: ${{ needs.neon.outputs.database_url }}
