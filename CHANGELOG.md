@@ -1,3 +1,15 @@
+## [1.5.1](https://github.com/marc-gavanier/ihexa/compare/v1.5.0...v1.5.1) (2026-04-11)
+
+
+### Bug Fixes
+
+* replace deprecated app-id with client-id in github-app-token action ([56e8bea](https://github.com/marc-gavanier/ihexa/commit/56e8beaade51aa55b858c583e4e04fe57d8ef9d0))
+
+
+### Performance Improvements
+
+* optimize client search with generated column and GIN trigram index ([ae27c07](https://github.com/marc-gavanier/ihexa/commit/ae27c0793594118be74bf74775cb0a6f9c491be5))
+
 # [1.5.0](https://github.com/marc-gavanier/ihexa/compare/v1.4.0...v1.5.0) (2026-04-11)
 
 
