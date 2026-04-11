@@ -1,3 +1,21 @@
+# [1.5.0](https://github.com/marc-gavanier/ihexa/compare/v1.4.0...v1.5.0) (2026-04-11)
+
+
+### Bug Fixes
+
+* add missing maxLength error translations for street and city ([a893783](https://github.com/marc-gavanier/ihexa/commit/a893783ffd3fe0589c252b6ffb5a797f6c5c55e3))
+* install Pulumi in CI workflows for SST deployments ([e0a5d32](https://github.com/marc-gavanier/ihexa/commit/e0a5d325175551637f2f6075bb289fadc384928b))
+* remove add-mask on Neon connection URI to allow job output propagation ([8a77391](https://github.com/marc-gavanier/ihexa/commit/8a77391e4026c671ac540609937109db244620cc))
+
+
+### Features
+
+* add client table schema, transfer and align domain maxLength constraints ([864dd34](https://github.com/marc-gavanier/ihexa/commit/864dd34a79d2f5c27cddab69af44379be579ea5a))
+* add Drizzle implementations for client abilities ([ff4a42b](https://github.com/marc-gavanier/ihexa/commit/ff4a42b3f51427e4f6032f0c8f15ffb717c89a1f))
+* add env-switchable clearClients for cucumber integration tests ([cee31ef](https://github.com/marc-gavanier/ihexa/commit/cee31ef5ae3cdc0226b1761635c5f992b6819bbc))
+* add Neon support for deployed environments ([00d962b](https://github.com/marc-gavanier/ihexa/commit/00d962b141cfefab254b50a80dd1270f22500d14))
+* setup Drizzle ORM with PostgreSQL and Docker ([f409f84](https://github.com/marc-gavanier/ihexa/commit/f409f8456e827150a6019049682a566cedaed32c))
+
 # [1.4.0](https://github.com/marc-gavanier/ihexa/compare/v1.3.0...v1.4.0) (2026-04-10)
 
 
