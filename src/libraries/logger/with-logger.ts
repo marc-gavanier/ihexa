@@ -23,6 +23,7 @@ export const withLogger =
       logger.log({
         level,
         event: result.success ? `${event}:success` : `${event}:failure`,
+        source: 'server',
         payload: { ...(extractPayload?.(ctx) ?? {}), ...(result.success ? {} : { error: result.error }) }
       });
     });

@@ -1,3 +1,6 @@
 import { consoleLogger, withLogger as createWithLogger } from '@/libraries/logger';
 
-export const withLogger = createWithLogger(consoleLogger());
+const loggerInstance = consoleLogger();
+
+export const logger = loggerInstance;
+export const withLogger = createWithLogger(loggerInstance);
