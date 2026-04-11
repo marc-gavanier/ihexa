@@ -6,24 +6,25 @@ on:
       stage:
         required: true
         type: string
+        description: 'SST stage name (e.g., production, feat-my-feature)'
       environment:
         required: true
         type: string
+        description: 'GitHub environment name for deployment protection rules'
       env-type:
         required: true
         type: string
-        description: 'Environment type: prod or ephemeral'
+        description: 'Implementation profile: prod or ephemeral (controls which code implementations are used)'
       with-database:
         required: false
         type: boolean
         default: false
+        description: 'Run database migrations and set SST DatabaseUrl secret before deploying'
     secrets:
       AWS_ACCESS_KEY_ID:
         required: true
       AWS_SECRET_ACCESS_KEY:
         required: true
-      DATABASE_URL:
-        required: false
     outputs:
       cloudfront_url:
         description: 'The CloudFront URL of the deployment'
@@ -53,8 +54,7 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        run: |
-          pnpm sst secret set DatabaseUrl "${{ secrets.DATABASE_URL }}" --stage "${{ inputs.stage }}"
+        run: pnpm sst secret set DatabaseUrl "${{ secrets.DATABASE_URL }}" --stage "${{ inputs.stage }}"
       - name: Build and Deploy
         id: deploy
         env:
