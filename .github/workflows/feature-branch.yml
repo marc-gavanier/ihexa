@@ -139,15 +139,34 @@ jobs:
   cucumber:
     name: Cucumber scenarios
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:17
+        env:
+          POSTGRES_USER: ihexa
+          POSTGRES_PASSWORD: ihexa
+          POSTGRES_DB: ihexa
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd="pg_isready -U ihexa"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=5
+    env:
+      DATABASE_USER: ihexa
+      DATABASE_PASSWORD: ihexa
+      DATABASE_PORT: 5432
+      DATABASE_NAME: ihexa
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
       - name: Setup
         uses: ./.github/actions/setup
-      - name: Generate implementations
-        run: pnpm generate:implementations
+      - name: Run migrations
+        run: pnpm db:migrate
       - name: Run cucumber
-        run: pnpm test:cucumber
+        run: pnpm test:cucumber@prod
 
   ephemeral-env-name:
     name: Ephemeral environment name
