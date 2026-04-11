@@ -1,25 +1,20 @@
-import { type AnyColumn, or, type SQL, sql } from 'drizzle-orm';
+import { like, or, type SQL, sql } from 'drizzle-orm';
 import { db } from '@/configuration/drizzle';
 import { clientsTable, clientToDomain } from '@/features/client/db';
 import type { ListClients } from '@/features/client/domain';
 import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, filtered, type Page, type PageSize } from '@/libraries/resultset';
 
-const unaccentIlike = (column: AnyColumn, pattern: string): SQL => sql`unaccent(${column}) ILIKE unaccent(${pattern})`;
+const normalizeSearch = (text: string): string =>
+  text
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase();
 
 const buildSearchCondition = (search: string): SQL | undefined => {
   const terms = search.trim().split(/\s+/).filter(Boolean);
   if (terms.length === 0) return undefined;
 
-  const conditions = terms.map((term) => {
-    const pattern = `%${term}%`;
-    return or(
-      unaccentIlike(clientsTable.firstname, pattern),
-      unaccentIlike(clientsTable.lastname, pattern),
-      unaccentIlike(clientsTable.street, pattern),
-      unaccentIlike(clientsTable.city, pattern),
-      unaccentIlike(clientsTable.zipcode, pattern)
-    );
-  });
+  const conditions = terms.map((term) => like(clientsTable.searchText, `%${normalizeSearch(term)}%`));
 
   return or(...conditions);
 };
