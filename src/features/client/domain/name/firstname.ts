@@ -10,4 +10,5 @@ export const Firstname = defineModel(
     brand('Firstname')
   )
 );
+
 export type Firstname = Model.TypeOf<typeof Firstname>;

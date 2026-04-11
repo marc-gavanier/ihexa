@@ -10,4 +10,5 @@ export const Zipcode = defineModel(
     brand('Zipcode')
   )
 );
+
 export type Zipcode = Model.TypeOf<typeof Zipcode>;
