@@ -158,4 +158,8 @@ storybook-static
 
 # generated implementations (DI)
 **/implementations/index.ts
+**/infrastructure/index.ts
 src/configuration/logger/index.ts
+
+# PostgreSQL data
+.database/
