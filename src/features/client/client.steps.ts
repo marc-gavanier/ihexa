@@ -1,9 +1,8 @@
 import assert from 'node:assert';
-import type { DataTable } from '@cucumber/cucumber';
-import { Given, Then, When } from '@cucumber/cucumber';
+import { After, type DataTable, Given, Then, When } from '@cucumber/cucumber';
 import { Either } from 'effect';
 import { type Client, type ClientId, ClientToCreate } from '@/features/client/domain';
-import { clearClientsStore } from '@/features/client/infrastructure/in-memory';
+import { clearClients } from '@/features/client/infrastructure';
 import { assertMatchesDataTable } from '@/libraries/cucumber';
 import type { Filtered } from '@/libraries/resultset';
 import { Page, PageSize, type Paginated } from '@/libraries/resultset';
@@ -20,11 +19,14 @@ let result: Filtered<Paginated<Client>> = {
   search: ''
 };
 
+After(async () => {
+  await clearClients();
+});
+
 const dataTableToInput = (dataTable: DataTable) => Object.fromEntries(dataTable.rows()) as CreateClientFormData;
 
-Given(/^I am a user with the ability to create clients$/, () => {
+Given(/^I am a user with the ability to create clients$/, async () => {
   clientId = undefined;
-  clearClientsStore();
 });
 
 When(/^I create a client with the following data$/, async (dataTable: DataTable) => {
@@ -50,7 +52,6 @@ type ClientInputRow = { id: string; firstname: string; lastname: string; street:
 type ClientOutputRow = { id: string };
 
 Given(/^the following clients exist$/, async (dataTable: DataTable) => {
-  clearClientsStore();
   const rows = dataTable.hashes() as ClientInputRow[];
   for (const row of rows) {
     const clientToCreate = ClientToCreate({
