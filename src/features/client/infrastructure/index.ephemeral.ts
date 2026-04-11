@@ -1,1 +1,1 @@
-export { clearClients } from './in-memory';
+export { clearClients } from './drizzle';
