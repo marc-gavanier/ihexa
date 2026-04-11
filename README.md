@@ -29,6 +29,9 @@ Here are some of my choices:
 - **Code organization**: Hexagonal architecture “primary/secondary” → Feature-based Vertical Slices with colocated Abilities (Screaming Architecture principles)
 - **Domain modeling**: plain objects → functional domain model
 - **Project setup**: JHipster → tools official documentations (Sorry Colin! 😉)
+- **Database hosting**: Clever Cloud PostgreSQL → Neon (serverless PostgreSQL, scale-to-zero, branch-per-environment)
+- **ORM & migrations**: JPA + Liquibase → Drizzle ORM + Drizzle Kit migrations
+- **Integration testing strategy**: separate integration tests for repositories + Gherkin component tests simulating full API calls → Cucumber scenarios serve dual purpose: BDD acceptance tests (in-memory) and integration tests against PostgreSQL in CI
 - **Deployment**: Clever Cloud → AWS with SST (Serverless Stack) for Next.js applications with OpenNext
 - **UI Documentation**: tikui → Storybook
 - **UI Pattern library**: tikui → DaisyUI + TailwindCSS
@@ -52,14 +55,20 @@ Here is a more detailed explanation of the choices I made while following the IH
 - **Feature / Use Case-based organization**: this is a personal preference that makes navigating the code much easier. While I fully understand hexagonal architecture and its primary/secondary ports, translating the concept directly into folders often confuses me. I’m excessively sensitive to folder organization, so **this structure keeps the code readable and maintainable for me**.
 - **Functional domain modeling**: I usually model the domain in a functional style, but for this project I wanted to **go one step further** by learning how to use the **Effect** library and building a **purely functional domain model**. This allows encoding business rules in the type system and handling errors in a composable, effectful way rather than relying on runtime `throw`s.
 - **No JHipster**: I have a habit of **enjoying setups that are *slightly inconvenient***, forcing me to spend an unreasonable amount of time reading documentation and getting frustrated when things don’t work.
-- **AWS with SST instead of Clever Cloud**: I’ve been wanting to try **SST (Serverless Stack)** for a while, as it is an **open alternative to Vercel**, offering similar simplicity while keeping full control over the infrastructure. Using it for this project was the perfect occasion to **experiment with modern serverless deployment**. As a bonus, it **stays entirely within AWS’s free tier**, so it costs nothing to run.
+- **Neon instead of Clever Cloud PostgreSQL**: Neon offers **serverless PostgreSQL with true scale-to-zero**, meaning the database costs nothing when idle, perfect for a learning project. Its **branch-per-environment** feature creates an isolated database copy in under a second for each ephemeral deployment, which is far more practical than provisioning a full Clever Cloud add-on per preview environment.
+- **Drizzle ORM instead of JPA + Liquibase**: Drizzle is a **lightweight, type-safe SQL toolkit** that fits naturally in a TypeScript codebase. Combined with Drizzle Kit for migrations, it provides a **code-first schema approach** where table definitions reference domain constants (e.g., max lengths), keeping the database schema aligned with business rules by design.
+- **Cucumber scenarios as integration tests**: in the training, **integration tests for repositories** and Gherkin-based component tests that simulate full API calls are separated. Since this project has **no standalone backend API** (Next.js server actions call domain logic directly), I chose to **reuse the same Cucumber scenarios** for both purposes: they run against in-memory implementations locally, and against a real PostgreSQL database in CI by simply switching the implementation profile (`ENV=prod`). This avoids duplicating test logic while still validating real database interactions.
+- **AWS with SST instead of Clever Cloud**: I’ve been wanting to try **SST (Serverless Stack)** for a while, as it is an **open alternative to Vercel**, offering similar simplicity while keeping full control over the infrastructure. Using it for this project was the perfect occasion to **experiment with modern serverless deployment**.
 - **DaisyUI + TailwindCSS instead of tikui**: DaisyUI provides a **solid design foundation** out of the box while staying **fully compatible with Tailwind’s utility-first approach**. Combined with TailwindCSS, it strikes a balance between having **ready-to-use components** and keeping enough **flexibility to customize the design** without the complexity often seen in pure Tailwind setups.
 - **Storybook instead of tikui documentation**: I’ve already used Storybook, but I wanted to go deeper into what the tool really offers: exploring its full potential for **interactive documentation**, **visual testing** and **design system workflows** for UI components.
+- **Near-zero infrastructure cost**: combined, AWS (Lambda, CloudFront, S3) and Neon both **scale to zero when idle**, less than 1€/year for a learning project with no traffic, a few euros per month for a low-traffic app, and still under 15€/month for a small production app with hundreds of daily users.
 
 <h2 id="contributing">🤗 Contributing</h2>
 
 This repository is primarily a personal progress log.  
 If you want to share ideas, suggestions, or adaptations on this alternative version, feel free to open an **issue** or **pull request**.
+
+See the [CONTRIBUTING.md](./CONTRIBUTING.md) for setup instructions, available scripts, and environment configuration.
 
 <h2 id="license">📝 License</h2>
 
