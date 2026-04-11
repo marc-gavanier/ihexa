@@ -18,6 +18,7 @@ jobs:
       stage: production
       environment: production
       env-type: prod
+      with-database: true
     secrets: inherit
 
   release:
