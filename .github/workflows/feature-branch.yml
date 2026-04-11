@@ -173,6 +173,8 @@ jobs:
         uses: actions/checkout@v6
       - name: Setup
         uses: ./.github/actions/setup
+      - name: Install Pulumi
+        run: curl -fsSL https://get.pulumi.com | sh && echo "$HOME/.pulumi/bin" >> $GITHUB_PATH
       - name: Create Neon branch
         uses: ./.github/actions/neon-branch
         with:
