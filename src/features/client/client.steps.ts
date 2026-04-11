@@ -25,7 +25,7 @@ After(async () => {
 
 const dataTableToInput = (dataTable: DataTable) => Object.fromEntries(dataTable.rows()) as CreateClientFormData;
 
-Given(/^I am a user with the ability to create clients$/, async () => {
+Given(/^I am a user with the ability to create clients$/, () => {
   clientId = undefined;
 });
 
