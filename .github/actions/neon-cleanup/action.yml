@@ -1,0 +1,40 @@
+name: 'Delete Neon branch'
+description: 'Delete a Neon database branch by name'
+
+inputs:
+  api-key:
+    description: 'Neon API key'
+    required: true
+  project-id:
+    description: 'Neon project ID'
+    required: true
+  branch-name:
+    description: 'Name of the Neon branch to delete'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Delete Neon branch
+      shell: bash
+      env:
+        NEON_API_KEY: ${{ inputs.api-key }}
+        NEON_PROJECT_ID: ${{ inputs.project-id }}
+        BRANCH_NAME: ${{ inputs.branch-name }}
+      run: |
+        API_BASE="https://console.neon.tech/api/v2/projects/$NEON_PROJECT_ID"
+        AUTH_HEADER="Authorization: Bearer $NEON_API_KEY"
+
+        echo "Looking for Neon branch: $BRANCH_NAME"
+
+        BRANCH_ID=$(curl -s -X GET "$API_BASE/branches" \
+          -H "$AUTH_HEADER" \
+          -H "Content-Type: application/json" | jq -r ".branches[] | select(.name == \"$BRANCH_NAME\") | .id")
+
+        if [ -n "$BRANCH_ID" ]; then
+          echo "Deleting branch $BRANCH_ID..."
+          curl -s -X DELETE "$API_BASE/branches/$BRANCH_ID" -H "$AUTH_HEADER"
+          echo "Branch deleted successfully"
+        else
+          echo "Branch $BRANCH_NAME not found, skipping"
+        fi

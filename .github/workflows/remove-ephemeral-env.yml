@@ -38,28 +38,19 @@ jobs:
     name: Delete Neon branch
     runs-on: ubuntu-latest
     steps:
-      - name: Delete Neon branch
-        env:
-          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
-          NEON_PROJECT_ID: ${{ secrets.NEON_PROJECT_ID }}
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Compute branch name
+        id: branch
         run: |
           BRANCH_NAME=$(echo "${{ github.event.ref }}" | tr '/' '-')
-          echo "Deleting Neon branch: $BRANCH_NAME"
-
-          BRANCH_ID=$(curl -s -X GET \
-            "https://console.neon.tech/api/v2/projects/$NEON_PROJECT_ID/branches" \
-            -H "Authorization: Bearer $NEON_API_KEY" \
-            -H "Content-Type: application/json" | jq -r ".branches[] | select(.name == \"$BRANCH_NAME\") | .id")
-
-          if [ -n "$BRANCH_ID" ]; then
-            echo "Found branch with ID: $BRANCH_ID"
-            curl -s -X DELETE \
-              "https://console.neon.tech/api/v2/projects/$NEON_PROJECT_ID/branches/$BRANCH_ID" \
-              -H "Authorization: Bearer $NEON_API_KEY"
-            echo "Branch deleted successfully"
-          else
-            echo "Branch $BRANCH_NAME not found, skipping deletion"
-          fi
+          echo "name=$BRANCH_NAME" >> $GITHUB_OUTPUT
+      - name: Delete Neon branch
+        uses: ./.github/actions/neon-cleanup
+        with:
+          api-key: ${{ secrets.NEON_API_KEY }}
+          project-id: ${{ secrets.NEON_PROJECT_ID }}
+          branch-name: ${{ steps.branch.outputs.name }}
 
   delete-github-environment:
     name: Delete GitHub environment

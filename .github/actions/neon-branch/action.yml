@@ -1,0 +1,72 @@
+name: 'Create Neon branch'
+description: 'Create or reuse a Neon database branch and return the connection URI'
+
+inputs:
+  api-key:
+    description: 'Neon API key'
+    required: true
+  project-id:
+    description: 'Neon project ID'
+    required: true
+  branch-name:
+    description: 'Name for the Neon branch'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Create or reuse Neon branch
+      id: branch
+      shell: bash
+      env:
+        NEON_API_KEY: ${{ inputs.api-key }}
+        NEON_PROJECT_ID: ${{ inputs.project-id }}
+        BRANCH_NAME: ${{ inputs.branch-name }}
+      run: |
+        API_BASE="https://console.neon.tech/api/v2/projects/$NEON_PROJECT_ID"
+        AUTH_HEADER="Authorization: Bearer $NEON_API_KEY"
+
+        # Check if branch already exists
+        EXISTING_BRANCH=$(curl -s -X GET "$API_BASE/branches" \
+          -H "$AUTH_HEADER" \
+          -H "Content-Type: application/json" | jq -r ".branches[] | select(.name == \"$BRANCH_NAME\") | .id")
+
+        if [ -n "$EXISTING_BRANCH" ]; then
+          echo "Branch $BRANCH_NAME already exists with ID: $EXISTING_BRANCH"
+          BRANCH_ID="$EXISTING_BRANCH"
+
+          # Ensure endpoint exists
+          ENDPOINT_ID=$(curl -s -X GET "$API_BASE/endpoints" \
+            -H "$AUTH_HEADER" | jq -r ".endpoints[] | select(.branch_id == \"$BRANCH_ID\") | .id")
+
+          if [ -z "$ENDPOINT_ID" ]; then
+            echo "Creating endpoint..."
+            curl -s -X POST "$API_BASE/endpoints" \
+              -H "$AUTH_HEADER" \
+              -H "Content-Type: application/json" \
+              -d "{\"endpoint\": {\"branch_id\": \"$BRANCH_ID\", \"type\": \"read_write\"}}"
+            sleep 5
+          fi
+        else
+          echo "Creating new branch: $BRANCH_NAME"
+          RESPONSE=$(curl -s -X POST "$API_BASE/branches" \
+            -H "$AUTH_HEADER" \
+            -H "Content-Type: application/json" \
+            -d "{\"branch\": {\"name\": \"$BRANCH_NAME\"}, \"endpoints\": [{\"type\": \"read_write\"}]}")
+          BRANCH_ID=$(echo "$RESPONSE" | jq -r '.branch.id')
+          echo "Created branch with ID: $BRANCH_ID"
+          sleep 5
+        fi
+
+        # Get connection URI
+        CONNECTION_URI=$(curl -s -X GET \
+          "$API_BASE/connection_uri?branch_id=$BRANCH_ID&database_name=neondb&role_name=neondb_owner" \
+          -H "$AUTH_HEADER" | jq -r '.uri')
+
+        if [ -z "$CONNECTION_URI" ] || [ "$CONNECTION_URI" = "null" ]; then
+          echo "::error::Failed to get connection URI"
+          exit 1
+        fi
+
+        echo "Connection URI retrieved successfully"
+        echo "DATABASE_URL=$CONNECTION_URI" >> $GITHUB_ENV
