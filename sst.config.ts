@@ -10,6 +10,12 @@ export default $config({
     };
   },
   async run() {
-    new sst.aws.Nextjs('IHexa');
+    const databaseUrl = new sst.Secret('DatabaseUrl');
+
+    new sst.aws.Nextjs('IHexa', {
+      environment: {
+        DATABASE_URL: databaseUrl.value
+      }
+    });
   }
 });
