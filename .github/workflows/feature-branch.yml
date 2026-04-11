@@ -97,34 +97,17 @@ jobs:
 
   e2e:
     name: E2E
-    needs: build
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    container:
-      image: mcr.microsoft.com/playwright:v1.58.2
-    env:
-      HOME: /root
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
-      - name: Download build artifact
-        uses: actions/download-artifact@v8
-        with:
-          name: next-build
-          path: .next
-      - name: Install pnpm
-        uses: pnpm/action-setup@v5
-        with:
-          version: latest
-      - name: Set up Node.js
-        uses: actions/setup-node@v6
-        with:
-          node-version: latest
-          cache: 'pnpm'
-      - name: Install dependencies
-        run: pnpm install --frozen-lockfile
-      - name: Start server
-        run: pnpm start &
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install --with-deps
+      - name: Generate implementations
+        run: pnpm generate:implementations
       - name: Run E2E tests
         run: pnpm exec playwright test
       - uses: actions/upload-artifact@v7
