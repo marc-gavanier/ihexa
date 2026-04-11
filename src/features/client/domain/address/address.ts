@@ -11,4 +11,5 @@ export const Address = defineModel(
     zipcode: Zipcode.schema
   })
 );
+
 export type Address = Model.TypeOf<typeof Address>;

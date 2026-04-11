@@ -23,6 +23,7 @@ export const ClientToCreate = defineModel(
   }),
   ({ name, ...input }) => ({ ...input, name: formatName(name) })
 );
+
 export type ClientToCreate = Model.TypeOf<typeof ClientToCreate>;
 
 export class ClientAlreadyExists extends Data.TaggedError('ClientAlreadyExists')<{
