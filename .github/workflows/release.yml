@@ -11,14 +11,34 @@ permissions:
   pull-requests: write
 
 jobs:
+  migrate-database:
+    name: Migrate production database
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+      - name: Setup
+        uses: ./.github/actions/setup
+      - name: Run migrations
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: pnpm db:migrate
+      - name: Set SST database secret
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: pnpm sst secret set DatabaseUrl "$DATABASE_URL" --stage production
+
   deploy:
     name: Deploy to production
+    needs: migrate-database
     uses: ./.github/workflows/deploy.reusable.yml
     with:
       stage: production
       environment: production
       env-type: prod
-      with-database: true
     secrets: inherit
 
   release:
