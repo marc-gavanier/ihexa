@@ -180,10 +180,74 @@ jobs:
           ENV_NAME=$(echo "${{ github.ref_name }}" | tr '/' '-')
           echo "env-name=$ENV_NAME" >> $GITHUB_OUTPUT
 
+  neon:
+    name: Create Neon branch
+    runs-on: ubuntu-latest
+    needs:
+      - ephemeral-env-name
+    outputs:
+      database_url: ${{ steps.neon.outputs.database_url }}
+    steps:
+      - name: Create Neon branch
+        id: neon
+        env:
+          NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+          NEON_PROJECT_ID: ${{ secrets.NEON_PROJECT_ID }}
+        run: |
+          BRANCH_NAME="${{ needs.ephemeral-env-name.outputs.env-name }}"
+
+          EXISTING_BRANCH=$(curl -s -X GET \
+            "https://console.neon.tech/api/v2/projects/$NEON_PROJECT_ID/branches" \
+            -H "Authorization: Bearer $NEON_API_KEY" \
+            -H "Content-Type: application/json" | jq -r ".branches[] | select(.name == \"$BRANCH_NAME\") | .id")
+
+          if [ -n "$EXISTING_BRANCH" ]; then
+            echo "Branch $BRANCH_NAME already exists with ID: $EXISTING_BRANCH"
+            BRANCH_ID="$EXISTING_BRANCH"
+
+            ENDPOINT_ID=$(curl -s -X GET \
+              "https://console.neon.tech/api/v2/projects/$NEON_PROJECT_ID/endpoints" \
+              -H "Authorization: Bearer $NEON_API_KEY" | jq -r ".endpoints[] | select(.branch_id == \"$BRANCH_ID\") | .id")
+
+            if [ -z "$ENDPOINT_ID" ]; then
+              echo "No endpoint found, creating one..."
+              curl -s -X POST \
+                "https://console.neon.tech/api/v2/projects/$NEON_PROJECT_ID/endpoints" \
+                -H "Authorization: Bearer $NEON_API_KEY" \
+                -H "Content-Type: application/json" \
+                -d "{\"endpoint\": {\"branch_id\": \"$BRANCH_ID\", \"type\": \"read_write\"}}"
+              sleep 5
+            fi
+          else
+            echo "Creating new branch: $BRANCH_NAME"
+            RESPONSE=$(curl -s -X POST \
+              "https://console.neon.tech/api/v2/projects/$NEON_PROJECT_ID/branches" \
+              -H "Authorization: Bearer $NEON_API_KEY" \
+              -H "Content-Type: application/json" \
+              -d "{\"branch\": {\"name\": \"$BRANCH_NAME\"}, \"endpoints\": [{\"type\": \"read_write\"}]}")
+            BRANCH_ID=$(echo "$RESPONSE" | jq -r '.branch.id')
+            echo "Created branch with ID: $BRANCH_ID"
+            sleep 5
+          fi
+
+          CONNECTION_URI=$(curl -s -X GET \
+            "https://console.neon.tech/api/v2/projects/$NEON_PROJECT_ID/connection_uri?branch_id=$BRANCH_ID&database_name=neondb&role_name=neondb_owner" \
+            -H "Authorization: Bearer $NEON_API_KEY" | jq -r '.uri')
+
+          if [ -z "$CONNECTION_URI" ] || [ "$CONNECTION_URI" = "null" ]; then
+            echo "Failed to get connection URI"
+            exit 1
+          fi
+          echo "Connection URI retrieved successfully"
+
+          echo "::add-mask::$CONNECTION_URI"
+          echo "database_url=$CONNECTION_URI" >> $GITHUB_OUTPUT
+
   deploy:
     name: Deploy to ephemeral environment
     needs:
       - ephemeral-env-name
+      - neon
     uses: ./.github/workflows/deploy.reusable.yml
     with:
       stage: ${{ needs.ephemeral-env-name.outputs.env-name }}
@@ -192,3 +256,4 @@ jobs:
     secrets:
       AWS_ACCESS_KEY_ID: ${{ secrets.EPHEMERAL_AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.EPHEMERAL_AWS_SECRET_ACCESS_KEY }}
+      DATABASE_URL: ${{ needs.neon.outputs.database_url }}
