@@ -22,7 +22,7 @@ export const BadgeList = <T,>({
     <ul className={cn(className, 'flex flex-wrap gap-1')}>
       {values.map((value) => (
         <li key={itemToKey(value)}>
-          <Badge color={color} kind={kind} scale={scale}>
+          <Badge {...(color ? { color } : {})} {...(kind ? { kind } : {})} {...(scale ? { scale } : {})}>
             {itemToString(value)}
           </Badge>
         </li>

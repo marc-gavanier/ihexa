@@ -8,5 +8,5 @@ export type Filtered<T> = T & {
 
 export const filtered = <T>(result: T, params: FilterParams = {}): Filtered<T> => ({
   ...result,
-  search: params.search
+  ...(params.search != null ? { search: params.search } : {})
 });

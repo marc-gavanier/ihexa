@@ -2,7 +2,7 @@ import { create } from 'storybook/theming';
 import { colors } from './colors';
 
 const shared = {
-  brandTitle: 'Blue Mapping',
+  brandTitle: 'IHexa',
   brandUrl: '/',
   fontBase: '"Inter", system-ui, sans-serif',
   fontCode: 'ui-monospace, monospace',

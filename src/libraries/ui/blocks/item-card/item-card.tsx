@@ -6,7 +6,7 @@ import { createContext, useContext } from 'react';
 import { RiArrowRightLine } from 'react-icons/ri';
 import { cn } from '../../utils';
 
-type ItemCardContextType = { href?: string };
+type ItemCardContextType = { href?: string | undefined };
 
 const ItemCardContext = createContext<ItemCardContextType>({});
 

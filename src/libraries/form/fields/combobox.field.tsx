@@ -39,11 +39,7 @@ export const ComboBox = <TItem, TPayload extends object>(comboBoxProps: ComboBox
   };
 
   return (
-    <ComboBoxBase
-      {...comboBoxProps}
-      clearOnSelect={isMultipleSelection}
-      defaultValue={isMultipleSelection ? undefined : defaultValue}
-    >
+    <ComboBoxBase {...comboBoxProps} clearOnSelect={isMultipleSelection} {...(isMultipleSelection ? {} : { defaultValue })}>
       {({
         getLabelProps,
         getInputProps,
