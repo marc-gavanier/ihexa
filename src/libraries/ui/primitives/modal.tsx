@@ -3,7 +3,7 @@ import { cn } from '../utils';
 
 type ModalPosition = 'modal-top' | 'modal-bottom' | 'modal-middle';
 
-const ModalContext = createContext<{ onClose?: () => void }>({});
+const ModalContext = createContext<{ onClose?: (() => void) | undefined }>({});
 
 export type ModalProps = Omit<ComponentProps<'dialog'>, 'open'> & {
   open: boolean;

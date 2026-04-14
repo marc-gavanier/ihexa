@@ -17,7 +17,7 @@ export const I18nProvider = ({ locale, namespaces, resources, children }: I18nPr
     instance.use(initReactI18next).init({
       lng: locale,
       ns: namespaces,
-      defaultNS: namespaces[0],
+      ...(namespaces[0] != null ? { defaultNS: namespaces[0] } : {}),
       resources,
       keySeparator: '.',
       interpolation: { escapeValue: false }

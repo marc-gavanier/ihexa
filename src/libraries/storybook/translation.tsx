@@ -16,7 +16,7 @@ export const translation = <N extends Namespace>(
     resources: {
       [lng]: resources
     },
-    defaultNS: namespaces[0]
+    ...(namespaces[0] != null ? { defaultNS: namespaces[0] } : {})
   });
   return i18n.getFixedT(lng, namespaces);
 };

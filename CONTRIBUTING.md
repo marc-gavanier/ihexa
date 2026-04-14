@@ -8,7 +8,9 @@
 - 🛠️ [Available Scripts](#available-scripts)
 - 🏗️ [Environment Setup Guide](#environment-setup-guide)
 - 🤝 [Requirements](#requirements)
+- 🏗️ [Built With](#built-with)
 - 🔄 [CI/CD](#cicd)
+- 🏷️ [Versioning](#versioning)
 
 <h2 id="prerequisites">🚀 Prerequisites</h2>
 
@@ -229,6 +231,39 @@ The release workflow uses a GitHub App to create releases and push tags.
 3. Push your branch : CI runs automatically, ephemeral environment is deployed
 4. Open a Pull Request to merge into `main`
 
+<h2 id="built-with">🏗️ Built With</h2>
+
+### Languages & Frameworks
+
+- [TypeScript](https://www.typescriptlang.org/): statically typed superset of JavaScript
+- [React](https://react.dev/): declarative library for building user interfaces
+- [Next.js](https://nextjs.org/): full-stack React framework with App Router
+- [Effect](https://effect.website/): type-safe functional programming library for domain modeling
+
+### UI & Styling
+
+- [Tailwind CSS](https://tailwindcss.com/): utility-first CSS framework
+- [DaisyUI](https://daisyui.com/): component library for Tailwind CSS
+- [Motion](https://motion.dev/): animation library for React
+
+### Database & ORM
+
+- [PostgreSQL](https://www.postgresql.org/): open-source relational database
+- [Drizzle ORM](https://orm.drizzle.team/): TypeScript ORM with type-safe queries
+
+### Tools
+
+- [Biome](https://biomejs.dev/): fast linter and formatter
+- [Vitest](https://vitest.dev/): unit test framework
+- [Playwright](https://playwright.dev/): end-to-end testing framework
+- [Cucumber](https://cucumber.io/): BDD testing framework
+- [Storybook](https://storybook.js.org/): UI component explorer
+- [Husky](https://typicode.github.io/husky/): git hooks for automatic checks
+- [Commitlint](https://github.com/conventional-changelog/commitlint): conventional commits validation
+- [Lint-staged](https://github.com/okonet/lint-staged): linters on staged git files
+- [dependency-cruiser](https://github.com/sverweij/dependency-cruiser): architecture dependency rules
+- [folderslint](https://github.com/denber1024/folderslint): folder structure validation
+
 <h2 id="cicd">🔄 CI/CD</h2>
 
 ### Tools
@@ -252,3 +287,7 @@ Each feature branch automatically gets its own environment:
 2. **Migrations** are applied to the branch
 3. The app is **deployed to AWS** via SST with its own CloudFront URL
 4. When the branch is deleted, everything is **cleaned up automatically**
+
+<h2 id="versioning">🏷️ Versioning</h2>
+
+This project follows [Semantic Versioning 2.0.0](https://semver.org/) specification for version naming, ensuring a clear release cycle and promoting backward compatibility.

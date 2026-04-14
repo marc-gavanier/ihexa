@@ -93,6 +93,16 @@ UI components can only import from:
 
 Library dependencies must be declared in `.dependency-cruiser.cjs` `LIBRARY_DEPENDENCIES`.
 
+### Storybook MCP
+
+When Storybook is running (`pnpm storybook:dev`), an MCP server is available at `http://localhost:6006/mcp`.
+
+When working on UI components:
+- Query `list-all-documentation` to discover existing components before creating new ones
+- Query `get-documentation` for detailed props and usage examples before using a component
+- Use `get-storybook-story-instructions` before writing or modifying stories
+- Validate changes with `run-story-tests` after modifications
+
 ### Type-Safe Server Action Errors
 
 `ServerActionResult<TSuccess, TError>` propagates error types through the chain. `useServerAction` hook extracts both result and error types for type-safe `onSuccess`/`onError` handlers.

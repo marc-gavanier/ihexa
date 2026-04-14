@@ -41,7 +41,7 @@ export const setI18nInstance = async (instance: I18nInstance): Promise<void> => 
   await merged.init({
     lng,
     ns: namespaces,
-    defaultNS: namespaces[0],
+    ...(namespaces[0] != null ? { defaultNS: namespaces[0] } : {}),
     resources
   });
 

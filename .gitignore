@@ -153,6 +153,10 @@ dist
 # generated docs
 dependency-graph.svg
 
+# generated sitemap
+public/robots.txt
+public/sitemap*.xml
+
 *storybook.log
 storybook-static
 

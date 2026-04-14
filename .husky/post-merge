@@ -1,1 +1,2 @@
 pnpm i18n:interface
+pnpm db:check
