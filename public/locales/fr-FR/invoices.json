@@ -1,4 +1,8 @@
 {
+  "metadata": {
+    "title": "Détail facture",
+    "description": "Consultation d'une facture avec ses lignes et montants."
+  },
   "title": "Facture",
   "details": {
     "label": "Désignation",
