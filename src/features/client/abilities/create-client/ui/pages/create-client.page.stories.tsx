@@ -5,7 +5,7 @@ import { provide } from '@/libraries/injection';
 import { ServerActionError, ServerActionSuccess } from '@/libraries/nextjs/action';
 import { withI18nProvider } from '@/libraries/storybook';
 import { Toaster } from '@/libraries/ui/blocks/toaster';
-import { CREATE_CLIENT_ACTION_KEY } from '../../action';
+import { CREATE_CLIENT_ACTION_KEY } from '../../create-client.key';
 import { CreateClientPage } from './create-client.page';
 
 const meta = {
