@@ -1,1 +1,1 @@
-export { ERROR_PREFIX } from './error-prefix';
+export const ERROR_PREFIX = { errorPrefix: 'global.server-action:error' };
