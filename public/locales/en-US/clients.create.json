@@ -1,4 +1,8 @@
 {
+  "metadata": {
+    "title": "Create Client",
+    "description": "Form to create a new client."
+  },
   "title": "Create Client",
   "success": {
     "created": "Client {{firstname}} {{lastname}} successfully created"
