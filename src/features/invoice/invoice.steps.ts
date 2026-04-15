@@ -4,7 +4,7 @@ import { Given, Then, When } from '@cucumber/cucumber';
 import { Either } from 'effect';
 import type { Invoice, InvoiceId, InvoiceNotFound } from '@/features/invoice/domain';
 import { assertMatchesDataTable } from '@/libraries/cucumber';
-import { invoiceById } from './implementations';
+import { invoiceById } from './abilities/consult-invoice/implementations';
 
 let currentInvoice: Invoice | undefined;
 let currentError: InvoiceNotFound | undefined;
