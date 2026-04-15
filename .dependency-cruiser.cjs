@@ -194,7 +194,8 @@ const FORBIDDEN_APP = [
         'src/features',
         'src/configuration',
         'src/styles/globals.css',
-        'client[.]layout[.]tsx$'
+        'client[.]layout[.]tsx$',
+        'src/app/_actions'
       ]
     }
   }
@@ -315,7 +316,7 @@ const FORBIDDEN_FEATURES = {
         pathNot: [
           '^src/features/$1/abilities/$2/ui',
           '^src/features/$1/abilities/$2/.+[.]validation[.]ts$',
-          '^src/features/$1/abilities/$2/.+[.]action[.]key[.]ts$',
+          '^src/features/$1/abilities/$2/.+[.]key[.]ts$',
           '^src/features/$1/domain',
           '^src/features/$1/injection',
           '^src/features/$1/ui',
