@@ -6,7 +6,8 @@ import { clearClients } from '@/features/client/infrastructure';
 import { assertMatchesDataTable } from '@/libraries/cucumber';
 import type { Filtered } from '@/libraries/resultset';
 import { Page, PageSize, type Paginated } from '@/libraries/resultset';
-import { type CreateClientFormData, createClient } from './abilities/create-client';
+import type { CreateClientFormData } from './abilities/create-client';
+import { createClient } from './abilities/create-client/implementations';
 import { getClientById } from './abilities/get-client';
 import { listClients } from './abilities/list-clients';
 
