@@ -53,7 +53,7 @@ export default layoutBuilder()
           </header>
           {children}
           <Footer className='bg-base-200 mt-auto' innerClassName='max-w-7xl px-4 py-10 sm:px-6 lg:px-8'>
-            <Logo width={80} height={80} color='color-base-content' className='pb-4 opacity-50' />
+            <Logo width={80} height={80} color='color-base-500' className='pb-4' />
             <ThemeChanger />
           </Footer>
         </ThemeProvider>
