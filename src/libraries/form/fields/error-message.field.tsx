@@ -6,19 +6,21 @@ const hasExactlyOne = <T,>(items: T[]): items is [T] => items.length === 1;
 
 export const ErrorMessage = ({
   errors: errorsProp = [],
-  formatMessage = (message) => message,
+  formatMessage,
   template,
   className = 'text-error mt-1 text-xs'
 }: {
   errors?: Error[];
-  // biome-ignore lint/suspicious/noExplicitAny: must accept any translation function signature (e.g. i18next TFunction)
-  formatMessage?: (key: any) => string;
+  formatMessage?: (key: never) => string;
   template?: (field: string, message: string) => string;
   className?: string;
 }): ReactNode => {
   const { name, state } = useFieldContext<string>();
   const errors: Error[] = [...state.meta.errors, ...errorsProp];
-  const format = (message: string) => formatMessage(template ? template(name, message) : message);
+  const format = (message: string) => {
+    const key = template ? template(name, message) : message;
+    return formatMessage ? (formatMessage as (key: string) => string)(key) : key;
+  };
 
   return hasError(state) || errorsProp.length > 0 ? (
     hasExactlyOne(errors) ? (
