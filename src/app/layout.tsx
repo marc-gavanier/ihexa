@@ -5,12 +5,12 @@ import { type TranslationProps, withI18n, withLang, withTranslation } from '@/li
 import '@/libraries/i18n/resource-loader.node';
 import { layoutBuilder } from '@/libraries/nextjs/layout';
 import '@/styles/globals.css';
+import { Logo } from '@/features/brand/logo';
 import { Footer } from '@/libraries/ui/blocks/footer/footer';
 import { contentId, skipLinksId } from '@/libraries/ui/blocks/skip-links/skip-links';
 import { SkipLinksPortalClient } from '@/libraries/ui/blocks/skip-links/skip-links-portal-client';
 import { ThemeChanger } from '@/libraries/ui/blocks/theme-changer';
 import { ToasterClient } from '@/libraries/ui/blocks/toaster-client';
-import { Logo } from '@/libraries/ui/icons/logo';
 import { ThemeProvider } from '@/libraries/ui/theme/providers';
 
 export const metadata: Metadata = {
