@@ -21,6 +21,7 @@ const SelectedItems = lazy(() =>
 ) as <T>(props: SelectedItemProps<T>) => ReactNode;
 
 const Submit = lazy(() => import('./form/submit.form').then((module) => ({ default: module.Submit })));
+const QueryLink = lazy(() => import('./form/query-link.form').then((module) => ({ default: module.QueryLink })));
 
 export const { useAppForm } = createFormHook({
   fieldContext,
@@ -35,5 +36,5 @@ export const { useAppForm } = createFormHook({
     Combobox,
     SelectedItems
   },
-  formComponents: { Submit }
+  formComponents: { QueryLink, Submit }
 });

@@ -1,11 +1,26 @@
+import type { Metadata } from 'next';
+import Link from 'next/link';
 import { i18n } from '@/configuration/i18n';
 import { type TranslationProps, withI18n, withLang, withTranslation } from '@/libraries/i18n';
 import '@/libraries/i18n/resource-loader.node';
 import { layoutBuilder } from '@/libraries/nextjs/layout';
 import '@/styles/globals.css';
+import { Logo } from '@/features/brand/logo';
+import { Footer } from '@/libraries/ui/blocks/footer/footer';
 import { contentId, skipLinksId } from '@/libraries/ui/blocks/skip-links/skip-links';
 import { SkipLinksPortalClient } from '@/libraries/ui/blocks/skip-links/skip-links-portal-client';
+import { ThemeChanger } from '@/libraries/ui/blocks/theme-changer';
 import { ToasterClient } from '@/libraries/ui/blocks/toaster-client';
+import { ThemeProvider } from '@/libraries/ui/theme/providers';
+
+export const metadata: Metadata = {
+  title: {
+    template: '%s | IHexa',
+    default: 'IHexa'
+  },
+  description:
+    'IHexa — training project for feature-based vertical slice architecture with Next.js, React, TypeScript, and Effect.'
+};
 
 const SkipLinks = withTranslation(({ t }: TranslationProps) => (
   <SkipLinksPortalClient links={[{ label: t('skip-links.content'), anchor: `#${contentId}` }]}>
@@ -18,16 +33,32 @@ export default layoutBuilder()
   .use(withI18n(i18n)('global.skip-links'))
   .render(async ({ lang }, { children }) => (
     <html lang={lang} suppressHydrationWarning>
-      <body className='antialiased'>
-        <ToasterClient directionY='toast-top' />
-        <div id={skipLinksId} />
-        <header className='navbar bg-base-100 border-base-300 border-b'>
-          <div className='mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8'></div>
-        </header>
-        <div className='mx-auto w-full max-w-7xl flex-1 px-4 py-6 sm:px-6 lg:px-8'>
+      <body className='flex min-h-screen flex-col antialiased'>
+        <ThemeProvider attribute='data-theme' defaultTheme='system' enableSystem disableTransitionOnChange>
+          <ToasterClient directionY='toast-top' />
+          <div id={skipLinksId} />
           <SkipLinks />
-          <main id={contentId}>{children}</main>
-        </div>
+          <header className='navbar bg-base-100 border-base-300 border-b'>
+            <div className='mx-auto flex w-full max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8'>
+              <Link href='/' className='flex items-center gap-2'>
+                <Logo width={28} height={28} title='IHexa' />
+                <span className='font-bold text-lg'>IHexa</span>
+              </Link>
+              <nav className='flex items-center gap-4'>
+                <Link href='/clients/create' className='link link-hover text-sm'>
+                  Clients
+                </Link>
+              </nav>
+            </div>
+          </header>
+          {children}
+          <Footer className='bg-base-200 mt-auto' innerClassName='max-w-7xl px-4 py-10 sm:px-6 lg:px-8'>
+            <div className='text-center'>
+              <Logo width={100} height={100} color='color-base-content' className='mb-6 opacity-20' />
+              <ThemeChanger />
+            </div>
+          </Footer>
+        </ThemeProvider>
       </body>
     </html>
   ));

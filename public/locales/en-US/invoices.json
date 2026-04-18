@@ -1,4 +1,8 @@
 {
+  "metadata": {
+    "title": "Invoice Detail",
+    "description": "View an invoice with its lines and amounts."
+  },
   "title": "Invoice",
   "details": {
     "label": "Label",

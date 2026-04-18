@@ -9,8 +9,8 @@ import { useAppForm } from '@/libraries/form/use-app-form';
 import { inject } from '@/libraries/injection';
 import { useServerAction } from '@/libraries/nextjs/action';
 import { toastError, toastSuccess } from '@/libraries/nextjs/components';
-import { CREATE_CLIENT_ACTION_KEY } from '../../action/create-client.action.key';
-import { createClientValidation } from '../../action/create-client.validation';
+import { CREATE_CLIENT_ACTION_KEY } from '../../create-client.key';
+import { createClientValidation } from '../../create-client.validation';
 
 export const CreateClientForm = () => {
   const { t } = useTranslation('clients.create');

@@ -1,4 +1,4 @@
-import { key } from '@/libraries/injection';
+import { key } from 'piqure';
 import type { Namespace, TypedTFunction } from './types';
 
 export type Translation = TypedTFunction<Namespace[]>;

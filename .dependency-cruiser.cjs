@@ -140,7 +140,10 @@ const FORBIDDEN_GLOBAL = [
       'from.pathNot re of the not-to-dev-dep rule in the dependency-cruiser configuration',
     from: {
       path: '^(src)',
-      pathNot: ['[.](?:spec|test|e2e|feature|stories|steps)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$']
+      pathNot: [
+        '[.](?:spec|test|e2e|feature|stories|steps)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$',
+        '^src/configuration/drizzle/config[.]ts$'
+      ]
     },
     to: {
       dependencyTypes: ['npm-dev'],
@@ -194,7 +197,8 @@ const FORBIDDEN_APP = [
         'src/features',
         'src/configuration',
         'src/styles/globals.css',
-        'client[.]layout[.]tsx$'
+        'client[.]layout[.]tsx$',
+        'src/app/_actions'
       ]
     }
   }
@@ -315,7 +319,7 @@ const FORBIDDEN_FEATURES = {
         pathNot: [
           '^src/features/$1/abilities/$2/ui',
           '^src/features/$1/abilities/$2/.+[.]validation[.]ts$',
-          '^src/features/$1/abilities/$2/.+[.]action[.]key[.]ts$',
+          '^src/features/$1/abilities/$2/.+[.]key[.]ts$',
           '^src/features/$1/domain',
           '^src/features/$1/injection',
           '^src/features/$1/ui',

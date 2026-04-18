@@ -1,4 +1,4 @@
-import { key } from '@/libraries/injection';
+import { key } from 'piqure';
 import type { Namespace } from './types';
 
 export type ResourceLoader = (lng: string, namespaces: Namespace[]) => Promise<Record<Namespace, Record<string, unknown>>>;

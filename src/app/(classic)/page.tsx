@@ -1,4 +1,10 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
+
+export const metadata: Metadata = {
+  title: 'Accueil',
+  description: "Page d'accueil IHexa — accès aux factures et clients."
+};
 
 const Page = () => (
   <div>

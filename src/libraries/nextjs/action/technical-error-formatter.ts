@@ -1,3 +1,3 @@
-import { key } from '@/libraries/injection';
+import { keyFor } from 'piqure';
 
-export const ERROR_PREFIX_KEY = key<string | undefined>('client-action.error-prefix');
+export const ERROR_PREFIX_KEY = keyFor<string | undefined>('client-action.error-prefix');

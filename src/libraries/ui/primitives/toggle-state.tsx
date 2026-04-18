@@ -1,3 +1,5 @@
+'use client';
+
 import { type ReactNode, useCallback, useState } from 'react';
 
 type ToggleStateProps = {
