@@ -1,7 +1,7 @@
 'use server';
 
 import { ERROR_PREFIX } from '@/configuration/errors';
-import { withLogger } from '@/configuration/logger';
+import { withLogger } from '@/configuration/observability/logger';
 import { ClientToCreate } from '@/features/client/domain';
 import { actionBuilder, fromEither, withInput } from '@/libraries/nextjs/action';
 import { createClient } from '../implementations';

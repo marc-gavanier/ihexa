@@ -1,15 +1,16 @@
 'use client';
 
 import { useTranslation } from 'react-i18next';
+import { analytics } from '@/configuration/observability/analytics';
 import { applyEffectSchema } from '@/libraries/form/apply-effect-schema';
 import { fieldErrorTranslation } from '@/libraries/form/field-error-translation';
 import { handleAction } from '@/libraries/form/handle-action';
 import { handleSubmit } from '@/libraries/form/handle-submit';
 import { useAppForm } from '@/libraries/form/use-app-form';
 import { inject } from '@/libraries/injection';
-import { withValidationLogging } from '@/libraries/logger/with-validation-logging';
 import { useServerAction } from '@/libraries/nextjs/action';
 import { toastError, toastSuccess } from '@/libraries/nextjs/components';
+import { withValidationLogging } from '@/libraries/observability/logger/with-validation-logging';
 import { CREATE_CLIENT_ACTION_KEY } from '../../action/create-client.action.key';
 import { createClientValidation } from '../../action/create-client.validation';
 
@@ -17,6 +18,7 @@ export const CreateClientForm = () => {
   const { t } = useTranslation('clients.create');
   const [action, isPending] = useServerAction(inject(CREATE_CLIENT_ACTION_KEY), {
     onSuccess: (state) => {
+      analytics.track({ category: 'clients', action: 'create', label: 'form-submit' });
       toastSuccess(state)(({ name }) => t('success.created', name));
       form.reset();
     },
