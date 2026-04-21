@@ -321,6 +321,7 @@ const FORBIDDEN_FEATURES = {
           '^src/features/$1/ui',
           '^src/features/$1/routes[.]ts$',
           '^src/libraries/',
+          '^src/configuration/',
           '^node_modules/',
           '^src/features/$1/abilities/[^/]+/ui'
         ]
@@ -413,12 +414,12 @@ const FORBIDDEN_FEATURES = {
 // Each library can only depend on libraries explicitly listed here
 const LIBRARY_DEPENDENCIES = {
   i18n: ['nextjs', 'injection'],
-  logger: ['nextjs'],
+  observability: ['nextjs'],
   nextjs: ['ui', 'injection'],
   resultset: ['effect'],
   storybook: ['i18n', 'injection'],
   ui: ['injection'],
-  form: ['ui']
+  form: ['ui', 'observability']
 };
 
 // Libraries that can access env.ts
@@ -520,10 +521,9 @@ module.exports = {
     },
 
     /* Which modules to exclude */
-    // exclude : {
-    //   /* path: an array of regular expressions in strings to match against */
-    //   path: '',
-    // },
+    exclude: {
+      path: ['^src/@arckit/']
+    },
 
     /* Which modules to exclusively include (array of regular expressions in strings)
        dependency-cruiser will skip everything not matching this pattern
