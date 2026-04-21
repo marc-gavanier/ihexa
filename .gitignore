@@ -160,10 +160,17 @@ public/sitemap*.xml
 *storybook.log
 storybook-static
 
+# arckit packages (published separately)
+src/@arckit/
+
 # generated implementations (DI)
 **/implementations/index.ts
 **/infrastructure/index.ts
-src/configuration/logger/index.ts
+src/configuration/observability/*/index.ts
 
 # PostgreSQL data
 .database/
+
+# Matomo data
+.matomo/
+.matomo-db/

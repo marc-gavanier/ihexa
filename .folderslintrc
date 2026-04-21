@@ -1,6 +1,7 @@
 {
   "root": "src",
   "rules": [
+    "@arckit/**",
     "env",
     "app/api/**",
     "app/**",

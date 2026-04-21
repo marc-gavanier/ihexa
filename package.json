@@ -98,6 +98,8 @@
     "@radix-ui/react-dropdown-menu": "^2.1.16",
     "@radix-ui/react-popover": "^1.1.15",
     "@radix-ui/react-tooltip": "^1.2.8",
+    "@sentry/nextjs": "^10.46.0",
+    "@socialgouv/matomo-next": "^1.13.1",
     "@tailwindcss/postcss": "^4.2.1",
     "@tailwindcss/typography": "^0.5.19",
     "@tanstack/react-form": "^1.28.5",
