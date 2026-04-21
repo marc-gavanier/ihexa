@@ -1,4 +1,4 @@
-import { consoleLogger, withLogger as createWithLogger } from '@/libraries/logger';
+import { consoleLogger, withLogger as createWithLogger } from '@/libraries/observability';
 
 const loggerInstance = consoleLogger();
 

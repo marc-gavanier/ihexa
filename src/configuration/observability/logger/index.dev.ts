@@ -1,4 +1,4 @@
-import { withLogger as createWithLogger, fileLogger } from '@/libraries/logger';
+import { withLogger as createWithLogger, fileLogger } from '@/libraries/observability';
 
 const loggerInstance = fileLogger({ path: '.logs/app.jsonl', console: true });
 

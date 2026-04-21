@@ -15,6 +15,14 @@ while IFS= read -r source_file; do
   count=$((count + 1))
 done < <(find "$SRC_DIR" -name "index.$ENV.ts" -type f)
 
+# Find all directories containing an index.client.$ENV.ts file
+while IFS= read -r source_file; do
+  target_file="${source_file%index.client.$ENV.ts}index.client.ts"
+
+  cp "$source_file" "$target_file"
+  count=$((count + 1))
+done < <(find "$SRC_DIR" -name "index.client.$ENV.ts" -type f)
+
 if [ "$count" -eq 0 ]; then
   echo "Warning: No index.$ENV.ts files found" >&2
   exit 0
