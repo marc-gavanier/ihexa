@@ -1,11 +1,16 @@
+import { Suspense } from 'react';
 import { i18n } from '@/configuration/i18n';
 import { type TranslationProps, withI18n, withLang, withTranslation } from '@/libraries/i18n';
 import '@/libraries/i18n/resource-loader.node';
 import { layoutBuilder } from '@/libraries/nextjs/layout';
+import { MatomoTracker } from '@/libraries/observability/analytics/matomo-tracker';
 import '@/styles/globals.css';
 import { contentId, skipLinksId } from '@/libraries/ui/blocks/skip-links/skip-links';
 import { SkipLinksPortalClient } from '@/libraries/ui/blocks/skip-links/skip-links-portal-client';
 import { ToasterClient } from '@/libraries/ui/blocks/toaster-client';
+
+const matomoUrl = process.env['NEXT_PUBLIC_MATOMO_URL'];
+const matomoSiteId = process.env['NEXT_PUBLIC_MATOMO_SITE_ID'];
 
 const SkipLinks = withTranslation(({ t }: TranslationProps) => (
   <SkipLinksPortalClient links={[{ label: t('skip-links.content'), anchor: `#${contentId}` }]}>
@@ -19,6 +24,11 @@ export default layoutBuilder()
   .render(async ({ lang }, { children }) => (
     <html lang={lang} suppressHydrationWarning>
       <body className='antialiased'>
+        {matomoUrl && matomoSiteId && (
+          <Suspense fallback={null}>
+            <MatomoTracker url={matomoUrl} siteId={matomoSiteId} />
+          </Suspense>
+        )}
         <ToasterClient directionY='toast-top' />
         <div id={skipLinksId} />
         <header className='navbar bg-base-100 border-base-300 border-b'>
