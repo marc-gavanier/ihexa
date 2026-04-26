@@ -1,3 +1,24 @@
+# [1.6.0](https://github.com/marc-gavanier/ihexa/compare/v1.5.1...v1.6.0) (2026-04-26)
+
+
+### Bug Fixes
+
+* add missing 'use client' directive to ToggleState component ([cbaf7df](https://github.com/marc-gavanier/ihexa/commit/cbaf7df238b53d6378007720142bba60d782fbec))
+* adjust footer logo color and layout for better theme contrast ([1662060](https://github.com/marc-gavanier/ihexa/commit/1662060184f5ce40d740bd98a95439483ac871ce))
+* copy locales to Lambda bundle for SSR i18n ([456a61f](https://github.com/marc-gavanier/ihexa/commit/456a61f0dedb07212b6f82634ec20469fd4c3d4b))
+* include locales in standalone output via outputFileTracingIncludes ([5b34f61](https://github.com/marc-gavanier/ihexa/commit/5b34f619c797c96cddda5b7058f21fa42c534dd4))
+* remove any from ErrorMessage formatMessage type, use never for contravariance ([4fc53f7](https://github.com/marc-gavanier/ihexa/commit/4fc53f745e6d77bd39c40c0d62deee9444056bab))
+* restore src/libraries rules as incubator for future libs ([b9aab6b](https://github.com/marc-gavanier/ihexa/commit/b9aab6bcb1aa9985300c8cc0dbc020555519cfa4))
+* update cucumber steps import after action extraction to app/_actions ([fb8ad4d](https://github.com/marc-gavanier/ihexa/commit/fb8ad4d0ed8c6620ad64ab00bb18d9988008125c))
+* use color-base-500 for footer logo to balance light and dark modes ([6154e7b](https://github.com/marc-gavanier/ihexa/commit/6154e7b5e11bb14189551db0b6a6234d1a000661))
+
+
+### Features
+
+* add color prop to Logo for theme-aware monochrome rendering ([71aecbc](https://github.com/marc-gavanier/ihexa/commit/71aecbc4db0d068e8b22465db44bbf328bda8826))
+* add page, layout, route middlewares and route builder ([4bf4a9b](https://github.com/marc-gavanier/ihexa/commit/4bf4a9b71a56d78a3d97f4538dd14157f2e33837))
+* improve form library with QueryLink and ErrorMessage enhancements ([9a2c6d1](https://github.com/marc-gavanier/ihexa/commit/9a2c6d1cfb8a429955af7d5797e8187e0a5a8f6e))
+
 ## [1.5.1](https://github.com/marc-gavanier/ihexa/compare/v1.5.0...v1.5.1) (2026-04-11)
 
 
