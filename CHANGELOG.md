@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/marc-gavanier/ihexa/compare/v1.6.0...v1.6.1) (2026-04-26)
+
+
+### Bug Fixes
+
+* sanitize stage names for SST and ignore 404 on env delete ([6185973](https://github.com/marc-gavanier/ihexa/commit/6185973a0ae71b492f5e9b6a3582b8fe0028cd3f))
+
 # [1.6.0](https://github.com/marc-gavanier/ihexa/compare/v1.5.1...v1.6.0) (2026-04-26)
 
 
