@@ -1,6 +1,10 @@
 @import "tailwindcss";
 @import "./components/components.css";
 
+@source "../../node_modules/@arckit/daisyui/dist";
+@source "../../node_modules/@arckit/form/dist";
+@source "../../node_modules/@arckit/nextjs/dist";
+
 @plugin "tailwindcss-animate";
 
 @plugin "@tailwindcss/typography";

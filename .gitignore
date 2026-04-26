@@ -165,5 +165,8 @@ storybook-static
 **/infrastructure/index.ts
 src/configuration/logger/index.ts
 
+# @arckit packages (separate repos)
+src/@arckit/
+
 # PostgreSQL data
 .database/

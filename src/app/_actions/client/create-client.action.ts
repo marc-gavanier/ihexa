@@ -1,13 +1,13 @@
 'use server';
 
-import { ERROR_PREFIX } from '@/configuration/errors';
+import { fromEither, withInput } from '@arckit/nextjs';
 import { withLogger } from '@/configuration/logger';
+import { actionBuilder } from '@/configuration/nextjs';
 import { CREATE_CLIENT_ERRORS, createClientValidation } from '@/features/client/abilities/create-client';
 import { createClient } from '@/features/client/abilities/create-client/implementations';
 import { ClientToCreate } from '@/features/client/domain';
-import { actionBuilder, fromEither, withInput } from '@/libraries/nextjs/action';
 
-export const createClientAction = actionBuilder(ERROR_PREFIX)
+export const createClientAction = actionBuilder()
   .use(withInput(createClientValidation))
   .use(withLogger('createClientAction', { extractPayload: ({ input: { id } }) => ({ id }) }))
   .execute(

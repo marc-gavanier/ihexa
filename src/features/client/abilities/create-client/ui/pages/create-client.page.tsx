@@ -1,7 +1,8 @@
+import { PageHeader } from '@arckit/daisyui/blocks';
+import { ICON_LG } from '@arckit/daisyui/icons';
+import type { TranslationProps } from '@arckit/i18n';
 import { RiUserAddLine } from 'react-icons/ri';
-import { type TranslationProps, withTranslation } from '@/libraries/i18n';
-import { PageHeader } from '@/libraries/ui/blocks/page-header';
-import { ICON_LG } from '@/libraries/ui/icons/sizes';
+import { withTranslation } from '@/configuration/i18n';
 import { CreateClientForm } from '../components';
 
 export const CreateClientPage = withTranslation(({ t }: TranslationProps) => (
