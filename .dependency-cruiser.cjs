@@ -277,6 +277,7 @@ const FORBIDDEN_FEATURES = {
           '^src/features/$1/abilities/$2/implementations/',
           '^src/features/$1/abilities/$2/ui/',
           '^src/features/$1/abilities/$2/[^/]+[.]validation[.]ts$',
+          '^src/libraries/',
           '^src/configuration/',
           '^src/env[.]ts$',
           '^node_modules/'
@@ -298,6 +299,7 @@ const FORBIDDEN_FEATURES = {
           '^src/features/$1/domain',
           '^src/features/$1/injection',
           '^src/features/$1/ui',
+          '^src/libraries/',
           '^src/configuration/',
           '^node_modules/'
         ]
@@ -324,6 +326,7 @@ const FORBIDDEN_FEATURES = {
           '^src/features/$1/injection',
           '^src/features/$1/ui',
           '^src/features/$1/routes[.]ts$',
+          '^src/libraries/',
           '^src/configuration/',
           '^node_modules/',
           '^src/features/$1/abilities/[^/]+/ui'
@@ -413,6 +416,86 @@ const FORBIDDEN_FEATURES = {
   ]
 };
 
+// Define allowed library dependencies graph
+// Each library can only depend on libraries explicitly listed here
+const LIBRARY_DEPENDENCIES = {};
+
+// Libraries that can access env.ts
+const LIBRARIES_WITH_ENV_ACCESS = [];
+
+// Libraries that can access features (for templates, i18n namespaces, etc.)
+const LIBRARIES_WITH_FEATURES_ACCESS = {};
+
+// Generate interdependency rules for each library
+const generateLibraryInterdependencyRules = () => {
+  return Object.entries(LIBRARY_DEPENDENCIES).map(([lib, allowedDeps]) => ({
+    name: `library-${lib}-allowed-deps`,
+    comment: `Library '${lib}' can only depend on: ${allowedDeps.join(', ') || 'nothing'}`,
+    severity: 'error',
+    from: { path: `^src/libraries/${lib}/` },
+    to: {
+      path: '^src/libraries/',
+      pathNot: [`^src/libraries/${lib}/`, ...allowedDeps.map((dep) => `^src/libraries/${dep}/`)]
+    }
+  }));
+};
+
+// Generate rule for libraries without declared dependencies
+const generateStrictLibraryRule = () => ({
+  name: 'no-undeclared-library-interdependencies',
+  comment: 'Libraries without declared dependencies cannot depend on other libraries. Add to LIBRARY_DEPENDENCIES if needed.',
+  severity: 'error',
+  from: {
+    path: '^src/libraries/([^/]+)/',
+    pathNot: Object.keys(LIBRARY_DEPENDENCIES).map((lib) => `^src/libraries/${lib}/`)
+  },
+  to: {
+    path: '^src/libraries/',
+    pathNot: ['^src/libraries/$1/']
+  }
+});
+
+const FORBIDDEN_LIBRARIES = [
+  {
+    name: 'no-app-dependencies-in-libraries',
+    comment: 'Libraries should never depend on app code.',
+    severity: 'error',
+    from: { path: ['^src/libraries'] },
+    to: { path: ['^src/app'] }
+  },
+  {
+    name: 'no-env-access-in-libraries',
+    comment: `Only specific libraries can access env.ts: ${LIBRARIES_WITH_ENV_ACCESS.join(', ') || 'none'}`,
+    severity: 'error',
+    from: {
+      path: ['^src/libraries'],
+      pathNot: LIBRARIES_WITH_ENV_ACCESS.map((lib) => `^src/libraries/${lib}/`)
+    },
+    to: { path: ['^src/env[.]ts$'] }
+  },
+  {
+    name: 'no-features-dependencies-in-libraries',
+    comment: 'Libraries should not depend on features unless explicitly allowed.',
+    severity: 'error',
+    from: {
+      path: ['^src/libraries'],
+      pathNot: Object.keys(LIBRARIES_WITH_FEATURES_ACCESS).map((lib) => `^src/libraries/${lib}/`)
+    },
+    to: { path: ['^src/features'] }
+  },
+  ...Object.entries(LIBRARIES_WITH_FEATURES_ACCESS).map(([lib, allowedPaths]) => ({
+    name: `library-${lib}-features-access`,
+    comment: `Library '${lib}' can only access specific feature paths.`,
+    severity: 'error',
+    from: { path: `^src/libraries/${lib}/` },
+    to: {
+      path: '^src/features',
+      pathNot: allowedPaths
+    }
+  })),
+  ...generateLibraryInterdependencyRules(),
+  generateStrictLibraryRule()
+];
 
 module.exports = {
   forbidden: [
@@ -423,7 +506,8 @@ module.exports = {
     ...FORBIDDEN_FEATURES.DOMAIN,
     ...FORBIDDEN_FEATURES.IMPLEMENTATIONS,
     ...FORBIDDEN_FEATURES.KEYS,
-    ...FORBIDDEN_FEATURES.TRANSFER
+    ...FORBIDDEN_FEATURES.TRANSFER,
+    ...FORBIDDEN_LIBRARIES
   ],
   options: {
     /* Which modules not to follow further when encountered */
