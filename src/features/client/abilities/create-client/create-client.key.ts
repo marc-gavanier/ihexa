@@ -1,6 +1,6 @@
+import type { ServerActionResult } from '@arckit/nextjs';
 import { keyFor } from 'piqure';
 import type { ClientToCreate } from '@/features/client/domain';
-import type { ServerActionResult } from '@/libraries/nextjs/action';
 import type { CreateClientErrorKey } from './create-client.errors';
 import type { CreateClientInput } from './create-client.validation';
 

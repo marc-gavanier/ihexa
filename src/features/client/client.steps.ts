@@ -1,11 +1,11 @@
 import assert from 'node:assert';
+import { assertMatchesDataTable } from '@arckit/cucumber';
+import type { Filtered } from '@arckit/resultset';
+import { Page, PageSize, type Paginated } from '@arckit/resultset';
 import { After, type DataTable, Given, Then, When } from '@cucumber/cucumber';
 import { Either } from 'effect';
 import { type Client, type ClientId, ClientToCreate } from '@/features/client/domain';
 import { clearClients } from '@/features/client/infrastructure';
-import { assertMatchesDataTable } from '@/libraries/cucumber';
-import type { Filtered } from '@/libraries/resultset';
-import { Page, PageSize, type Paginated } from '@/libraries/resultset';
 import type { CreateClientFormData } from './abilities/create-client';
 import { createClient } from './abilities/create-client/implementations';
 import { getClientById } from './abilities/get-client';

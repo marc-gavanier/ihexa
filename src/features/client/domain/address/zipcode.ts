@@ -1,5 +1,5 @@
+import { defineModel, type Model } from '@arckit/effect';
 import { brand, nonEmptyString, pattern, Trim } from 'effect/Schema';
-import { defineModel, type Model } from '@/libraries/effect';
 
 export const ZIPCODE_PATTERN = /^\d{5}$/;
 

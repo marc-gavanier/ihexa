@@ -1,6 +1,6 @@
+import { defineModel, type Model } from '@arckit/effect';
+import type { Filtered, FilterParams, Paginated, PaginationParams } from '@arckit/resultset';
 import { Data, type Either, Schema } from 'effect';
-import { defineModel, type Model } from '@/libraries/effect';
-import type { Filtered, FilterParams, Paginated, PaginationParams } from '@/libraries/resultset';
 import { Address } from '../address';
 import { Name } from '../name';
 import { ClientId } from './client-id';

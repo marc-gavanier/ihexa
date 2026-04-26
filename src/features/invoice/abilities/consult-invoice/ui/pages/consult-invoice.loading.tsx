@@ -1,9 +1,9 @@
+import { PageHeader } from '@arckit/daisyui/blocks';
+import { ICON_LG } from '@arckit/daisyui/icons';
+import { Card, CardBody, Table } from '@arckit/daisyui/primitives';
+import type { TranslationProps } from '@arckit/i18n';
 import { RiFileTextLine } from 'react-icons/ri';
-import { type TranslationProps, withTranslation } from '@/libraries/i18n';
-import { PageHeader } from '@/libraries/ui/blocks/page-header';
-import { ICON_LG } from '@/libraries/ui/icons/sizes';
-import { Card, CardBody } from '@/libraries/ui/primitives/card';
-import { Table } from '@/libraries/ui/primitives/table';
+import { withTranslation } from '@/configuration/i18n';
 
 const RecipientSkeleton = () => (
   <Card kind='card-border' className='w-fit'>

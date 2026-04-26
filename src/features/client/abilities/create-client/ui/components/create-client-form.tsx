@@ -1,14 +1,10 @@
 'use client';
 
+import { applyEffectSchema, fieldErrorTranslation, handleAction, handleSubmit, useAppForm } from '@arckit/form';
+import { toastError, toastSuccess } from '@arckit/nextjs';
 import { useTranslation } from 'react-i18next';
-import { applyEffectSchema } from '@/libraries/form/apply-effect-schema';
-import { fieldErrorTranslation } from '@/libraries/form/field-error-translation';
-import { handleAction } from '@/libraries/form/handle-action';
-import { handleSubmit } from '@/libraries/form/handle-submit';
-import { useAppForm } from '@/libraries/form/use-app-form';
-import { inject } from '@/libraries/injection';
-import { useServerAction } from '@/libraries/nextjs/action';
-import { toastError, toastSuccess } from '@/libraries/nextjs/components';
+import { inject } from '@/configuration/injection';
+import { useServerAction } from '@/configuration/nextjs/client';
 import { CREATE_CLIENT_ACTION_KEY } from '../../create-client.key';
 import { createClientValidation } from '../../create-client.validation';
 

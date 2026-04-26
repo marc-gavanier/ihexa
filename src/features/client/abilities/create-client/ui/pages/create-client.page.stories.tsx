@@ -1,10 +1,10 @@
+import { Toaster } from '@arckit/daisyui/blocks-client';
+import { ServerActionError, ServerActionSuccess } from '@arckit/nextjs';
 import translations from '@public/locales/en-US/clients.create.json';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { provide } from '@/configuration/injection';
+import { withI18nProvider } from '@/configuration/storybook';
 import type { ClientToCreate } from '@/features/client/domain';
-import { provide } from '@/libraries/injection';
-import { ServerActionError, ServerActionSuccess } from '@/libraries/nextjs/action';
-import { withI18nProvider } from '@/libraries/storybook';
-import { Toaster } from '@/libraries/ui/blocks/toaster';
 import { CREATE_CLIENT_ACTION_KEY } from '../../create-client.key';
 import { CreateClientPage } from './create-client.page';
 

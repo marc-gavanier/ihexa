@@ -1,5 +1,5 @@
+import { defineModel, type Model } from '@arckit/effect';
 import { brand, maxLength, nonEmptyString, Trim } from 'effect/Schema';
-import { defineModel, type Model } from '@/libraries/effect';
 
 export const CITY_MAX_LENGTH = 255;
 

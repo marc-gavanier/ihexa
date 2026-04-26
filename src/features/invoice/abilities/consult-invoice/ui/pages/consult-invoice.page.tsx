@@ -1,8 +1,9 @@
+import { PageHeader } from '@arckit/daisyui/blocks';
+import { ICON_LG } from '@arckit/daisyui/icons';
+import type { TranslationProps } from '@arckit/i18n';
 import { RiFileTextLine } from 'react-icons/ri';
+import { withTranslation } from '@/configuration/i18n';
 import type { Invoice } from '@/features/invoice/domain';
-import { type TranslationProps, withTranslation } from '@/libraries/i18n';
-import { PageHeader } from '@/libraries/ui/blocks/page-header';
-import { ICON_LG } from '@/libraries/ui/icons/sizes';
 import { InvoiceLines, InvoiceRecipient } from '../components';
 
 type ConsultInvoicePageProps = {

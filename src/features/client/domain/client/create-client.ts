@@ -1,5 +1,5 @@
+import { defineModel, type Model } from '@arckit/effect';
 import { Data, type Either, Schema } from 'effect';
-import { defineModel, type Model } from '@/libraries/effect';
 import { Address } from '../address';
 import { Name } from '../name';
 import type { Client } from './client';

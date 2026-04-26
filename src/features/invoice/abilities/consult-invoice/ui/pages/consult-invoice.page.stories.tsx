@@ -1,7 +1,7 @@
 import invoices from '@public/locales/en-US/invoices.json';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
+import { withI18nProvider } from '@/configuration/storybook';
 import { Invoice } from '@/features/invoice/domain';
-import { withI18nProvider } from '@/libraries/storybook';
 import { ConsultInvoiceLoading } from './consult-invoice.loading';
 import { ConsultInvoicePage } from './consult-invoice.page';
 

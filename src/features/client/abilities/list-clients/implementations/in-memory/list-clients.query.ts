@@ -1,6 +1,6 @@
+import { filtered, paginate } from '@arckit/resultset';
 import type { Client, ListClients } from '@/features/client/domain';
 import { clientsStore } from '@/features/client/infrastructure/in-memory';
-import { filtered, paginate } from '@/libraries/resultset';
 
 import { normalizeSearchText } from './normalize-search-text';
 

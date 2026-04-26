@@ -1,6 +1,7 @@
+import { Table } from '@arckit/daisyui/primitives';
+import type { TranslationProps } from '@arckit/i18n';
+import { withTranslation } from '@/configuration/i18n';
 import { amountOf, type Line, lineTotal, totalOfAll } from '@/features/invoice/domain';
-import { type TranslationProps, withTranslation } from '@/libraries/i18n';
-import { Table } from '@/libraries/ui/primitives/table';
 
 type InvoiceLinesProps = {
   lines: readonly Line[];

@@ -1,5 +1,5 @@
+import { defineModel, type Model } from '@arckit/effect';
 import { Schema } from 'effect';
-import { defineModel, type Model } from '@/libraries/effect';
 import { Line, totalOfAll } from '../line';
 import { Recipient } from '../recipient';
 

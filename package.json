@@ -27,7 +27,7 @@
     "db:push": "drizzle-kit push --config src/configuration/drizzle/config.ts",
     "db:check": "drizzle-kit check --config src/configuration/drizzle/config.ts",
     "db:studio": "drizzle-kit studio --config src/configuration/drizzle/config.ts",
-    "lint:architecture": "depcruise src && folderslint",
+    "lint:architecture": "depcruise src --exclude '^src/@arckit' && folderslint",
     "doc:architecture": "depcruise src --include-only \"^src\" --output-type dot | dot -T svg > dependency-graph.svg",
     "storybook:dev": "storybook dev -p 6006",
     "storybook:build": "storybook build",
@@ -40,12 +40,14 @@
   "contributors": [
     {
       "name": "Marc Gavanier",
-      "email": "marc.gavanier@gmail.com",
+      "email": "marc@gavanier.com",
       "url": "https://www.linkedin.com/in/marc-gavanier/"
     }
   ],
   "license": "MIT",
   "devDependencies": {
+    "@arckit/cucumber": "^1.0.0",
+    "@arckit/storybook": "^1.1.0",
     "@biomejs/biome": "^2.4.7",
     "@chromatic-com/storybook": "^5.0.1",
     "@commitlint/cli": "^20.5.0",
@@ -92,6 +94,14 @@
     "vitest": "^4.1.0"
   },
   "dependencies": {
+    "@arckit/daisyui": "1.1.2",
+    "@arckit/effect": "^1.0.0",
+    "@arckit/form": "1.0.1",
+    "@arckit/i18n": "1.1.1",
+    "@arckit/nextjs": "1.3.1",
+    "@arckit/observability": "^1.0.0",
+    "@arckit/pipeline": "^1.0.0",
+    "@arckit/resultset": "^1.0.1",
     "@dnd-kit/core": "^6.3.1",
     "@dnd-kit/sortable": "^10.0.0",
     "@dnd-kit/utilities": "^3.2.2",

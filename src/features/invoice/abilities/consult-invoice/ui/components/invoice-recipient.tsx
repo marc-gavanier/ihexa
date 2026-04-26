@@ -1,5 +1,5 @@
+import { Card, CardBody, CardTitle } from '@arckit/daisyui/primitives';
 import type { Recipient } from '@/features/invoice/domain';
-import { Card, CardBody, CardTitle } from '@/libraries/ui/primitives/card';
 
 type InvoiceRecipientProps = {
   recipient: Recipient;

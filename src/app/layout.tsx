@@ -1,17 +1,14 @@
+import type { TranslationProps } from '@arckit/i18n';
 import type { Metadata } from 'next';
 import Link from 'next/link';
-import { i18n } from '@/configuration/i18n';
-import { type TranslationProps, withI18n, withLang, withTranslation } from '@/libraries/i18n';
-import '@/libraries/i18n/resource-loader.node';
-import { layoutBuilder } from '@/libraries/nextjs/layout';
+import { i18n, withI18n, withLang, withTranslation } from '@/configuration/i18n';
+import '@/configuration/i18n/resource-loader.node';
+import { layoutBuilder } from '@arckit/nextjs';
 import '@/styles/globals.css';
+import { contentId, Footer, skipLinksId } from '@arckit/daisyui/blocks';
+import { SkipLinksPortalClient, ThemeChanger, ToasterClient } from '@arckit/daisyui/blocks-client';
+import { ThemeProvider } from '@arckit/daisyui/theme';
 import { Logo } from '@/features/brand/logo';
-import { Footer } from '@/libraries/ui/blocks/footer/footer';
-import { contentId, skipLinksId } from '@/libraries/ui/blocks/skip-links/skip-links';
-import { SkipLinksPortalClient } from '@/libraries/ui/blocks/skip-links/skip-links-portal-client';
-import { ThemeChanger } from '@/libraries/ui/blocks/theme-changer';
-import { ToasterClient } from '@/libraries/ui/blocks/toaster-client';
-import { ThemeProvider } from '@/libraries/ui/theme/providers';
 
 export const metadata: Metadata = {
   title: {

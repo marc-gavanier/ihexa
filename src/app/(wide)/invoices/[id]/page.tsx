@@ -1,8 +1,8 @@
-import { i18n } from '@/configuration/i18n';
+import { withDecode, withEither, withParams } from '@arckit/nextjs';
+import { i18n, type MetadataTranslation, metadataTranslation, withI18n } from '@/configuration/i18n';
+import { pageBuilder } from '@/configuration/nextjs';
 import { ConsultInvoicePage, invoiceById } from '@/features/invoice/abilities/consult-invoice';
 import { InvoiceId } from '@/features/invoice/domain';
-import { type MetadataTranslation, metadataTranslation, withI18n } from '@/libraries/i18n';
-import { pageBuilder, withDecode, withEither, withParams } from '@/libraries/nextjs/page';
 
 export const generateMetadata: MetadataTranslation = metadataTranslation(i18n)('invoices');
 

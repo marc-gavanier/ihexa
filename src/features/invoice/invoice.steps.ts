@@ -1,10 +1,10 @@
 import assert from 'node:assert';
+import { assertMatchesDataTable } from '@arckit/cucumber';
 import type { DataTable } from '@cucumber/cucumber';
 import { Given, Then, When } from '@cucumber/cucumber';
 import { Either } from 'effect';
 import type { Invoice, InvoiceId, InvoiceNotFound } from '@/features/invoice/domain';
-import { assertMatchesDataTable } from '@/libraries/cucumber';
-import { invoiceById } from './abilities/consult-invoice/implementations';
+import { invoiceById } from './abilities/consult-invoice';
 
 let currentInvoice: Invoice | undefined;
 let currentError: InvoiceNotFound | undefined;
