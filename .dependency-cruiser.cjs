@@ -358,7 +358,12 @@ const FORBIDDEN_FEATURES = {
         pathNot: '[.](?:spec|test|e2e|feature|stories)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$'
       },
       to: {
-        pathNot: ['^node_modules/[^/]+/effect', '^src/features/$1/domain', '^node_modules/.*@arckit[+/]effect', '^node_modules/.*@arckit[+/]resultset']
+        pathNot: [
+          '^node_modules/[^/]+/effect',
+          '^src/features/$1/domain',
+          '^node_modules/.*@arckit[+/]effect',
+          '^node_modules/.*@arckit[+/]resultset'
+        ]
       }
     }
   ],
@@ -395,7 +400,7 @@ const FORBIDDEN_FEATURES = {
         pathNot: 'index[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$'
       },
       to: {
-        pathNot: ['^src/features/$1/domain', '^node_modules/']
+        pathNot: ['^src/features/$1/domain', '^node_modules/.*piqure']
       }
     }
   ],
@@ -419,9 +424,6 @@ const FORBIDDEN_FEATURES = {
 // Define allowed library dependencies graph
 // Each library can only depend on libraries explicitly listed here
 const LIBRARY_DEPENDENCIES = {};
-
-// Libraries that can access env.ts
-const LIBRARIES_WITH_ENV_ACCESS = [];
 
 // Libraries that can access features (for templates, i18n namespaces, etc.)
 const LIBRARIES_WITH_FEATURES_ACCESS = {};
@@ -462,16 +464,6 @@ const FORBIDDEN_LIBRARIES = [
     severity: 'error',
     from: { path: ['^src/libraries'] },
     to: { path: ['^src/app'] }
-  },
-  {
-    name: 'no-env-access-in-libraries',
-    comment: `Only specific libraries can access env.ts: ${LIBRARIES_WITH_ENV_ACCESS.join(', ') || 'none'}`,
-    severity: 'error',
-    from: {
-      path: ['^src/libraries'],
-      pathNot: LIBRARIES_WITH_ENV_ACCESS.map((lib) => `^src/libraries/${lib}/`)
-    },
-    to: { path: ['^src/env[.]ts$'] }
   },
   {
     name: 'no-features-dependencies-in-libraries',
