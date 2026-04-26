@@ -25,6 +25,7 @@
     "features/*/seeds/**",
     "features/*/transfers",
     "features/*/ui",
+    "libraries/*/**",
     "styles/*/**",
     "types"
   ]
