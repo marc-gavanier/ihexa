@@ -15,6 +15,9 @@ export default $config({
     new sst.aws.Nextjs('IHexa', {
       environment: {
         DATABASE_URL: databaseUrl.value
+      },
+      server: {
+        copyFiles: [{ from: 'public/locales', to: 'public/locales' }]
       }
     });
   }
