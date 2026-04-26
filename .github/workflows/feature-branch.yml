@@ -160,7 +160,7 @@ jobs:
       - name: Compute stage name
         id: stage
         run: |
-          STAGE_NAME=$(echo "${{ github.ref_name }}" | tr '/' '-')
+          STAGE_NAME=$(echo "${{ github.ref_name }}" | tr '/' '-' | tr '_' '-')
           echo "name=$STAGE_NAME" >> $GITHUB_OUTPUT
       - name: Checkout repository
         uses: actions/checkout@v6
