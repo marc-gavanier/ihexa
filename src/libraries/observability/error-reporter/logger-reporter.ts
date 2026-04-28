@@ -6,9 +6,12 @@ export const loggerReporter = (logger: Logger): ErrorReporter => ({
     logger.log({
       level: 'error',
       event: 'error:captured',
-      source,
-      payload: context,
-      error
+      payload: {
+        source,
+        message: error.message,
+        ...(context ? { context } : {}),
+        stack: error.stack
+      }
     });
   }
 });

@@ -11,19 +11,21 @@ type WithErrorReporterOptions<TCtx> = {
 
 export const withErrorReporter =
   (errorReporter: ErrorReporter) =>
-  <TCtx extends object>({ extractContext }: WithErrorReporterOptions<TCtx> = {}): PipeMiddleware<TCtx, object, unknown> =>
+  <TCtx extends object>(
+    action: string,
+    { extractContext }: WithErrorReporterOptions<TCtx> = {}
+  ): PipeMiddleware<TCtx, object, unknown> =>
   async (ctx, _rawInput, next): Promise<ServerActionResult<unknown>> => {
-    const result = await next(ctx);
-
-    if (!result.success) {
+    try {
+      return await next(ctx);
+    } catch (error) {
       after(() => {
         errorReporter.capture({
-          error: new Error(String(result.error)),
+          error: error instanceof Error ? error : new Error(String(error)),
           source: 'server',
-          context: extractContext?.(ctx)
+          context: { action, ...extractContext?.(ctx) }
         });
       });
+      throw error;
     }
-
-    return result;
   };
