@@ -35,3 +35,42 @@ services:
       - .matomo:/var/www/html
     depends_on:
       - matomo-db
+
+  glitchtip-db:
+    image: postgres:17
+    environment:
+      POSTGRES_DB: glitchtip
+      POSTGRES_USER: glitchtip
+      POSTGRES_PASSWORD: glitchtip
+    volumes:
+      - .glitchtip-db:/var/lib/postgresql/data
+
+  glitchtip-redis:
+    image: redis:7
+
+  glitchtip:
+    image: glitchtip/glitchtip
+    ports:
+      - '8090:8080'
+    environment:
+      DATABASE_URL: postgres://glitchtip:glitchtip@glitchtip-db:5432/glitchtip
+      REDIS_URL: redis://glitchtip-redis:6379/0
+      SECRET_KEY: local-dev-secret-key-change-in-prod
+      GLITCHTIP_DOMAIN: http://localhost:8090
+      DEFAULT_FROM_EMAIL: glitchtip@local.dev
+      ENABLE_OPEN_USER_REGISTRATION: 'true'
+    depends_on:
+      - glitchtip-db
+      - glitchtip-redis
+
+  glitchtip-worker:
+    image: glitchtip/glitchtip
+    command: ./bin/run-celery-with-beat.sh
+    environment:
+      DATABASE_URL: postgres://glitchtip:glitchtip@glitchtip-db:5432/glitchtip
+      REDIS_URL: redis://glitchtip-redis:6379/0
+      SECRET_KEY: local-dev-secret-key-change-in-prod
+      GLITCHTIP_DOMAIN: http://localhost:8090
+    depends_on:
+      - glitchtip-db
+      - glitchtip-redis

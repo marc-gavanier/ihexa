@@ -170,3 +170,6 @@ src/configuration/observability/*/index.ts
 # Matomo data
 .matomo/
 .matomo-db/
+
+# GlitchTip data
+.glitchtip-db/
