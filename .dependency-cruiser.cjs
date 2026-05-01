@@ -234,7 +234,10 @@ const FORBIDDEN_FEATURES = {
       comment:
         "An ability represents a distinct, self-contained business behavior within a feature. It encapsulates all of the elements required to fulfill a specific part of the feature's responsibility. Abilities must never depend on other abilities within the same feature, except for shared UI components in `ui/shared` folders which can be imported by other abilities within the same feature via `ui/` exports.",
       severity: 'error',
-      from: { path: 'src/features/([^/]+)/abilities/([^/]+)/' },
+      from: {
+        path: 'src/features/([^/]+)/abilities/([^/]+)/',
+        pathNot: '[.]steps[.]ts$'
+      },
       to: {
         path: 'src/features/$1/abilities/',
         pathNot: [
@@ -254,7 +257,7 @@ const FORBIDDEN_FEATURES = {
         pathNot: '[.](?:spec|test|e2e|feature|stories)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$'
       },
       to: {
-        pathNot: ['^src/features/$1/domain/abilities/$2']
+        pathNot: ['^src/features/$1/abilities/$2/domain', '^src/features/$1/domain', '^node_modules']
       }
     },
     {
