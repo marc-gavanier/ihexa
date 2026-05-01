@@ -30,8 +30,9 @@ pnpm lint:architecture      # dependency-cruiser + folderslint
 pnpm storybook:dev          # Start Storybook on port 6006
 
 # Implementations (environment-based)
-ENV=dev pnpm generate:implementations   # Copy index.dev.ts → index.ts
-ENV=prod pnpm generate:implementations  # Copy index.prod.ts → index.ts
+ENV=dev pnpm generate:implementations        # Copy index.dev.ts → index.ts
+ENV=prod pnpm generate:implementations       # Copy index.prod.ts → index.ts
+ENV=ephemeral pnpm generate:implementations  # Copy index.ephemeral.ts → index.ts
 ```
 
 ## Architecture
@@ -48,22 +49,23 @@ src/
 │       ├── domain/         # Domain models, value objects, errors
 │       └── abilities/      # Use cases
 │           └── {ability}/
-│               ├── action/           # Server action, validation, errors, action key
-│               ├── implementations/  # index.{env}.ts files for DI
-│               └── ui/               # components/, pages/
-└── libraries/              # Shared utilities
-    ├── nextjs/             # Page/layout builders, action builder, hooks
-    ├── form/               # TanStack Form integration
-    ├── i18n/               # i18next setup
-    ├── injection/          # piqure DI container
-    └── ui/                 # UI primitives and blocks (DaisyUI)
+│               ├── {ability}.ability.md    # Gherkin specs (Markdown format)
+│               ├── {ability}.steps.ts      # Cucumber step definitions
+│               ├── {ability}.validation.ts # Effect Schema validation
+│               ├── {ability}.errors.ts     # Typed errors
+│               ├── {ability}.key.ts        # DI key (keyFor)
+│               ├── index.ts                    # Barrel export
+├── implementations/            # index.dev.ts, index.ephemeral.ts, index.prod.ts → index.ts
+│               ├── domain/                 # Ability-specific domain (if needed)
+│               └── ui/                     # components/, pages/
+└── libraries/              # Incubator (created when needed, published to @arckit/ when mature)
 ```
 
 ### Key Patterns
 
 **Domain Modeling with Effect**: Value objects use `Schema.TaggedStruct` with branded types. Errors are tagged unions. Business logic returns `Either<Result, Error>`.
 
-**Server Actions**: Built with `actionBuilder()` using middleware pattern:
+**Server Actions**: Live in `src/app/_actions/{feature}/{ability}.action.ts`. Built with `actionBuilder()`:
 ```typescript
 actionBuilder()
   .use(withInput(validation))
@@ -71,7 +73,7 @@ actionBuilder()
   .execute(fromEither(async ({ input }) => domainFunction(input), { onError: ERROR_MAP }))
 ```
 
-**Dependency Injection**: Uses `piqure` library. Keys defined in `action/*.action.key.ts`, bound in page via `withClientBinder()`.
+**Dependency Injection**: Uses `piqure` library. Keys defined in `{ability}.key.ts` using `keyFor()`, bound in page via `withClientBinder()`.
 
 **Environment-based Implementations**: Each ability has `implementations/index.{env}.ts` files. The `generate:implementations` script copies the appropriate one to `index.ts` based on `ENV` variable.
 
@@ -87,7 +89,7 @@ pageBuilder()
 
 UI components can only import from:
 - `.validation.ts` files
-- `.action.key.ts` files
+- `.key.ts` files (injection keys)
 - Domain types
 - Libraries
 
