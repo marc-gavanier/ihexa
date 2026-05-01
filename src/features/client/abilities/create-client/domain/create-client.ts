@@ -1,9 +1,9 @@
 import { defineModel, type Model } from '@arckit/effect';
 import { Data, type Either, Schema } from 'effect';
-import { Address } from '../address';
-import { Name } from '../name';
-import type { Client } from './client';
-import { ClientId } from './client-id';
+import { Address } from '@/features/client/domain/address';
+import type { Client } from '@/features/client/domain/client';
+import { ClientId } from '@/features/client/domain/client';
+import { Name } from '@/features/client/domain/name';
 
 const FIRSTNAME_PATTERN = /(?<=^|[\s-])\p{L}/gu;
 

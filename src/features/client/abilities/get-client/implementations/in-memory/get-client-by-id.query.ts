@@ -1,6 +1,8 @@
 import { Either } from 'effect';
-import { type ClientId, ClientNotFound, type GetClientById } from '@/features/client/domain';
+import type { ClientId } from '@/features/client/domain';
 import { clientsStore } from '@/features/client/infrastructure/in-memory';
+import type { GetClientById } from '../../domain';
+import { ClientNotFound } from '../../domain';
 
 export const getClientById: GetClientById = async (id: ClientId) => {
   const client = clientsStore().get(id);

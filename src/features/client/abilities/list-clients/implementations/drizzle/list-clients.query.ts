@@ -2,7 +2,7 @@ import { DEFAULT_PAGE, DEFAULT_PAGE_SIZE, filtered, type Page, type PageSize } f
 import { like, or, type SQL, sql } from 'drizzle-orm';
 import { db } from '@/configuration/drizzle';
 import { clientsTable, clientToDomain } from '@/features/client/db';
-import type { ListClients } from '@/features/client/domain';
+import type { ListClients } from '../../domain';
 
 const normalizeSearch = (text: string): string =>
   text
