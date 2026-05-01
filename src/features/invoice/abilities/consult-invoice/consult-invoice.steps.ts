@@ -3,8 +3,9 @@ import { assertMatchesDataTable } from '@arckit/cucumber';
 import type { DataTable } from '@cucumber/cucumber';
 import { Given, Then, When } from '@cucumber/cucumber';
 import { Either } from 'effect';
-import type { Invoice, InvoiceId, InvoiceNotFound } from '@/features/invoice/domain';
-import { invoiceById } from './abilities/consult-invoice';
+import { invoiceById } from '@/features/invoice/abilities/consult-invoice';
+import type { InvoiceNotFound } from '@/features/invoice/abilities/consult-invoice/domain';
+import type { Invoice, InvoiceId } from '@/features/invoice/domain';
 
 let currentInvoice: Invoice | undefined;
 let currentError: InvoiceNotFound | undefined;

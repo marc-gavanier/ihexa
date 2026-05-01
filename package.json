@@ -16,7 +16,7 @@
     "start": "next start",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:cucumber": "pnpm generate:implementations && NODE_OPTIONS='--import tsx/esm --import dotenv/config' cucumber-js 'src/features/**/*.feature' --import 'src/features/**/*.steps.ts'",
+    "test:cucumber": "pnpm generate:implementations && NODE_OPTIONS='--import tsx/esm --import dotenv/config' cucumber-js 'src/features/**/*.ability.md' --import 'src/features/**/*.steps.ts'",
     "test:cucumber@prod": "pnpm generate:implementations && ENV=prod pnpm test:cucumber",
     "test:e2e": "playwright test",
     "lint:code:fix": "pnpm exec biome check --write",
