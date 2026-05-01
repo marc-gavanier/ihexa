@@ -4,8 +4,8 @@ import { fromEither, withInput } from '@arckit/nextjs';
 import { withLogger } from '@/configuration/logger';
 import { actionBuilder } from '@/configuration/nextjs';
 import { CREATE_CLIENT_ERRORS, createClientValidation } from '@/features/client/abilities/create-client';
+import { ClientToCreate } from '@/features/client/abilities/create-client/domain';
 import { createClient } from '@/features/client/abilities/create-client/implementations';
-import { ClientToCreate } from '@/features/client/domain';
 
 export const createClientAction = actionBuilder()
   .use(withInput(createClientValidation))

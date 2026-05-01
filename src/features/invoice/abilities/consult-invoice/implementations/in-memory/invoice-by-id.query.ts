@@ -1,5 +1,6 @@
 import { Either } from 'effect';
-import { Invoice, type InvoiceById, InvoiceId, InvoiceNotFound } from '@/features/invoice/domain';
+import { Invoice, InvoiceId } from '@/features/invoice/domain';
+import { type InvoiceById, InvoiceNotFound } from '../../domain';
 
 const ID = '550e8400-e29b-41d4-a716-446655440000';
 

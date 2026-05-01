@@ -1,6 +1,7 @@
 import { Either } from 'effect';
-import { Client, ClientAlreadyExists, ClientId, type CreateClient } from '@/features/client/domain';
+import { Client, ClientId } from '@/features/client/domain';
 import { clientsStore } from '@/features/client/infrastructure/in-memory';
+import { ClientAlreadyExists, type CreateClient } from '../../domain';
 
 export const createClient: CreateClient = async (clientToCreate) => {
   const store = clientsStore();
