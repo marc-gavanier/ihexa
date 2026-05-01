@@ -83,16 +83,16 @@
 
 ## Summary table
 
-| Transaction | VAT | Invoice mention | Declaration |
-|---|---|---|---|
-| FR → EU B2B (goods) | Exempt | Art. 262 ter-I | EMEBI + état récap TVA |
-| FR → EU B2B (services) | Reverse charge | Art. 283-2 | DES |
-| FR → EU B2C (goods) | Buyer's rate (if > 10K) | N/A | OSS |
-| FR → EU B2C (services) | French rate (general) | N/A | CA3 |
-| FR → Non-EU (goods) | Exempt | Art. 262-I | Customs |
-| FR → Non-EU (services) | Not applicable | Art. 259-1 | CA3 |
-| EU → FR B2B (goods) | Reverse charge | N/A | CA3 line 08 |
-| EU → FR B2B (services) | Reverse charge | N/A | CA3 line 2A |
+| Transaction            | VAT                     | Invoice mention | Declaration            |
+|------------------------|-------------------------|-----------------|------------------------|
+| FR → EU B2B (goods)    | Exempt                  | Art. 262 ter-I  | EMEBI + état récap TVA |
+| FR → EU B2B (services) | Reverse charge          | Art. 283-2      | DES                    |
+| FR → EU B2C (goods)    | Buyer's rate (if > 10K) | N/A             | OSS                    |
+| FR → EU B2C (services) | French rate (general)   | N/A             | CA3                    |
+| FR → Non-EU (goods)    | Exempt                  | Art. 262-I      | Customs                |
+| FR → Non-EU (services) | Not applicable          | Art. 259-1      | CA3                    |
+| EU → FR B2B (goods)    | Reverse charge          | N/A             | CA3 line 08            |
+| EU → FR B2B (services) | Reverse charge          | N/A             | CA3 line 2A            |
 
 ## Language considerations
 

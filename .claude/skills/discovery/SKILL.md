@@ -4,7 +4,7 @@ user-invocable: true
 description: >-
   Product discovery and backlog grooming workflow. Explore a product idea,
   challenge it with the domain expert, decompose into features and abilities,
-  and create prioritized GitHub issues. Use before /methodology to define
+  and create prioritized GitHub issues. Use before /delivery to define
   WHAT to build.
 ---
 
@@ -14,8 +14,8 @@ description: >-
 
 ```
 Discovery = Understand WHAT to build and WHY
-Methodology = Implement HOW to build it
-Discovery outputs GitHub issues → Methodology consumes them
+Delivery  = Implement HOW to build it
+Discovery outputs GitHub issues → Delivery consumes them
 ```
 
 ## When to Use
@@ -23,13 +23,13 @@ Discovery outputs GitHub issues → Methodology consumes them
 - Exploring a new product idea or feature area
 - Grooming and prioritizing a backlog of abilities
 - Decomposing a broad requirement into features and abilities
-- Before starting /methodology, to define WHAT to build
+- Before starting /delivery, to define WHAT to build
 
 ## When NOT to Use
 
-- Implementing code — use /methodology instead
+- Implementing code — use /delivery instead
 - Fixing a bug or refactoring — work directly, no discovery needed
-- When a well-defined GitHub issue already exists — go straight to /methodology
+- When a well-defined GitHub issue already exists — go straight to /delivery
 
 ## Entry point
 
@@ -101,7 +101,7 @@ For each ability, create a GitHub issue using `gh issue create`:
 [Key types, rules, edge cases identified during discovery]
 
 ## Acceptance criteria
-[Bullet points — will be refined into Gherkin during /methodology]
+[Bullet points — will be refined into Gherkin during /delivery]
 
 ## Dependencies
 [Other abilities this depends on, if any]
@@ -114,7 +114,7 @@ Use labels for categorization:
 ### Step 6: Confirm next steps
 
 List the created issues with their numbers and suggest which one
-to implement first using `/methodology`.
+to implement first using `/delivery`.
 
 ```
 Issues created:
@@ -122,7 +122,7 @@ Issues created:
 - #13 list-clients (priority:high, feature:client)
 - #14 edit-client (priority:medium, feature:client)
 
-Suggested next: /methodology starting from #12
+Suggested next: /delivery starting from #12
 ```
 
 ## Useful commands
@@ -144,16 +144,16 @@ gh issue close <number>
 ## What this skill does NOT do
 
 - Does not write code
-- Does not write Gherkin scenarios (that's /methodology's job)
+- Does not write Gherkin scenarios (that's /delivery's job)
 - Does not make priority decisions — it proposes, the human decides
 - Does not replace user research or stakeholder interviews
 
-## Linking to /methodology
+## Linking to /delivery
 
 When ready to implement an ability:
 ```
-/methodology
+/delivery
 > Starting from issue #42: <ability-name>
 ```
 
-The methodology skill picks up from the issue and begins checkpoint 1.
+The delivery skill picks up from the issue and begins checkpoint 1.

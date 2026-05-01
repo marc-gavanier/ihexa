@@ -9,38 +9,38 @@
 
 ### Sales (revenue)
 
-| Account | Name | Usage |
-|---|---|---|
-| **411** | Clients | Debited for total TTC of issued invoices (trade receivable) |
-| **701** | Ventes de produits finis | Products manufactured/transformed by the company |
-| **706** | Prestations de services | Service revenue |
-| **707** | Ventes de marchandises | Goods bought and resold as-is |
-| **709** | Remises, rabais, ristournes | Discounts granted |
-| **44571** | TVA collectée | VAT collected on sales |
+| Account   | Name                        | Usage                                                       |
+|-----------|-----------------------------|-------------------------------------------------------------|
+| **411**   | Clients                     | Debited for total TTC of issued invoices (trade receivable) |
+| **701**   | Ventes de produits finis    | Products manufactured/transformed by the company            |
+| **706**   | Prestations de services     | Service revenue                                             |
+| **707**   | Ventes de marchandises      | Goods bought and resold as-is                               |
+| **709**   | Remises, rabais, ristournes | Discounts granted                                           |
+| **44571** | TVA collectée               | VAT collected on sales                                      |
 
 ### Purchases (expenses)
 
-| Account | Name | Usage |
-|---|---|---|
-| **401** | Fournisseurs | Credited for total TTC of received invoices (trade payable) |
-| **601** | Achats de matières premières | Raw materials |
-| **607** | Achats de marchandises | Goods for resale |
-| **44566** | TVA déductible sur ABS | Deductible VAT on goods and services |
+| Account   | Name                         | Usage                                                       |
+|-----------|------------------------------|-------------------------------------------------------------|
+| **401**   | Fournisseurs                 | Credited for total TTC of received invoices (trade payable) |
+| **601**   | Achats de matières premières | Raw materials                                               |
+| **607**   | Achats de marchandises       | Goods for resale                                            |
+| **44566** | TVA déductible sur ABS       | Deductible VAT on goods and services                        |
 
 ### Down payments
 
-| Account | Name | Usage |
-|---|---|---|
-| **4191** | Clients — avances et acomptes reçus | Down payments received from clients |
-| **4091** | Fournisseurs — avances et acomptes versés | Down payments paid to suppliers |
+| Account  | Name                                      | Usage                               |
+|----------|-------------------------------------------|-------------------------------------|
+| **4191** | Clients — avances et acomptes reçus       | Down payments received from clients |
+| **4091** | Fournisseurs — avances et acomptes versés | Down payments paid to suppliers     |
 
 ### Credit notes
 
-| Account | Name | Usage |
-|---|---|---|
-| **709** | Remises, rabais, ristournes | Credit notes reducing revenue |
-| **411** | Clients | Credited to reduce the receivable |
-| **44571** | TVA collectée | Reversed for the VAT portion |
+| Account   | Name                        | Usage                             |
+|-----------|-----------------------------|-----------------------------------|
+| **709**   | Remises, rabais, ristournes | Credit notes reducing revenue     |
+| **411**   | Clients                     | Credited to reduce the receivable |
+| **44571** | TVA collectée               | Reversed for the VAT portion      |
 
 ## Journal entries — typical scenarios
 
@@ -91,13 +91,13 @@ Credit 7631   Revenus des créances comm.    99.86 EUR
 
 ## Accounting journals
 
-| Journal | Code | Purpose |
-|---|---|---|
-| Journal des ventes | VE | All sales invoices and credit notes |
-| Journal des achats | AC | All purchase invoices |
-| Journal de banque | BQ | Bank transactions (payments, receipts) |
-| Journal de caisse | CA | Cash transactions |
-| Journal des OD | OD | Miscellaneous operations (year-end adjustments) |
+| Journal            | Code | Purpose                                         |
+|--------------------|------|-------------------------------------------------|
+| Journal des ventes | VE   | All sales invoices and credit notes             |
+| Journal des achats | AC   | All purchase invoices                           |
+| Journal de banque  | BQ   | Bank transactions (payments, receipts)          |
+| Journal de caisse  | CA   | Cash transactions                               |
+| Journal des OD     | OD   | Miscellaneous operations (year-end adjustments) |
 
 ## Fiscal year close considerations
 

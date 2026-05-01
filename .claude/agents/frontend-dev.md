@@ -3,7 +3,7 @@ name: frontend-dev
 description: >-
   Implements UI components, pages, Storybook stories, E2E tests, and
   wiring (DI, routes, config). Works with DaisyUI, TanStack Form,
-  and the pageBuilder pattern. Use during methodology checkpoint 3.
+  and the pageBuilder pattern. Use during delivery checkpoint 3.
 tools: ["Read", "Write", "Edit", "Bash", "Grep", "Glob"]
 model: opus
 ---
@@ -46,8 +46,7 @@ pageBuilder()
 **Forms** use TanStack Form with Effect Schema validation.
 
 **UI components** import only from:
-- `.validation.ts` files
-- `.key.ts` files (injection keys)
+- `action/` files (validation, errors, key)
 - Domain types
 - `@arckit/*` packages (or `@/libraries/*` for incubator code)
 
