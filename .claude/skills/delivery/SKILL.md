@@ -1,16 +1,16 @@
 ---
-name: methodology
+name: delivery
 user-invocable: true
 description: >-
   Follow the 3-checkpoint ATDD process (spec, backend, frontend) to
-  implement an ability from a GitHub issue or feature description.
+  deliver an ability from a GitHub issue or feature description.
   Coordinate specialized agents (spec-writer, domain-expert, backend-dev,
   frontend-dev, reviewer, fresh-context-review). Triggers on: "implement
-  ability", "start ATDD", "build feature from issue", "new ability",
-  "/methodology".
+  ability", "deliver feature", "build from issue", "new ability",
+  "/delivery".
 ---
 
-# ATDD Implementation Methodology
+# Ability Delivery
 
 ## When to Use
 
@@ -55,10 +55,11 @@ src/features/<feature>/
     └── <ability>/
         ├── <ability>.ability.md        # Gherkin specs (Markdown format)
         ├── <ability>.steps.ts          # Cucumber step definitions
-        ├── <ability>.validation.ts     # Effect Schema validation
-        ├── <ability>.errors.ts         # Typed errors
-        ├── <ability>.key.ts            # DI key (keyFor)
         ├── index.ts                    # Barrel export
+        ├── action/                     # Server action contract (public surface)
+        │   ├── <ability>.validation.ts # Effect Schema validation (input)
+        │   ├── <ability>.errors.ts     # Error i18n mapping (output)
+        │   └── <ability>.key.ts        # DI key (keyFor)
         ├── implementations/
         │   ├── index.dev.ts            # Dev implementation
         │   ├── index.prod.ts           # Prod implementation
@@ -171,11 +172,11 @@ pnpm test:cucumber && pnpm test && pnpm test:e2e && pnpm build && pnpm lint:arch
 
 ## Three-stream testing (mandatory)
 
-| Stream   | Purpose        | Location                         | Verifies                 |
-|----------|----------------|----------------------------------|--------------------------|
+| Stream   | Purpose        | Location                                      | Verifies                 |
+|----------|----------------|-----------------------------------------------|--------------------------|
 | Cucumber | Behavior specs | `<ability>.ability.md` + `<ability>.steps.ts` | WHAT (domain behavior)   |
-| E2E      | UI specs       | `src/app/.../page.e2e.ts`        | VIEW (user interactions) |
-| Unit     | Domain logic   | `src/features/<feature>/domain/` | HOW (internal logic)     |
+| E2E      | UI specs       | `src/app/.../page.e2e.ts`                     | VIEW (user interactions) |
+| Unit     | Domain logic   | `src/features/<feature>/domain/`              | HOW (internal logic)     |
 
 All three streams must pass. No exceptions.
 
@@ -196,7 +197,7 @@ No. Specs first, always. The spec is the contract.
 No. Passing tests don't guarantee correct architecture or clean code.
 
 ### "I'll add tests later"
-No. TDD: tests before or alongside implementation, never after.
+No. Tests before or alongside implementation, never after.
 
 ### "One big PR for everything"
 Prefer one ability per PR. Keep changes reviewable.

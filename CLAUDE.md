@@ -51,11 +51,12 @@ src/
 │           └── {ability}/
 │               ├── {ability}.ability.md    # Gherkin specs (Markdown format)
 │               ├── {ability}.steps.ts      # Cucumber step definitions
-│               ├── {ability}.validation.ts # Effect Schema validation
-│               ├── {ability}.errors.ts     # Typed errors
-│               ├── {ability}.key.ts        # DI key (keyFor)
-│               ├── index.ts                    # Barrel export
-├── implementations/            # index.dev.ts, index.ephemeral.ts, index.prod.ts → index.ts
+│               ├── index.ts                # Barrel export
+│               ├── action/                 # Server action contract
+│               │   ├── {ability}.validation.ts # Input validation (Effect Schema)
+│               │   ├── {ability}.errors.ts     # Error i18n mapping
+│               │   └── {ability}.key.ts        # DI key (keyFor)
+│               ├── implementations/        # index.dev.ts, index.ephemeral.ts, index.prod.ts → index.ts
 │               ├── domain/                 # Ability-specific domain (if needed)
 │               └── ui/                     # components/, pages/
 └── libraries/              # Incubator (created when needed, published to @arckit/ when mature)
@@ -88,8 +89,7 @@ pageBuilder()
 ### Architecture Rules
 
 UI components can only import from:
-- `.validation.ts` files
-- `.key.ts` files (injection keys)
+- `action/` files (validation, errors, key)
 - Domain types
 - Libraries
 

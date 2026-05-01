@@ -4,7 +4,7 @@ import translations from '@public/locales/en-US/clients.create.json';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { provide } from '@/configuration/injection';
 import { withI18nProvider } from '@/configuration/storybook';
-import { CREATE_CLIENT_ACTION_KEY } from '../../create-client.key';
+import { CREATE_CLIENT_ACTION_KEY } from '../../action/create-client.key';
 import type { ClientToCreate } from '../../domain';
 import { CreateClientPage } from './create-client.page';
 

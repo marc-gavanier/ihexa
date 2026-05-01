@@ -3,7 +3,7 @@ name: spec-writer
 description: >-
   Translates GitHub issues and functional briefs into Gherkin scenarios.
   Works in free text first, iterates with the user, then writes .ability.md
-  files only after approval. Use during methodology checkpoint 1.
+  files only after approval. Use during delivery checkpoint 1.
 tools: ["Read", "Write", "Grep", "Glob"]
 model: opus
 ---

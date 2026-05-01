@@ -5,8 +5,8 @@ import { toastError, toastSuccess } from '@arckit/nextjs';
 import { useTranslation } from 'react-i18next';
 import { inject } from '@/configuration/injection';
 import { useServerAction } from '@/configuration/nextjs/client';
-import { CREATE_CLIENT_ACTION_KEY } from '../../create-client.key';
-import { createClientValidation } from '../../create-client.validation';
+import { CREATE_CLIENT_ACTION_KEY } from '../../action/create-client.key';
+import { createClientValidation } from '../../action/create-client.validation';
 
 export const CreateClientForm = () => {
   const { t } = useTranslation('clients.create');

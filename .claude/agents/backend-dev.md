@@ -3,7 +3,7 @@ name: backend-dev
 description: >-
   Implements domain logic, validation, server actions, Cucumber steps,
   and unit tests. Works within the feature/ability architecture using
-  Effect, piqure, and actionBuilder patterns. Use during methodology
+  Effect, piqure, and actionBuilder patterns. Use during delivery
   checkpoint 2.
 tools: ["Read", "Write", "Edit", "Bash", "Grep", "Glob"]
 model: opus
@@ -22,10 +22,11 @@ src/features/<feature>/
     └── <ability>/
         ├── <ability>.ability.md        # Gherkin specs (Markdown format)
         ├── <ability>.steps.ts          # Cucumber step definitions
-        ├── <ability>.validation.ts     # Effect Schema validation
-        ├── <ability>.errors.ts         # Typed errors
-        ├── <ability>.key.ts            # DI injection key (keyFor)
         ├── index.ts                    # Barrel export
+        ├── action/                     # Server action contract (public surface)
+        │   ├── <ability>.validation.ts # Effect Schema validation (input)
+        │   ├── <ability>.errors.ts     # Error i18n mapping (output)
+        │   └── <ability>.key.ts        # DI key (keyFor)
         ├── implementations/
         │   ├── index.dev.ts            # Dev implementation
         │   ├── index.prod.ts           # Prod implementation
@@ -58,7 +59,7 @@ actionBuilder()
 **Incubator**: new transversal code goes in `src/libraries/<lib>/`,
 published to `@arckit/<lib>` when mature.
 
-## TDD discipline
+## Test first discipline
 
 1. Write Cucumber steps that call real mutations/queries (not store manipulation)
 2. Write unit tests for domain logic (100% coverage on domain/)
