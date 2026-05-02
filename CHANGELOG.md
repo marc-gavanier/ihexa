@@ -1,3 +1,11 @@
+# [1.7.0](https://github.com/marc-gavanier/ihexa/compare/v1.6.1...v1.7.0) (2026-05-02)
+
+
+### Features
+
+* add agentic development workflow with skills and agents ([6e02408](https://github.com/marc-gavanier/ihexa/commit/6e02408322105de68771d5657fb034d0a633fa57))
+* migrate Cucumber specs to ability-level .ability.md format ([d0556ee](https://github.com/marc-gavanier/ihexa/commit/d0556ee9ba3722fde2a1de9a5834a40f0fc30173))
+
 ## [1.6.1](https://github.com/marc-gavanier/ihexa/compare/v1.6.0...v1.6.1) (2026-04-26)
 
 
