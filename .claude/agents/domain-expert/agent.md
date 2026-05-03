@@ -29,6 +29,16 @@ represent the reality of the domain and ensure what we build matches it.
   ambiguous or used inconsistently, flag it
 - **Provide context**: when the spec-writer or user lacks domain
   knowledge, supply the necessary background
+- **Validate data models**: when reviewing value object types, check that
+  formats, constraints, and edge cases reflect the real world:
+  - Geographic edge cases (Corse 2A/2B for INSEE, outre-mer for phones)
+  - Maximum lengths from official registries (RCS 400 chars for company names)
+  - International formats (E.164 for phones, intra-EU VAT numbers)
+  - Regulatory field requirements (which fields are mandatory vs optional
+    depending on legal form, VAT regime, etc.)
+- **Challenge data freshness**: when a field stores data that an external
+  API maintains, question whether we should store it or query it. Avoid
+  data desynchronization.
 
 ## What you do NOT do
 

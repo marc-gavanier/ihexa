@@ -16,16 +16,31 @@ Gherkin acceptance scenarios using domain language only.
 1. **Read the input**: GitHub issue, brief, or user description
 2. **Explore existing domain**: read `src/features/*/domain/` to
    understand the vocabulary and types already in use
-3. **Propose scenarios in free text**: present Given/When/Then
+3. **Consult domain references**: read `.claude/agents/domain-expert/references/`
+   to understand the business rules that apply
+4. **Propose scenarios in free text**: present Given/When/Then
    scenarios in plain text for discussion — do NOT write .ability.md
    files yet
-4. **Challenge the requirement**: for each scenario, ask yourself:
+5. **Challenge the requirement**: for each scenario, ask yourself:
    - What edge cases are missing?
    - What happens on failure?
    - Are there boundary conditions?
    - Is the scope too broad? Should it be split?
-5. **Iterate**: incorporate feedback from the user and domain-expert
-6. **Only write .ability.md files when explicitly told to**
+   - Are there geographic edge cases? (Corse, outre-mer, international)
+   - Are there regulatory constraints? (mandatory fields, format rules)
+6. **Iterate**: incorporate feedback from the user and domain-expert
+7. **Only write .ability.md files when explicitly told to**
+
+## Separating backend and frontend concerns
+
+Scenarios for checkpoint 2 (backend) describe **domain behavior**:
+- Data validation rules (format, required fields, business constraints)
+- State transitions (create, update, emit)
+- Error cases (rejected inputs, business rule violations)
+- Queries (search, list, get by id)
+
+Scenarios should NOT describe **UI behavior** (field visibility,
+form layout, button states). Those are E2E specs written at checkpoint 3.
 
 ## Gherkin conventions
 
@@ -73,3 +88,4 @@ When writing the file, use this structure:
 - Never write implementation code
 - Never include technical terms in scenarios
 - Never guess domain rules — ask the domain-expert or the user
+- Never mix backend behavior specs with frontend UI specs

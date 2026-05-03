@@ -9,16 +9,15 @@ import type { LegalForm } from '@/features/settings/domain/seller/legal-form';
 import { Phone } from '@/features/settings/domain/seller/phone';
 import { RcsRegistration } from '@/features/settings/domain/seller/rcs-registration';
 import type { Seller, SellerConfigurationError, ValidatedSellerInput } from '@/features/settings/domain/seller/seller';
-import { buildSeller } from '@/features/settings/domain/seller/seller';
 import { ShareCapital } from '@/features/settings/domain/seller/share-capital';
 import { Siren } from '@/features/settings/domain/seller/siren';
 import { Siret } from '@/features/settings/domain/seller/siret';
 import { VatNumber } from '@/features/settings/domain/seller/vat-number';
 import { VAT_REGIMES, VatRegime } from '@/features/settings/domain/seller/vat-regime';
 import { Website } from '@/features/settings/domain/seller/website';
-import { clearSellerStore, sellerStore } from '@/features/settings/infrastructure/in-memory';
+import { clearSettings } from '@/features/settings/infrastructure';
 import type { CompanyData, CompanySearchResult, InvalidSiretFormat } from '@/libraries/company-registry';
-import { getSellerConfiguration, searchCompany, selectCompany } from './implementations';
+import { getSellerConfiguration, saveSellerConfiguration, searchCompany, selectCompany } from './implementations';
 
 interface RawSellerInput {
   readonly companyName: string;
@@ -63,14 +62,10 @@ const buildValidatedInput = (raw: RawSellerInput): ValidatedSellerInput => {
   };
 };
 
-const buildAndSave = (raw: RawSellerInput): Either.Either<Seller, SellerConfigurationError | Error> => {
+const buildAndSave = async (raw: RawSellerInput): Promise<Either.Either<Seller, SellerConfigurationError | Error>> => {
   try {
     const validated = buildValidatedInput(raw);
-    const result = buildSeller(validated);
-    if (Either.isRight(result)) {
-      sellerStore().set(result.right);
-    }
-    return result;
+    return await saveSellerConfiguration(validated);
   } catch (error) {
     return Either.left(error instanceof Error ? error : new Error('Validation failed'));
   }
@@ -96,14 +91,14 @@ const resetState = (): void => {
 
 // --- Given ---
 
-Given(/^there is no seller configured$/, () => {
+Given(/^there is no seller configured$/, async () => {
   resetState();
-  clearSellerStore();
+  await clearSettings();
 });
 
-Given(/^I have selected company "([^"]*)" with legal form "([^"]*)"$/, (_companyName: string, legalForm: LegalForm) => {
+Given(/^I have selected company "([^"]*)" with legal form "([^"]*)"$/, async (_companyName: string, legalForm: LegalForm) => {
   resetState();
-  clearSellerStore();
+  await clearSettings();
 
   const fixtures: Record<string, Partial<RawSellerInput>> = {
     'ACME SARL': {
@@ -140,9 +135,9 @@ Given(/^I have selected company "([^"]*)" with legal form "([^"]*)"$/, (_company
   };
 });
 
-Given(/^a seller is configured with email "([^"]*)"$/, (email: string) => {
+Given(/^a seller is configured with email "([^"]*)"$/, async (email: string) => {
   resetState();
-  clearSellerStore();
+  await clearSettings();
 
   const raw: RawSellerInput = {
     companyName: 'ACME SARL',
@@ -159,7 +154,7 @@ Given(/^a seller is configured with email "([^"]*)"$/, (email: string) => {
     email
   };
 
-  const result = buildAndSave(raw);
+  const result = await buildAndSave(raw);
   assert.ok(Either.isRight(result), 'Failed to configure seller');
   savedSeller = result.right;
   currentRawInput = { ...raw };
@@ -167,9 +162,9 @@ Given(/^a seller is configured with email "([^"]*)"$/, (email: string) => {
 
 Given(
   /^a seller is configured with VAT regime "([^"]*)" and tax debit option "([^"]*)"$/,
-  (vatRegime: VatRegime, taxDebitOption: string) => {
+  async (vatRegime: VatRegime, taxDebitOption: string) => {
     resetState();
-    clearSellerStore();
+    await clearSettings();
 
     const raw: RawSellerInput = {
       companyName: 'ACME SARL',
@@ -186,7 +181,7 @@ Given(
       email: 'contact@acme.fr'
     };
 
-    const result = buildAndSave(raw);
+    const result = await buildAndSave(raw);
     assert.ok(Either.isRight(result), 'Failed to configure seller');
     savedSeller = result.right;
     currentRawInput = { ...raw };
@@ -220,7 +215,7 @@ When(/^I select the company with SIRET "([^"]*)"$/, async (siret: string) => {
   }
 });
 
-When(/^I save the seller configuration with$/, (dataTable: DataTable) => {
+When(/^I save the seller configuration with$/, async (dataTable: DataTable) => {
   const tableData = Object.fromEntries(dataTable.rows());
   const { email: tableEmail, ...rest } = tableData;
 
@@ -246,7 +241,7 @@ When(/^I save the seller configuration with$/, (dataTable: DataTable) => {
 
   currentRawInput = { ...currentRawInput, ...raw };
 
-  const result = buildAndSave(raw);
+  const result = await buildAndSave(raw);
   if (Either.isRight(result)) {
     savedSeller = result.right;
     saveError = undefined;
@@ -256,7 +251,7 @@ When(/^I save the seller configuration with$/, (dataTable: DataTable) => {
   }
 });
 
-When(/^I save the seller configuration without a VAT regime$/, () => {
+When(/^I save the seller configuration without a VAT regime$/, async () => {
   const raw: RawSellerInput = {
     companyName: currentRawInput.companyName ?? '',
     legalForm: currentRawInput.legalForm ?? 'SARL',
@@ -269,7 +264,7 @@ When(/^I save the seller configuration without a VAT regime$/, () => {
     email: 'contact@acme.fr'
   };
 
-  const result = buildAndSave(raw);
+  const result = await buildAndSave(raw);
   if (Either.isRight(result)) {
     savedSeller = result.right;
     saveError = undefined;
@@ -279,7 +274,7 @@ When(/^I save the seller configuration without a VAT regime$/, () => {
   }
 });
 
-When(/^I save the seller configuration without an email$/, () => {
+When(/^I save the seller configuration without an email$/, async () => {
   const raw: RawSellerInput = {
     companyName: currentRawInput.companyName ?? '',
     legalForm: currentRawInput.legalForm ?? 'SARL',
@@ -294,7 +289,7 @@ When(/^I save the seller configuration without an email$/, () => {
     email: ''
   };
 
-  const result = buildAndSave(raw);
+  const result = await buildAndSave(raw);
   if (Either.isRight(result)) {
     savedSeller = result.right;
     saveError = undefined;
@@ -313,7 +308,7 @@ When(/^I update the seller email to "([^"]*)"$/, (email: string) => {
   currentRawInput = { ...currentRawInput, email };
 });
 
-When(/^I save the seller configuration$/, () => {
+When(/^I save the seller configuration$/, async () => {
   const raw: RawSellerInput = {
     companyName: currentRawInput.companyName ?? '',
     legalForm: currentRawInput.legalForm ?? 'SARL',
@@ -329,7 +324,7 @@ When(/^I save the seller configuration$/, () => {
     email: currentRawInput.email ?? ''
   };
 
-  const result = buildAndSave(raw);
+  const result = await buildAndSave(raw);
   if (Either.isRight(result)) {
     savedSeller = result.right;
     saveError = undefined;
@@ -353,7 +348,7 @@ When(/^I attempt to create an invoice$/, async () => {
   invoiceBlocked = Either.isLeft(result);
 });
 
-When(/^I save the seller configuration with SIRET "([^"]*)"$/, (siret: string) => {
+When(/^I save the seller configuration with SIRET "([^"]*)"$/, async (siret: string) => {
   const raw: RawSellerInput = {
     companyName: 'Test Company',
     legalForm: 'SARL',
@@ -368,7 +363,7 @@ When(/^I save the seller configuration with SIRET "([^"]*)"$/, (siret: string) =
     email: 'test@test.fr'
   };
 
-  const result = buildAndSave(raw);
+  const result = await buildAndSave(raw);
   if (Either.isRight(result)) {
     savedSeller = result.right;
     saveError = undefined;
@@ -378,7 +373,7 @@ When(/^I save the seller configuration with SIRET "([^"]*)"$/, (siret: string) =
   }
 });
 
-When(/^I save the seller configuration with SIREN "([^"]*)"$/, (siren: string) => {
+When(/^I save the seller configuration with SIREN "([^"]*)"$/, async (siren: string) => {
   const raw: RawSellerInput = {
     companyName: 'Test Company',
     legalForm: 'SARL',
@@ -393,7 +388,7 @@ When(/^I save the seller configuration with SIREN "([^"]*)"$/, (siren: string) =
     email: 'test@test.fr'
   };
 
-  const result = buildAndSave(raw);
+  const result = await buildAndSave(raw);
   if (Either.isRight(result)) {
     savedSeller = result.right;
     saveError = undefined;
