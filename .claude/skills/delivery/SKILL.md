@@ -118,26 +118,33 @@ src/app/.../<route>/
 
 ### Checkpoint 2: BACKEND
 
-**Goal**: implement domain + action + tests. All backend tests GREEN.
+**Goal**: implement domain + action + tests. All checks GREEN.
 
 1. Invoke **backend-dev** with:
    - The approved Gherkin .ability.md file
    - The target feature/ability path
    - Any existing domain types to reuse
+   - Instruction to read existing code style before writing anything
 2. backend-dev implements:
-   - Domain types, value objects, errors
-   - Validation (Effect Schema)
+   - Domain types, value objects, typed errors (Data.TaggedError)
+   - Validation (Effect Schema) with comprehensive patterns
    - Server action (actionBuilder) in `src/app/_actions/`
-   - Implementations (index.dev.ts at minimum)
+   - Implementations: BOTH in-memory AND drizzle (with table + transfer)
    - Cucumber step definitions (calling real mutations/queries)
-   - Unit tests for domain logic
-3. backend-dev runs: `pnpm test:cucumber && pnpm test`
+   - Unit tests for domain logic + transfer round-trip tests
+3. backend-dev runs ALL checks before reporting done:
+   - `pnpm tsc --noEmit` — zero TypeScript errors
+   - `pnpm test:cucumber` — all scenarios GREEN
+   - `pnpm test` — all unit tests GREEN
+   - `pnpm lint:code:fix` — zero Biome errors
+   - `pnpm lint:architecture` — zero violations
 4. Invoke **reviewer** (backend mode) to review
+   - Reviewer also runs `pnpm tsc --noEmit` and `pnpm lint:code:fix`
    - If REJECTED: reviewer lists ALL issues → re-invoke backend-dev
      with complete feedback (max 2 rounds, then STOP for human)
    - If APPROVED: proceed
 
-**Gate**: user reviews + reviewer APPROVED. Both test streams GREEN.
+**Gate**: user reviews + reviewer APPROVED. All checks GREEN.
 
 ### Checkpoint 3: FRONTEND
 
