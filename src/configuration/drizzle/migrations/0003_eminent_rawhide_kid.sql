@@ -1,0 +1,1 @@
+ALTER TABLE "seller" ALTER COLUMN "phone" SET DATA TYPE varchar(16);
