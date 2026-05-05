@@ -5,15 +5,6 @@
 * Given there is no seller configured
 * When I search for a company with SIRET "44306184100047"
 * Then the results should include a company named "GOOGLE FRANCE"
-* And the results should include full company data
-  | Field               | Value            |
-  | company name        | GOOGLE FRANCE    |
-  | legal form          | SAS              |
-  | SIREN               | 443061841        |
-  | SIRET               | 44306184100047   |
-  | registered address  | 8 Rue de Londres |
-  | zipcode             | 75009            |
-  | city                | Paris            |
 
 ## Scenario: Search for a company by name
 

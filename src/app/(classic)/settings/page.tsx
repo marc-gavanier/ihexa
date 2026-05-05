@@ -17,7 +17,7 @@ export default pageBuilder()
   .use(
     withClientBinder(CONFIGURE_SELLER_KEY, configureSellerAction),
     withClientBinder(SEARCH_COMPANY_KEY, searchCompanyAction),
-    withI18n(i18n)('settings.configure-seller', 'global.server-action')
+    withI18n(i18n)('settings.configure-seller', 'global.server-action'),
+    withOptionalEither('seller', () => getSellerConfiguration())
   )
-  .use(withOptionalEither('seller', () => getSellerConfiguration()))
   .render(async ({ seller }) => <ConfigureSellerPage seller={presentSeller(seller)} />);
