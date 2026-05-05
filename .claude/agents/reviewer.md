@@ -70,13 +70,32 @@ Organize findings by severity:
 
 ## Frontend checklist (checkpoint 3)
 
+### Data flow
+- [ ] SSR data loading via pageBuilder middlewares (withOptionalEither, withMap) — NOT useEffect
+- [ ] Presenter exists in `ui/components/presenter.ts` — colocated with form, handles null, pure function, tested
+- [ ] Submission adapter exists in `ui/components/submission.ts` — colocated with form, pure function, tested
+- [ ] No transformation helpers in form components — all in presenter/submission
+- [ ] `render()` is a pure projection — no logic, no conditionals
+
+### Form patterns
+- [ ] Form uses `transformValue(submission)(applyEffectSchema(schema))` for onChange validator
+- [ ] Form uses `transformValue(submission)(handleAction(action))` for onSubmit
+- [ ] Combobox config in separate `.combobox.tsx` file (itemToString, itemToKey, loadSuggestions)
+- [ ] Conditional display uses presenter functions inlined in JSX (not variables)
+- [ ] No `as` casts anywhere — if needed, fix the schema or use smart constructors
+
+### Validation schema
+- [ ] API data fields use `Schema.String` — not branded domain schemas
+- [ ] User input fields use domain schemas (Email.schema, etc.)
+- [ ] Enum fields: `Schema.String.pipe(Schema.filter(...))` — NOT `Schema.Literal` in validation
+- [ ] Cross-field validation via `Schema.filter` on struct with `{ path, message }`
+
+### General UI
 - [ ] E2E tests exist for each page and cover key behaviors
-- [ ] Components import only from allowed sources
-- [ ] Page uses pageBuilder pattern correctly
-- [ ] Storybook stories cover meaningful states
+- [ ] Components import only from allowed sources (action/, domain, @arckit/*, @/libraries/*)
+- [ ] Storybook stories cover meaningful states (Default, WithExisting, Error)
 - [ ] Accessibility: proper roles, labels, keyboard navigation
-- [ ] No business logic in UI components
-- [ ] i18n: all user-facing strings use translation keys
+- [ ] i18n: all user-facing strings use translation keys, translations have proper accents
 
 ## Verdict format
 

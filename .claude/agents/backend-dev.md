@@ -61,12 +61,25 @@ actionBuilder()
 - Business logic returns `Either<Result, Error>`
 - Use `Match` from Effect for pattern matching when there are multiple
   business rule branches
+- **CAUTION with Match and optional properties**: `Match.when({ prop: predicate })`
+  does NOT trigger the predicate if the property is absent from the object.
+  Always match the positive case first (`Match.defined`), then catch the
+  absence as a separate `Match.when` without the property predicate.
 
 **Dependency injection** uses `piqure`:
 - Keys defined in `<ability>.key.ts` using `keyFor()`
 - Bound in page via `withClientBinder(KEY, implementation)`
 
 **Validation** uses Effect Schema (never Zod).
+
+**Smart constructors**: when external data (API, plain strings) must be
+converted to branded domain types, create a smart constructor in the domain:
+```typescript
+export const MySmartConstructor = (raw: RawExternalData) => ({
+  field: BrandedType(raw.field), ...
+});
+```
+Use these in server actions to convert at the action→domain boundary.
 
 **Incubator**: new transversal code goes in `src/libraries/<lib>/`,
 published to `@arckit/<lib>` when mature.

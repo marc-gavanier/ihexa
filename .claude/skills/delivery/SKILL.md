@@ -66,11 +66,14 @@ src/features/<feature>/
         │   └── index.ts               # Active (generated)
         ├── domain/                     # Ability-specific domain (if needed)
         └── ui/
-            ├── components/
-            ├── pages/
-            │   ├── <ability>.page.tsx
-            │   └── <ability>.page.stories.tsx
-            └── shared/
+            ├── components/             # Colocated: form, presenter, submission, combobox, card
+            │   ├── <ability>.presenter.ts      # Domain → FormViewModel (SSR → UI)
+            │   ├── <ability>.submission.ts      # FormValues → ActionInput (UI → Action)
+            │   ├── <ability>-form.tsx
+            │   └── <name>.combobox.tsx
+            └── pages/
+                ├── <ability>.page.tsx
+                └── <ability>.page.stories.tsx
 ```
 
 ### Server actions
@@ -82,6 +85,17 @@ actionBuilder()
   .use(withLogger('name'))
   .execute(fromEither(async ({ input }) => fn(input), { onError: ERROR_MAP }))
 ```
+
+### Data transformation cycle
+
+```
+DB ──transfer──▶ Domain ──presenter──▶ Form ──submission──▶ Action ──smart constructor──▶ Domain ──transfer──▶ DB
+```
+
+- **presenter.ts**: Domain → FormViewModel (prepare data for the form, handle null)
+- **submission.ts**: FormValues → ActionInput (transform form types to action types)
+- **Smart constructors**: Convert API/external data (plain strings) to branded domain types
+- The form NEVER contains transformation helpers — all logic is in presenter/submission (pure, testable)
 
 ### Route structure
 
@@ -95,7 +109,7 @@ src/app/.../<route>/
 ### Key patterns
 
 - **Domain**: Effect `Schema.TaggedStruct` with branded types, `Either<Result, Error>`
-- **Pages**: `pageBuilder().use(withClientBinder(KEY, impl)).use(withI18n(i18n)('ns')).render(...)`
+- **Pages**: `pageBuilder().use(withClientBinder(KEY, impl)).use(withOptionalEither/withMap for SSR data).use(withI18n(i18n)('ns')).render(({ data }) => <Page data={data} />)` — render is a pure projection, no logic
 - **DI**: `piqure` with `keyFor()` for injection keys
 - **Validation**: Effect Schema (never Zod)
 - **Incubator**: new transversal code goes in `src/libraries/<lib>/`, published to `@arckit/<lib>` when mature
