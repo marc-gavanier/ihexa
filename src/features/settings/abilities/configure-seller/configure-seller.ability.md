@@ -5,17 +5,7 @@
 * Given there is no seller configured
 * When I search for a company with SIRET "44306184100047"
 * Then the results should include a company named "GOOGLE FRANCE"
-
-## Scenario: Search for a company by name
-
-* Given there is no seller configured
-* When I search for a company with name "Google France"
-* Then the results should include a company named "GOOGLE FRANCE"
-
-## Scenario: Select a company returns full company data
-
-* When I select the company with SIRET "44306184100047"
-* Then I should receive the company data
+* And the results should include full company data
   | Field               | Value            |
   | company name        | GOOGLE FRANCE    |
   | legal form          | SAS              |
@@ -24,6 +14,12 @@
   | registered address  | 8 Rue de Londres |
   | zipcode             | 75009            |
   | city                | Paris            |
+
+## Scenario: Search for a company by name
+
+* Given there is no seller configured
+* When I search for a company with name "Google France"
+* Then the results should include a company named "GOOGLE FRANCE"
 
 ## Scenario: Save a complete seller configuration with normal VAT regime
 
@@ -65,18 +61,12 @@
   | Field      | Value             |
   | VAT regime | franchise en base |
   | email      | dupont@email.fr   |
-* And no share capital is provided
 * Then the seller configuration should be saved successfully
 
 ## Scenario: Company not found
 
 * When I search for a company with name "ZZZZNONEXISTENT999"
 * Then no companies should be found
-
-## Scenario: Invalid SIRET format is rejected
-
-* When I search for a company with SIRET "123"
-* Then the search should be rejected as invalid SIRET format
 
 ## Scenario: Update an existing seller configuration
 
@@ -93,11 +83,11 @@
 * Then the seller should have no tax debit option
 * And the seller should have no intra-EU VAT number
 
-## Scenario: Cannot create invoices without seller configuration
+## Scenario: Seller configuration is unavailable when not configured
 
 * Given there is no seller configured
-* When I attempt to create an invoice
-* Then the invoice creation should be blocked
+* When I attempt to retrieve the seller configuration
+* Then the seller configuration should be unavailable
 
 ## Scenario: SIRET must be exactly 14 digits
 

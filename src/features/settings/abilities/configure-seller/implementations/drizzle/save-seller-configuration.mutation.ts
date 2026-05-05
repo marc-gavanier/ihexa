@@ -11,7 +11,8 @@ export const saveSellerConfiguration: SaveSellerConfiguration = async (input) =>
 
   const seller = result.right;
   const row = sellerFromDomain(seller);
-  await db.insert(sellerTable).values(row).onConflictDoUpdate({ target: sellerTable.siret, set: row });
+  await db.delete(sellerTable);
+  await db.insert(sellerTable).values(row);
 
   return Either.right(seller);
 };
