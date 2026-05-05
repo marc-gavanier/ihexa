@@ -1,3 +1,23 @@
+# [1.8.0](https://github.com/marc-gavanier/ihexa/compare/v1.7.0...v1.8.0) (2026-05-05)
+
+
+### Bug Fixes
+
+* code style ([25c9938](https://github.com/marc-gavanier/ihexa/commit/25c99388dd49a46ab9441ed603c42bc89f6dd8ba))
+* domain definition problems ([ef1d2fd](https://github.com/marc-gavanier/ihexa/commit/ef1d2fda5b3b49a67c234bac1441123f11ec6a99))
+* max length for phone column in seller table ([a0e30e3](https://github.com/marc-gavanier/ihexa/commit/a0e30e3f68aa25437b52c2f71bd457e50d354115))
+
+
+### Features
+
+* add configure seller ui ([1ccf989](https://github.com/marc-gavanier/ihexa/commit/1ccf9896d5599cbe5be2984167d143c322872f75))
+* add congigure seller settings page ([ed48f1e](https://github.com/marc-gavanier/ihexa/commit/ed48f1e01dcb0eaffe6be2c1f53f224afe0f9a65))
+* add recherche entreprise implementation ([b075498](https://github.com/marc-gavanier/ihexa/commit/b075498058fd6c525cd0a282d860b837551a1947))
+* add rechercher entreprise api integration library ([6db3fed](https://github.com/marc-gavanier/ihexa/commit/6db3feda19111c28d279466ca35a343404803011))
+* add search company action ([2bac465](https://github.com/marc-gavanier/ihexa/commit/2bac465dc0d95f35c1089cf8126128e163ab0505))
+* add translations for cinfigure seller page ([9fc8ba0](https://github.com/marc-gavanier/ihexa/commit/9fc8ba09498bbbf6cb75394452a6f2aa39a1349d))
+* **settings:** add configure-seller ability ([55fb9d9](https://github.com/marc-gavanier/ihexa/commit/55fb9d9b40515760c2272b7c3677b0a993fbf15e))
+
 # [1.7.0](https://github.com/marc-gavanier/ihexa/compare/v1.6.1...v1.7.0) (2026-05-02)
 
 
