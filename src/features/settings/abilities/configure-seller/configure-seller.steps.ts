@@ -16,8 +16,8 @@ import { VatNumber } from '@/features/settings/domain/seller/vat-number';
 import { VAT_REGIMES, VatRegime } from '@/features/settings/domain/seller/vat-regime';
 import { Website } from '@/features/settings/domain/seller/website';
 import { clearSettings } from '@/features/settings/infrastructure';
-import type { CompanyData, CompanySearchResult, InvalidSiretFormat } from '@/libraries/company-registry';
-import { getSellerConfiguration, saveSellerConfiguration, searchCompany, selectCompany } from './implementations';
+import type { CompanySummary } from '@/libraries/recherche-entreprises';
+import { getSellerConfiguration, saveSellerConfiguration, searchCompany } from './implementations';
 
 interface RawSellerInput {
   readonly companyName: string;
@@ -71,21 +71,17 @@ const buildAndSave = async (raw: RawSellerInput): Promise<Either.Either<Seller, 
   }
 };
 
-let searchResults: readonly CompanySearchResult[] | undefined;
-let companyData: CompanyData | undefined;
+let searchResults: readonly CompanySummary[] | undefined;
 let savedSeller: Seller | undefined;
 let saveError: unknown;
-let searchError: InvalidSiretFormat | undefined;
-let invoiceBlocked: boolean;
+let sellerUnavailable: boolean;
 let currentRawInput: Partial<RawSellerInput>;
 
 const resetState = (): void => {
   searchResults = undefined;
-  companyData = undefined;
   savedSeller = undefined;
   saveError = undefined;
-  searchError = undefined;
-  invoiceBlocked = false;
+  sellerUnavailable = false;
   currentRawInput = {};
 };
 
@@ -191,28 +187,11 @@ Given(
 // --- When ---
 
 When(/^I search for a company with SIRET "([^"]*)"$/, async (siret: string) => {
-  const result = await searchCompany(siret);
-  if (Either.isRight(result)) {
-    searchResults = result.right;
-  } else {
-    searchError = result.left;
-  }
+  searchResults = await searchCompany(siret);
 });
 
 When(/^I search for a company with name "([^"]*)"$/, async (name: string) => {
-  const result = await searchCompany(name);
-  if (Either.isRight(result)) {
-    searchResults = result.right;
-  } else {
-    searchError = result.left;
-  }
-});
-
-When(/^I select the company with SIRET "([^"]*)"$/, async (siret: string) => {
-  const result = await selectCompany(Siret(siret));
-  if (Either.isRight(result)) {
-    companyData = result.right;
-  }
+  searchResults = await searchCompany(name);
 });
 
 When(/^I save the seller configuration with$/, async (dataTable: DataTable) => {
@@ -299,11 +278,6 @@ When(/^I save the seller configuration without an email$/, async () => {
   }
 });
 
-When(/^no share capital is provided$/, () => {
-  // Share capital is already not provided in currentRawInput for EI
-  // This is a confirmation step - no action needed
-});
-
 When(/^I update the seller email to "([^"]*)"$/, (email: string) => {
   currentRawInput = { ...currentRawInput, email };
 });
@@ -338,14 +312,14 @@ When(/^I change the VAT regime to "([^"]*)"$/, (vatRegime: string) => {
   const regime = Schema.decodeUnknownSync(VatRegime)(vatRegime.replace(/ /g, '_'));
   currentRawInput = { ...currentRawInput, vatRegime: regime };
   if (regime === 'franchise_en_base') {
-    Reflect.deleteProperty(currentRawInput, 'vatNumber');
-    Reflect.deleteProperty(currentRawInput, 'taxDebitOption');
+    const { vatNumber, taxDebitOption, ...rest } = currentRawInput;
+    currentRawInput = rest;
   }
 });
 
-When(/^I attempt to create an invoice$/, async () => {
+When(/^I attempt to retrieve the seller configuration$/, async () => {
   const result = await getSellerConfiguration();
-  invoiceBlocked = Either.isLeft(result);
+  sellerUnavailable = Either.isLeft(result);
 });
 
 When(/^I save the seller configuration with SIRET "([^"]*)"$/, async (siret: string) => {
@@ -406,18 +380,19 @@ Then(/^the results should include a company named "([^"]*)"$/, (name: string) =>
   assert.ok(found, `Expected to find company "${name}" in results`);
 });
 
-Then(/^I should receive the company data$/, (dataTable: DataTable) => {
-  assert.ok(companyData, 'Company data should be defined');
+Then(/^the results should include full company data$/, (dataTable: DataTable) => {
+  assert.ok(searchResults, 'Search results should be defined');
   const entries = Object.fromEntries(dataTable.rows());
-  const { SIREN, SIRET, zipcode, city, ...expected } = entries;
+  const company = searchResults.find((r) => r.companyName === entries['company name']);
+  assert.ok(company, `Expected to find company "${entries['company name']}" in results`);
 
-  if (expected['company name']) assert.strictEqual(companyData.companyName, expected['company name']);
-  if (expected['legal form']) assert.strictEqual(companyData.legalForm, expected['legal form']);
-  if (SIREN) assert.strictEqual(companyData.siren, SIREN);
-  if (SIRET) assert.strictEqual(companyData.siret, SIRET);
-  if (expected['registered address']) assert.strictEqual(companyData.street, expected['registered address']);
-  if (zipcode) assert.strictEqual(companyData.zipcode, zipcode);
-  if (city) assert.strictEqual(companyData.city, city);
+  const { SIREN, SIRET, zipcode, city, ...expected } = entries;
+  if (expected['legal form']) assert.strictEqual(company.legalForm, expected['legal form']);
+  if (SIREN) assert.strictEqual(company.siren, SIREN);
+  if (SIRET) assert.strictEqual(company.siret, SIRET);
+  if (expected['registered address']) assert.strictEqual(company.street, expected['registered address']);
+  if (zipcode) assert.strictEqual(company.zipcode, zipcode);
+  if (city) assert.strictEqual(company.city, city);
 });
 
 Then(/^the seller configuration should be saved successfully$/, () => {
@@ -445,17 +420,12 @@ Then(/^no companies should be found$/, () => {
   assert.strictEqual(searchResults.length, 0);
 });
 
-Then(/^the search should be rejected as invalid SIRET format$/, () => {
-  assert.ok(searchError, 'Expected search error');
-  assert.strictEqual(searchError._tag, 'InvalidSiretFormat');
-});
-
 Then(/^the seller configuration should have email "([^"]*)"$/, async (email: string) => {
   const result = await getSellerConfiguration();
   assert.ok(Either.isRight(result), 'Seller should be configured');
   assert.strictEqual(result.right.email, email);
 });
 
-Then(/^the invoice creation should be blocked$/, () => {
-  assert.ok(invoiceBlocked, 'Invoice creation should be blocked when no seller is configured');
+Then(/^the seller configuration should be unavailable$/, () => {
+  assert.ok(sellerUnavailable, 'Seller configuration should be unavailable when not configured');
 });

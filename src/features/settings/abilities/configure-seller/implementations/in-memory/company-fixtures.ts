@@ -1,6 +1,6 @@
-import type { CompanyData } from '@/libraries/company-registry';
+import type { CompanySummary } from '@/libraries/recherche-entreprises';
 
-export const COMPANY_FIXTURES: readonly CompanyData[] = [
+export const COMPANY_FIXTURES: readonly CompanySummary[] = [
   {
     companyName: 'GOOGLE FRANCE',
     legalForm: 'SAS',
