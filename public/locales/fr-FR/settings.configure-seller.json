@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "title": "Configuration du vendeur",
+    "description": "Configurez les informations de votre entreprise."
+  },
+  "title": "Configuration du vendeur",
+  "success": {
+    "saved": "Configuration du vendeur enregistrée avec succès"
+  },
+  "error": {
+    "shareCapitalNotAllowedForEI": "Le capital social n'est pas autorisé pour les entreprises individuelles (EI)",
+    "taxDebitOptionNotAllowedForFranchise": "L'option sur les débits n'est pas autorisée en franchise en base",
+    "vatNumberRequiredForNormalRegime": "Le numéro de TVA est requis pour le régime normal",
+    "invalidSiretFormat": "Le format du SIRET est invalide",
+    "companyNotFound": "Entreprise non trouvée",
+    "sellerNotConfigured": "Le vendeur n'est pas encore configuré"
+  },
+  "company": {
+    "search": {
+      "label": "Rechercher une entreprise",
+      "placeholder": "Nom de l'entreprise ou SIRET...",
+      "noResults": "Aucun résultat trouvé"
+    },
+    "card": {
+      "title": "Entreprise sélectionnée",
+      "siren": "SIREN",
+      "siret": "SIRET",
+      "address": "Adresse"
+    }
+  },
+  "form": {
+    "vatRegime": {
+      "label": "Régime de TVA",
+      "placeholder": "Sélectionnez un régime de TVA",
+      "options": {
+        "normal": "Normal",
+        "franchise_en_base": "Franchise en base"
+      },
+      "error": {
+        "required": "Le régime de TVA est requis",
+        "invalid": "Le régime de TVA est invalide"
+      }
+    },
+    "vatNumber": {
+      "label": "Numéro de TVA",
+      "error": {
+        "required": "Le numéro de TVA est requis",
+        "invalid": "Le numéro de TVA doit correspondre au format FRXX suivi de 9 chiffres"
+      }
+    },
+    "taxDebitOption": {
+      "label": "Option sur les débits"
+    },
+    "rcsRegistration": {
+      "label": "Immatriculation RCS",
+      "error": {
+        "invalid": "Le format d'immatriculation RCS est invalide"
+      }
+    },
+    "shareCapital": {
+      "label": "Capital social",
+      "error": {
+        "invalid": "Le capital social doit être un nombre positif"
+      }
+    },
+    "email": {
+      "label": "Email",
+      "error": {
+        "required": "L'email est requis",
+        "invalid": "Le format de l'email est invalide"
+      }
+    },
+    "phone": {
+      "label": "Téléphone",
+      "error": {
+        "invalid": "Le téléphone doit commencer par + suivi de 9 à 15 chiffres"
+      }
+    },
+    "website": {
+      "label": "Site web",
+      "error": {
+        "invalid": "Le site web doit être une URL valide commençant par http:// ou https://"
+      }
+    },
+    "submit": "Enregistrer la configuration"
+  }
+}

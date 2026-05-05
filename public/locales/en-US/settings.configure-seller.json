@@ -1,0 +1,87 @@
+{
+  "metadata": {
+    "title": "Seller Configuration",
+    "description": "Configure your seller information."
+  },
+  "title": "Seller Configuration",
+  "success": {
+    "saved": "Seller configuration saved successfully"
+  },
+  "error": {
+    "shareCapitalNotAllowedForEI": "Share capital is not allowed for individual enterprises (EI)",
+    "taxDebitOptionNotAllowedForFranchise": "Tax debit option is not allowed for franchise en base regime",
+    "vatNumberRequiredForNormalRegime": "VAT number is required for normal VAT regime",
+    "invalidSiretFormat": "Invalid SIRET format",
+    "companyNotFound": "Company not found",
+    "sellerNotConfigured": "Seller is not yet configured"
+  },
+  "company": {
+    "search": {
+      "label": "Search company",
+      "placeholder": "Company name or SIRET...",
+      "noResults": "No results found"
+    },
+    "card": {
+      "title": "Selected company",
+      "siren": "SIREN",
+      "siret": "SIRET",
+      "address": "Address"
+    }
+  },
+  "form": {
+    "vatRegime": {
+      "label": "VAT regime",
+      "placeholder": "Select a VAT regime",
+      "options": {
+        "normal": "Normal",
+        "franchise_en_base": "Franchise en base"
+      },
+      "error": {
+        "required": "VAT regime is required",
+        "invalid": "VAT regime is invalid"
+      }
+    },
+    "vatNumber": {
+      "label": "VAT number",
+      "error": {
+        "required": "VAT number is required",
+        "invalid": "VAT number must match format FRXX followed by 9 digits"
+      }
+    },
+    "taxDebitOption": {
+      "label": "Tax debit option"
+    },
+    "rcsRegistration": {
+      "label": "RCS registration",
+      "error": {
+        "invalid": "RCS registration format is invalid"
+      }
+    },
+    "shareCapital": {
+      "label": "Share capital",
+      "error": {
+        "invalid": "Share capital must be a positive number"
+      }
+    },
+    "email": {
+      "label": "Email",
+      "error": {
+        "required": "Email is required",
+        "invalid": "Email format is invalid"
+      }
+    },
+    "phone": {
+      "label": "Phone",
+      "error": {
+        "invalid": "Phone must start with + followed by 9 to 15 digits"
+      }
+    },
+    "website": {
+      "label": "Website",
+      "error": {
+        "invalid": "Website must be a valid URL starting with http:// or https://"
+      }
+    },
+    "submit": "Save configuration"
+  }
+}
