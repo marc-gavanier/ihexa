@@ -1,7 +1,7 @@
 import { defineModel, type Model } from '@arckit/effect';
 import { brand, nonEmptyString, pattern, Trim } from 'effect/Schema';
 
-export const VAT_NUMBER_PATTERN = /^FR\d{2}\d{9}$/;
+export const VAT_NUMBER_PATTERN = /^FR[A-Z0-9]{2}\d{9}$/;
 
 export const VatNumber = defineModel(
   Trim.pipe(

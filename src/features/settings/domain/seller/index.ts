@@ -1,4 +1,5 @@
 export * from './address';
+export * from './company-identity';
 export * from './company-name';
 export * from './email';
 export * from './legal-form';
