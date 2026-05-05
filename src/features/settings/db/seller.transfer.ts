@@ -1,7 +1,8 @@
+import { Schema } from 'effect';
 import { InseeCode, SellerCity, SellerStreet, SellerZipcode } from '@/features/settings/domain/seller/address';
 import { CompanyName } from '@/features/settings/domain/seller/company-name';
 import { Email } from '@/features/settings/domain/seller/email';
-import type { LegalForm } from '@/features/settings/domain/seller/legal-form';
+import { LegalForm } from '@/features/settings/domain/seller/legal-form';
 import { Phone } from '@/features/settings/domain/seller/phone';
 import { RcsRegistration } from '@/features/settings/domain/seller/rcs-registration';
 import type { Seller } from '@/features/settings/domain/seller/seller';
@@ -16,7 +17,7 @@ type SellerRow = typeof sellerTable.$inferSelect;
 
 export const sellerToDomain = (row: SellerRow): Seller => ({
   companyName: CompanyName(row.companyName),
-  legalForm: row.legalForm as LegalForm,
+  legalForm: Schema.decodeUnknownSync(LegalForm)(row.legalForm),
   siren: Siren(row.siren),
   siret: Siret(row.siret),
   address: {
