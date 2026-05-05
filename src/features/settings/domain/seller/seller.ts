@@ -119,11 +119,9 @@ export const buildSeller = (input: ValidatedSellerInput): Either.Either<Seller, 
     Match.when({ vatRegime: (vatRegime: VatRegime) => !isVatApplicable(vatRegime), taxDebitOption: Match.is(true) }, () =>
       Either.left(new TaxDebitOptionNotAllowedForFranchise())
     ),
-    Match.when({ vatRegime: 'normal', vatNumber: (vatNumber?: VatNumber) => vatNumber == null }, () =>
-      Either.left(new VatNumberRequiredForNormalRegime())
-    ),
     Match.when({ vatRegime: 'normal', vatNumber: Match.defined }, (input) =>
       Either.right(assembleNormalVatSeller(toBase(input), input.vatNumber, input.taxDebitOption ?? false, input.shareCapital))
     ),
+    Match.when({ vatRegime: 'normal' }, () => Either.left(new VatNumberRequiredForNormalRegime())),
     Match.orElse((input) => Either.right(assembleFranchiseSeller(toBase(input), input.shareCapital)))
   );
