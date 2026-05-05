@@ -1,41 +1,51 @@
 import { describe, expect, it } from 'vitest';
-import type { FranchiseEnBaseSeller, NormalVatSeller } from '@/features/settings/domain/seller';
+import { InseeCode, SellerCity, SellerStreet, SellerZipcode } from '@/features/settings/domain/seller/address';
+import { CompanyName } from '@/features/settings/domain/seller/company-name';
+import { Email } from '@/features/settings/domain/seller/email';
+import { Phone } from '@/features/settings/domain/seller/phone';
+import { RcsRegistration } from '@/features/settings/domain/seller/rcs-registration';
+import type { FranchiseEnBaseSeller, NormalVatSeller } from '@/features/settings/domain/seller/seller';
+import { ShareCapital } from '@/features/settings/domain/seller/share-capital';
+import { Siren } from '@/features/settings/domain/seller/siren';
+import { Siret } from '@/features/settings/domain/seller/siret';
+import { VatNumber } from '@/features/settings/domain/seller/vat-number';
+import { Website } from '@/features/settings/domain/seller/website';
 import { presentSeller, showShareCapital, showVatFields } from './configure-seller.presenter';
 
 const NORMAL_SELLER: NormalVatSeller = {
-  companyName: 'ACME SARL' as never,
+  companyName: CompanyName('ACME SARL'),
   legalForm: 'SARL',
-  siren: '123456789' as never,
-  siret: '12345678900014' as never,
+  siren: Siren('123456789'),
+  siret: Siret('12345678900014'),
   address: {
-    street: '10 Rue du Commerce' as never,
-    zipcode: '75015' as never,
-    city: 'Paris' as never,
-    inseeCode: '75115' as never
+    street: SellerStreet('10 Rue du Commerce'),
+    zipcode: SellerZipcode('75015'),
+    city: SellerCity('Paris'),
+    inseeCode: InseeCode('75115')
   },
   vatRegime: 'normal',
-  vatNumber: 'FR12123456789' as never,
+  vatNumber: VatNumber('FR12123456789'),
   taxDebitOption: true,
-  rcsRegistration: 'RCS Paris 123456789' as never,
-  shareCapital: 10000 as never,
-  email: 'contact@acme.fr' as never,
-  phone: '+33123456789' as never,
-  website: 'https://acme.fr' as never
+  rcsRegistration: RcsRegistration('RCS Paris 123456789'),
+  shareCapital: ShareCapital(10000),
+  email: Email('contact@acme.fr'),
+  phone: Phone('+33123456789'),
+  website: Website('https://acme.fr')
 };
 
 const FRANCHISE_SELLER: FranchiseEnBaseSeller = {
-  companyName: 'DUPONT EI' as never,
+  companyName: CompanyName('DUPONT EI'),
   legalForm: 'EI',
-  siren: '987654321' as never,
-  siret: '98765432100012' as never,
+  siren: Siren('987654321'),
+  siret: Siret('98765432100012'),
   address: {
-    street: '5 Avenue de la Paix' as never,
-    zipcode: '69001' as never,
-    city: 'Lyon' as never,
-    inseeCode: '69123' as never
+    street: SellerStreet('5 Avenue de la Paix'),
+    zipcode: SellerZipcode('69001'),
+    city: SellerCity('Lyon'),
+    inseeCode: InseeCode('69123')
   },
   vatRegime: 'franchise_en_base',
-  email: 'dupont@email.fr' as never
+  email: Email('dupont@email.fr')
 };
 
 describe('presentSeller', () => {

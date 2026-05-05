@@ -1,5 +1,3 @@
-'use client';
-
 import { Card, CardBody } from '@arckit/daisyui/primitives';
 import { useTranslation } from 'react-i18next';
 import type { CompanySummary } from '@/libraries/recherche-entreprises';

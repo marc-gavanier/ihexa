@@ -380,21 +380,6 @@ Then(/^the results should include a company named "([^"]*)"$/, (name: string) =>
   assert.ok(found, `Expected to find company "${name}" in results`);
 });
 
-Then(/^the results should include full company data$/, (dataTable: DataTable) => {
-  assert.ok(searchResults, 'Search results should be defined');
-  const entries = Object.fromEntries(dataTable.rows());
-  const company = searchResults.find((r) => r.companyName === entries['company name']);
-  assert.ok(company, `Expected to find company "${entries['company name']}" in results`);
-
-  const { SIREN, SIRET, zipcode, city, ...expected } = entries;
-  if (expected['legal form']) assert.strictEqual(company.legalForm, expected['legal form']);
-  if (SIREN) assert.strictEqual(company.siren, SIREN);
-  if (SIRET) assert.strictEqual(company.siret, SIRET);
-  if (expected['registered address']) assert.strictEqual(company.street, expected['registered address']);
-  if (zipcode) assert.strictEqual(company.zipcode, zipcode);
-  if (city) assert.strictEqual(company.city, city);
-});
-
 Then(/^the seller configuration should be saved successfully$/, () => {
   assert.ok(savedSeller, `Seller configuration should be saved. Error: ${saveError}`);
   assert.strictEqual(saveError, undefined);

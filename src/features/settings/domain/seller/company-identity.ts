@@ -5,7 +5,7 @@ import { LegalForm } from './legal-form';
 import { Siren } from './siren';
 import { Siret } from './siret';
 
-interface RawCompanyIdentity {
+type RawCompanyIdentity = {
   readonly companyName: string;
   readonly legalForm: string;
   readonly siren: string;
@@ -14,7 +14,7 @@ interface RawCompanyIdentity {
   readonly zipcode: string;
   readonly city: string;
   readonly inseeCode: string;
-}
+};
 
 export const CompanyIdentity = (raw: RawCompanyIdentity) => ({
   companyName: CompanyName(raw.companyName),
