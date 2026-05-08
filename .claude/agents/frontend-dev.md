@@ -86,6 +86,14 @@ const form = useAppForm({
 - Use `transformValue(submission)(handler)` for both validation AND submit
 - Use `handleAction(action)` for submit — it wraps in `startTransition`
 
+**Functional style** (mandatory):
+- No `let` accumulators or mutable state — use `reduce`, `map`, `filter`
+- Extract complex expressions into small named pure functions, compose them
+- A function body should read as a sequence of named steps (Compose Method)
+- No `if` in tests — use `Either.left`/`Either.right` comparisons, not narrowing guards
+- **No classes** — never use `class` or `new`. Use plain objects, `as const`,
+  arrow functions, and `taggedError()` for tagged unions.
+
 **No logic in components**:
 - Conditional display (showVatFields, showShareCapital) → functions in presenter
 - Inline them directly in JSX: `{showVatFields(regime) && (...)}`
@@ -141,10 +149,18 @@ smart constructor).
 - Decorators for i18n and layout wrapping
 - When Storybook is running, use the MCP server at `http://localhost:6006/mcp`
 
+## .ability.md — Presentation rules
+
+The `.ability.md` file contains a **Presentation rules** section (after the
+second `---` separator). These are display invariants and mandatory mentions
+that must be verified in E2E tests. Use them as the source of truth for
+what the UI must show.
+
 ## Implementation order
 
 1. Create presenter + submission (pure functions, with unit tests)
-2. Write E2E specs (`page.e2e.ts`) — they should FAIL
+2. Write E2E specs (`page.e2e.ts`) — use the Presentation rules from
+   `.ability.md` as acceptance criteria. They should FAIL initially.
 3. Implement components and pages
 4. Write Storybook stories
 5. Wire: pageBuilder with SSR middlewares, DI, i18n, routes

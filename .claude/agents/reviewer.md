@@ -59,6 +59,8 @@ Organize findings by severity:
 - [ ] Cucumber steps call real mutations/queries (not store manipulation)
 - [ ] Cucumber steps import from switchable barrels (`./implementations`, `@/features/<feature>/infrastructure`), never directly from `in-memory/` or `drizzle/`
 - [ ] Unit tests cover domain logic with meaningful assertions
+- [ ] Domain constraints from `.ability.md` are tested as unit tests, not as Cucumber steps
+- [ ] Cucumber steps only cover the Scenarios section (Gherkin with `Rule:`), not validation edge cases
 
 ### Code style
 - [ ] Code style matches existing codebase (read existing files for reference)
@@ -67,6 +69,12 @@ Organize findings by severity:
 - [ ] Architecture lint passes (`pnpm lint:architecture`)
 - [ ] TypeScript compiles without errors (`pnpm tsc --noEmit`)
 - [ ] No `any` types (use `never`, generics, or narrowing)
+- [ ] Functional style: no `let` accumulators, no imperative loops — use `map`/`filter`/`reduce`
+- [ ] Complex expressions are decomposed into small named pure functions (Compose Method)
+- [ ] No `if` in tests — use `Either.left`/`Either.right` comparisons for assertions
+- [ ] No `class` or `new` keyword anywhere — use `taggedError()`, `as const`, arrow functions
+- [ ] No redundant `export type X = typeof X` — use `typeof X` directly in unions
+- [ ] No `if` in domain logic — one `Match.when` per business rule
 
 ## Frontend checklist (checkpoint 3)
 
@@ -92,6 +100,7 @@ Organize findings by severity:
 
 ### General UI
 - [ ] E2E tests exist for each page and cover key behaviors
+- [ ] E2E tests verify the Presentation rules from `.ability.md`
 - [ ] Components import only from allowed sources (action/, domain, @arckit/*, @/libraries/*)
 - [ ] Storybook stories cover meaningful states (Default, WithExisting, Error)
 - [ ] Accessibility: proper roles, labels, keyboard navigation

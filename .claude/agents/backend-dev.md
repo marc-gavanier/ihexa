@@ -53,11 +53,15 @@ actionBuilder()
 
 ### Patterns
 
+**No classes** — never use `class`. Use plain objects, `as const`,
+arrow functions, and `taggedError()` for tagged unions. No `new` keyword.
+
 **Domain modeling with Effect**:
 - Value objects use `Schema.TaggedStruct` with branded types
-- Errors are tagged discriminated unions using `Data.TaggedError` — NEVER
-  use a generic error with a `reason: string` field. Each error case gets
-  its own class. The mapping to i18n keys happens in `action/errors.ts`.
+- Errors are tagged constants using `taggedError('MyError')` — NEVER
+  use `class` or `Data.TaggedError`. Each error case is its own constant.
+  Use `typeof MyError` in unions instead of redundant type aliases.
+  The mapping to i18n keys happens in `action/errors.ts`.
 - Business logic returns `Either<Result, Error>`
 - Use `Match` from Effect for pattern matching when there are multiple
   business rule branches
@@ -65,6 +69,32 @@ actionBuilder()
   does NOT trigger the predicate if the property is absent from the object.
   Always match the positive case first (`Match.defined`), then catch the
   absence as a separate `Match.when` without the property predicate.
+
+**Functional style** (mandatory):
+- **No mutable state**: no `let` accumulators, no mutation. Favor
+  expressions over statements (referential transparency).
+- **Replace Loop with Pipeline**: use `map`, `filter`, `reduce`
+  instead of `for`/`while` loops.
+- **Extract Function + Compose**: break complex expressions into
+  small named pure functions, each at the same abstraction level.
+  Compose them: `f(g(h(x)))` or pipeline style.
+- **Compose Method** (Kent Beck): a function body should read as
+  a sequence of named steps, not a wall of inline logic.
+- Example: prefer `mod97(toNumericString(rearrangeIban(iban))) === 1`
+  over a `for` loop with `let remainder`.
+- **No `if` in domain logic**: use one `Match.when` per business rule
+  instead of `if` blocks inside Match branches.
+- **No `if` in tests**: use `Either.left`/`Either.right` comparisons
+  instead of narrowing guards:
+  ```typescript
+  // BAD
+  expect(Either.isLeft(result)).toBe(true);
+  if (Either.isLeft(result)) { expect(result.left._tag).toBe('MyError'); }
+
+  // GOOD
+  expect(result).toEqual(Either.left(new MyError()));
+  expect(Either.map(result, (r) => r.field)).toEqual(Either.right(value));
+  ```
 
 **Dependency injection** uses `piqure`:
 - Keys defined in `<ability>.key.ts` using `keyFor()`
@@ -95,6 +125,16 @@ The domain layer must remain pure:
 - **No `as` casts**: domain code must be fully type-safe. Use
   `Match.defined`, null guards, or discriminated unions to narrow types.
 - **No string-based error reasons**: errors are typed, not messages.
+
+## .ability.md — two-section structure
+
+The `.ability.md` file contains two sections:
+
+1. **Scenarios** (Gherkin with `Rule:` grouping): implement these as
+   Cucumber step definitions in `<ability>.steps.ts`.
+2. **Domain constraints** (free text after `---`): implement these as
+   unit tests (`.spec.ts`) on the corresponding domain value objects.
+   Do NOT create Cucumber steps for domain constraints.
 
 ## Cucumber steps — import rules
 
