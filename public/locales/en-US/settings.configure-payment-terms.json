@@ -1,0 +1,95 @@
+{
+  "metadata": {
+    "title": "Payment Terms Configuration",
+    "description": "Configure your default payment terms."
+  },
+  "title": "Payment Terms",
+  "success": {
+    "saved": "Payment terms saved successfully"
+  },
+  "error": {
+    "uponReceiptWithEndOfMonth": "End of month is not allowed with upon receipt",
+    "bankTransferRequiresIban": "An IBAN is required when bank transfer is selected",
+    "earlyPaymentDiscountNotSpecified": "Early payment discount must be specified",
+    "paymentDeadlineExceedsMaxDays": "Payment deadline exceeds the maximum number of days"
+  },
+  "form": {
+    "startingPoint": {
+      "label": "Deadline starting point",
+      "placeholder": "Select a starting point",
+      "options": {
+        "upon_receipt": "Upon receipt",
+        "from_invoice_date": "From invoice date"
+      },
+      "error": {
+        "required": "Deadline starting point is required",
+        "invalid": "Deadline starting point is invalid"
+      }
+    },
+    "days": {
+      "label": "Deadline days",
+      "error": {
+        "invalid": "Deadline days must be a non-negative integer",
+        "exceeds_max": "Cannot exceed 60 days",
+        "exceeds_max_eom": "Cannot exceed 45 days with end of month"
+      }
+    },
+    "endOfMonth": {
+      "label": "End of month"
+    },
+    "penaltyRate": {
+      "label": "Penalty rate (%)",
+      "error": {
+        "invalid": "Penalty rate must be a positive number"
+      }
+    },
+    "earlyPaymentDiscount": {
+      "label": "Early payment discount",
+      "placeholder": "Select an option",
+      "options": {
+        "NoDiscount": "No discount",
+        "WithDiscount": "With discount"
+      },
+      "noDiscountMessage": "No discount for early payment",
+      "error": {
+        "required": "Early payment discount must be specified",
+        "invalid": "Early payment discount is invalid"
+      }
+    },
+    "discountRate": {
+      "label": "Discount rate (%)",
+      "error": {
+        "required": "Discount rate is required",
+        "invalid": "Discount rate must be a positive number"
+      }
+    },
+    "discountDelayThreshold": {
+      "label": "Discount delay threshold (days)",
+      "error": {
+        "required": "Discount delay threshold is required",
+        "invalid": "Discount delay threshold must be a positive integer"
+      }
+    },
+    "paymentMethods": {
+      "label": "Payment methods",
+      "options": {
+        "bank_transfer": "Bank transfer",
+        "check": "Check",
+        "direct_debit": "Direct debit",
+        "credit_card": "Credit card"
+      },
+      "error": {
+        "required": "At least one payment method is required"
+      }
+    },
+    "iban": {
+      "label": "IBAN",
+      "error": {
+        "required": "IBAN is required when bank transfer is selected",
+        "invalid": "IBAN format is invalid"
+      }
+    },
+    "recoveryFee": "Recovery fee: 40 EUR (B2B, non-configurable)",
+    "submit": "Save payment terms"
+  }
+}
