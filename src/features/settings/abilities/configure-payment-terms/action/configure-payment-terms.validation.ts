@@ -44,23 +44,19 @@ export const configurePaymentTermsValidation = Schema.Struct({
   iban: Schema.optionalWith(Iban.schema, { exact: true })
 }).pipe(
   Schema.filter((data) =>
-    data.earlyPaymentDiscountTag === 'WithDiscount' && data.discountRate == null
-      ? { path: ['discountRate'], message: 'required' }
-      : undefined
-  ),
-  Schema.filter((data) =>
-    data.earlyPaymentDiscountTag === 'WithDiscount' && data.discountDelayThreshold == null
-      ? { path: ['discountDelayThreshold'], message: 'required' }
-      : undefined
-  ),
-  Schema.filter((data) =>
-    data.startingPoint === 'from_invoice_date' &&
-    (data.endOfMonth === true ? data.days > MAX_DAYS_WITH_EOM : data.days > MAX_DAYS_WITHOUT_EOM)
-      ? { path: ['days'], message: data.endOfMonth === true ? 'exceeds_max_eom' : 'exceeds_max' }
-      : undefined
-  ),
-  Schema.filter((data) =>
-    data.paymentMethods.includes('bank_transfer') && data.iban == null ? { path: ['iban'], message: 'required' } : undefined
+    [
+      data.earlyPaymentDiscountTag === 'WithDiscount' && data.discountRate == null
+        ? { path: ['discountRate'], message: 'required' }
+        : undefined,
+      data.earlyPaymentDiscountTag === 'WithDiscount' && data.discountDelayThreshold == null
+        ? { path: ['discountDelayThreshold'], message: 'required' }
+        : undefined,
+      data.startingPoint === 'from_invoice_date' &&
+      (data.endOfMonth === true ? data.days > MAX_DAYS_WITH_EOM : data.days > MAX_DAYS_WITHOUT_EOM)
+        ? { path: ['days'], message: data.endOfMonth === true ? 'exceeds_max_eom' : 'exceeds_max' }
+        : undefined,
+      data.paymentMethods.includes('bank_transfer') && data.iban == null ? { path: ['iban'], message: 'required' } : undefined
+    ].filter((error) => error != null)
   )
 );
 

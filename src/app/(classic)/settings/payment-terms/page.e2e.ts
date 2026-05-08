@@ -24,12 +24,6 @@ test.describe('Configure payment terms page', () => {
     await expect(page.getByLabel(/end of month/i)).not.toBeVisible();
   });
 
-  test('should show "No discount for early payment" when no discount is selected', async ({ page }) => {
-    await page.getByLabel(/early payment discount/i).selectOption('NoDiscount');
-
-    await expect(page.getByText(/no discount for early payment/i)).toBeVisible();
-  });
-
   test('should show discount fields when with discount is selected', async ({ page }) => {
     await page.getByLabel(/early payment discount/i).selectOption('WithDiscount');
 
@@ -57,10 +51,6 @@ test.describe('Configure payment terms page', () => {
     await page.getByLabel(/bank transfer/i).uncheck();
 
     await expect(page.getByLabel(/^iban$/i)).not.toBeVisible();
-  });
-
-  test('should always display recovery fee', async ({ page }) => {
-    await expect(page.getByText(/recovery fee.*40 EUR/i)).toBeVisible();
   });
 
   test('should save payment terms successfully', async ({ page }) => {

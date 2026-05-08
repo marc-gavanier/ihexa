@@ -43,14 +43,13 @@
         "invalid": "Penalty rate must be a positive number"
       }
     },
-    "earlyPaymentDiscount": {
+    "earlyPaymentDiscountTag": {
       "label": "Early payment discount",
       "placeholder": "Select an option",
       "options": {
         "NoDiscount": "No discount",
         "WithDiscount": "With discount"
       },
-      "noDiscountMessage": "No discount for early payment",
       "error": {
         "required": "Early payment discount must be specified",
         "invalid": "Early payment discount is invalid"
@@ -89,7 +88,6 @@
         "invalid": "IBAN format is invalid"
       }
     },
-    "recoveryFee": "Recovery fee: 40 EUR (B2B, non-configurable)",
     "submit": "Save payment terms"
   }
 }

@@ -94,9 +94,9 @@
     "vitest": "^4.1.0"
   },
   "dependencies": {
-    "@arckit/daisyui": "1.1.2",
-    "@arckit/effect": "^1.0.0",
-    "@arckit/form": "^1.1.0",
+    "@arckit/daisyui": "1.2.0",
+    "@arckit/effect": "^1.1.0",
+    "@arckit/form": "^1.2.0",
     "@arckit/i18n": "^1.1.1",
     "@arckit/nextjs": "^1.4.0",
     "@arckit/observability": "^1.0.0",
