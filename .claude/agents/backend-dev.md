@@ -167,7 +167,8 @@ characters). When in doubt, consult the domain-expert agent.
 3. `pnpm test` — all unit tests GREEN
 4. `pnpm lint:code:fix` — zero Biome errors
 5. `pnpm lint:architecture` — zero violations
-6. If blocked after 2 attempts: STOP and report what's wrong
+6. `pnpm db:generate` — generate Drizzle migration if a new table was created
+7. If blocked after 2 attempts: STOP and report what's wrong
 
 ## What you do NOT do
 

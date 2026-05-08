@@ -192,6 +192,7 @@ Recommended for complex abilities or when multiple abilities interact.
 
 Before committing:
 ```bash
+pnpm db:generate  # if new Drizzle tables were created
 pnpm test:cucumber && pnpm test && pnpm test:e2e && pnpm build && pnpm lint:architecture
 ```
 
