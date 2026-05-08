@@ -19,11 +19,11 @@ const fillRequiredFields = async (page: Page, options: { vatRegime?: string; ema
   await page.getByLabel(/^email$/i).fill(email);
 };
 
-const submitForm = (page: Page) => page.getByRole('button', { name: /save/i }).click();
+const submitSellerForm = (page: Page) => page.getByRole('button', { name: /save configuration/i }).click();
 
 test.describe('Configure seller page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/settings', { waitUntil: 'networkidle' });
+    await page.goto('/settings', { waitUntil: 'networkidle', timeout: 15000 });
   });
 
   test('should display the settings page with company search', async ({ page }) => {
@@ -64,7 +64,7 @@ test.describe('Configure seller page', () => {
 
     await expect(page.getByLabel(/vat regime/i)).toBeVisible();
     await expect(page.getByLabel(/^email$/i)).toBeVisible();
-    await expect(page.getByRole('button', { name: /save/i })).toBeVisible();
+    await expect(page.getByRole('button', { name: /save configuration/i })).toBeVisible();
   });
 
   test('should show VAT fields when regime is normal', async ({ page }) => {
@@ -103,7 +103,7 @@ test.describe('Configure seller page', () => {
     await searchCompany(page, 'ACME');
     await selectCompany(page, 'ACME SARL');
     await fillRequiredFields(page, { vatRegime: 'normal', email: 'contact@acme.fr' });
-    await submitForm(page);
+    await submitSellerForm(page);
 
     await expect(page.locator('.alert-success')).toBeVisible();
   });
@@ -112,7 +112,7 @@ test.describe('Configure seller page', () => {
     await searchCompany(page, 'DUPONT');
     await selectCompany(page, 'DUPONT EI');
     await fillRequiredFields(page, { vatRegime: 'franchise_en_base', email: 'dupont@email.fr' });
-    await submitForm(page);
+    await submitSellerForm(page);
 
     await expect(page.locator('.alert-success')).toBeVisible();
   });
@@ -121,7 +121,7 @@ test.describe('Configure seller page', () => {
     await searchCompany(page, 'Google');
     await selectCompany(page, 'GOOGLE FRANCE');
     await page.getByLabel(/^email$/i).clear();
-    await submitForm(page);
+    await submitSellerForm(page);
 
     await expect(page.locator('.text-error').first()).toBeVisible();
   });
@@ -145,7 +145,7 @@ test.describe('Configure seller page', () => {
       return route.request().method() === 'POST' ? route.abort('failed') : route.continue();
     });
 
-    await submitForm(page);
+    await submitSellerForm(page);
 
     await expect(page.locator('.alert-error')).toBeVisible();
     await expect(page.locator('.alert-error')).toContainText(/unable to connect|check your internet/i);
@@ -161,7 +161,7 @@ test.describe('Configure seller page', () => {
     await selectCompany(page, 'DUPONT EI');
     await page.getByLabel(/vat regime/i).selectOption('franchise_en_base');
     await page.getByLabel(/^email$/i).fill('dupont@email.fr');
-    await submitForm(page);
+    await submitSellerForm(page);
 
     await expect(page.locator('.alert-error')).toBeVisible();
     await expect(page.locator('.alert-error')).toContainText(/share capital is not allowed/i);
@@ -169,16 +169,17 @@ test.describe('Configure seller page', () => {
 });
 
 test.describe('Configure seller page - edit mode', () => {
-  test.describe.configure({ mode: 'serial' });
-
-  test('should save and reload existing configuration', async ({ page }) => {
-    await page.goto('/settings', { waitUntil: 'networkidle' });
-
+  const saveSellerConfig = async (page: Page, email: string) => {
+    await page.goto('/settings', { waitUntil: 'networkidle', timeout: 15000 });
     await searchCompany(page, 'ACME');
     await selectCompany(page, 'ACME SARL');
-    await fillRequiredFields(page, { vatRegime: 'normal', email: 'original@acme.fr' });
-    await submitForm(page);
+    await fillRequiredFields(page, { vatRegime: 'normal', email });
+    await submitSellerForm(page);
     await expect(page.locator('.alert-success')).toBeVisible();
+  };
+
+  test('should save and reload existing configuration', async ({ page }) => {
+    await saveSellerConfig(page, 'original@acme.fr');
 
     await page.goto('/settings', { waitUntil: 'networkidle' });
 
@@ -189,13 +190,12 @@ test.describe('Configure seller page - edit mode', () => {
   });
 
   test('should update an existing seller configuration', async ({ page }) => {
+    await saveSellerConfig(page, 'original@acme.fr');
+
     await page.goto('/settings', { waitUntil: 'networkidle' });
-
-    await expect(page.getByLabel(/^email$/i)).toHaveValue('original@acme.fr');
-
     await page.getByLabel(/^email$/i).clear();
     await page.getByLabel(/^email$/i).fill('new@acme.fr');
-    await submitForm(page);
+    await submitSellerForm(page);
     await expect(page.locator('.alert-success')).toBeVisible();
 
     await page.goto('/settings', { waitUntil: 'networkidle' });
