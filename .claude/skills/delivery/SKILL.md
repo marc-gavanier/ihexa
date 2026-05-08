@@ -28,7 +28,7 @@ description: >-
 ## Philosophy
 
 ```
-Specs = Contracts         → Gherkin (.ability.md) + E2E (page.e2e.ts)
+Specs = Contracts         → .ability.md (Scenarios + Domain constraints) + E2E (page.e2e.ts)
 ATDD = Safety net         → Red scenario → abilities → green scenario
 Three-stream testing      → Cucumber + E2E + Unit (mandatory)
 Human = Orchestrator      → Validates each checkpoint, agents execute
@@ -53,7 +53,7 @@ src/features/<feature>/
 ├── domain/                             # Shared domain types, value objects, errors
 └── abilities/
     └── <ability>/
-        ├── <ability>.ability.md        # Gherkin specs (Markdown format)
+        ├── <ability>.ability.md        # Scenarios (Gherkin) + Domain constraints
         ├── <ability>.steps.ts          # Cucumber step definitions
         ├── index.ts                    # Barrel export
         ├── action/                     # Server action contract (public surface)
@@ -121,14 +121,18 @@ src/app/.../<route>/
 **Goal**: define WHAT we're building in domain language.
 
 1. Invoke **domain-expert** to review the issue/brief for domain accuracy
-2. Invoke **spec-writer** to propose Gherkin scenarios in **free text**
+2. Invoke **spec-writer** to propose the spec in **free text**:
+   - **Scenarios** (Gherkin): behavioral, stakeholder-meaningful examples
+     grouped by `Rule:`. Keep 1-3 examples per rule.
+   - **Domain constraints**: validation rules for value objects
+     (format, range, required fields) — these guide unit tests, not Cucumber steps.
    - Ensure spec-writer reads existing domain to reuse vocabulary
    - Ensure spec-writer challenges edge cases, failures, boundaries
    - Have domain-expert validate against business rules
 3. **Iterate** in free text until the user approves
-4. Only then: write the `.ability.md` Gherkin file
+4. Only then: write the `.ability.md` file
 
-**Gate**: user approves the scenarios. No code is written until this gate passes.
+**Gate**: user approves the spec. No code is written until this gate passes.
 
 ### Checkpoint 2: BACKEND
 
@@ -144,8 +148,8 @@ src/app/.../<route>/
    - Validation (Effect Schema) with comprehensive patterns
    - Server action (actionBuilder) in `src/app/_actions/`
    - Implementations: BOTH in-memory AND drizzle (with table + transfer)
-   - Cucumber step definitions (calling real mutations/queries)
-   - Unit tests for domain logic + transfer round-trip tests
+   - Cucumber step definitions for the Scenarios section (calling real mutations/queries)
+   - Unit tests for the Domain constraints section + transfer round-trip tests
 3. backend-dev runs ALL checks before reporting done:
    - `pnpm tsc --noEmit` — zero TypeScript errors
    - `pnpm test:cucumber` — all scenarios GREEN
@@ -193,13 +197,30 @@ pnpm test:cucumber && pnpm test && pnpm test:e2e && pnpm build && pnpm lint:arch
 
 ## Three-stream testing (mandatory)
 
-| Stream   | Purpose        | Location                                      | Verifies                 |
-|----------|----------------|-----------------------------------------------|--------------------------|
-| Cucumber | Behavior specs | `<ability>.ability.md` + `<ability>.steps.ts` | WHAT (domain behavior)   |
-| E2E      | UI specs       | `src/app/.../page.e2e.ts`                     | VIEW (user interactions) |
-| Unit     | Domain logic   | `src/features/<feature>/domain/`              | HOW (internal logic)     |
+| Stream   | Purpose              | Source in .ability.md    | Location                                      | Verifies                 |
+|----------|----------------------|-------------------------|-----------------------------------------------|--------------------------|
+| Cucumber | Behavior specs       | Scenarios (Gherkin)     | `<ability>.ability.md` + `<ability>.steps.ts` | WHAT (domain behavior)   |
+| Unit     | Domain constraints   | Domain constraints      | `src/features/<feature>/domain/`              | HOW (value object rules) |
+| E2E      | UI specs             | Presentation rules      | `src/app/.../page.e2e.ts`                     | VIEW (user interactions) |
 
 All three streams must pass. No exceptions.
+
+### .ability.md two-section structure
+
+The `.ability.md` file is the single specification contract, structured in two sections:
+
+1. **Scenarios** (Gherkin with `Rule:` grouping): behavioral, stakeholder-meaningful
+   examples. Each `Rule:` represents one business rule with 1-3 illustrative scenarios.
+   These generate Cucumber steps.
+2. **Domain constraints** (free text after `---` separator): validation rules for
+   value objects (format, range, required fields, cross-field rules). These guide
+   unit tests on domain types, not Cucumber steps.
+3. **Presentation rules** (free text after second `---` separator): display
+   invariants, mandatory mentions, conditional visibility. These guide E2E tests.
+
+The split criterion: **"Would a stakeholder validate this scenario?"**
+If yes → Gherkin scenario. If it's a technical validation detail → domain constraint.
+If it's about what the UI must show → presentation rule.
 
 ## Conventions
 
