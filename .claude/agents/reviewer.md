@@ -80,6 +80,8 @@ Organize findings by severity:
 ## Frontend checklist (checkpoint 3)
 
 ### Data flow
+- [ ] `'use client'` boundary is at the form/interactive component level, not the page level
+- [ ] Page components use `withTranslation` (server HOC), not `useTranslation` (client hook)
 - [ ] SSR data loading via pageBuilder middlewares (withOptionalEither, withMap) — NOT useEffect
 - [ ] Presenter exists in `ui/components/presenter.ts` — colocated with form, handles null, pure function, tested
 - [ ] Submission adapter exists in `ui/components/submission.ts` — colocated with form, pure function, tested

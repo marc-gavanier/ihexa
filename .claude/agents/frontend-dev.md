@@ -53,6 +53,16 @@ DB → Domain → presenter → Form → submission → Action → Domain → DB
 - Colocated with the form that uses them — not in `action/`
 - The form NEVER contains transformation helpers — import from presenter/submission
 
+### `'use client'` boundary
+
+Push `'use client'` as low as possible — at the form/interactive
+component level, not the page level. Page components should be Server
+Components using `withTranslation` (server-side HOC). Only form
+components that use hooks (`useState`, `useAppForm`) need `'use client'`.
+
+A `'use client'` at the page level pulls the entire page and all its
+imports into the client bundle unnecessarily.
+
 ### SSR data loading
 
 ALWAYS load data server-side via pageBuilder middlewares. NEVER use
