@@ -1,5 +1,5 @@
+import { taggedError } from '@arckit/effect';
 import { Either, Match, pipe } from 'effect';
-import { taggedError } from '@/libraries/modeling';
 import type { EarlyPaymentDiscount } from './early-payment-discount';
 import type { Iban } from './iban';
 import type { DeadlineStartingPoint, PaymentDeadline } from './payment-deadline';
