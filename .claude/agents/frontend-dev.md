@@ -119,6 +119,29 @@ const form = useAppForm({
   This gives Encoded=string (form compatible) and Type=literal union (domain compatible)
 - Cross-field validation: use `Schema.filter` on the struct with `{ path, message }`
 
+### Form validation principles
+
+- **Schema must be flat**: the schema field names must match the form
+  field names. If the domain has nested structures (discriminated unions,
+  embedded objects), flatten them in the schema and rebuild the structure
+  in the action. Nested schema paths won't map to form fields and errors
+  will be silently swallowed.
+- **Every field must show its errors**: if a field group (checkboxes,
+  radio buttons) can be invalid, wrap it in a `form.AppField` with a
+  `field.Error`. No validation without visible feedback.
+- **Validate client-side first**: every rule that can be checked without
+  the server (max values, conditional required fields, cross-field rules)
+  must be in the `onChange` validator via `Schema.filter`. Don't rely on
+  server-side errors for validations the form can catch.
+- **Error messages must be specific**: use distinct translation keys for
+  different error causes on the same field. Don't reuse `invalid` for
+  both format errors and business rule violations. Use contextual messages
+  that tell the user what to fix (e.g., "Cannot exceed 60 days" not
+  "Invalid value").
+- **Conditional error messages**: when a validation rule depends on
+  another field's state, return different message keys from
+  `Schema.filter` so the translation is contextual.
+
 ### Smart constructors for API data
 
 When API data (plain strings) must become branded domain types, use smart
