@@ -56,6 +56,7 @@ Organize findings by severity:
 - [ ] Action contract (validation, errors, key) lives in `action/` subdirectory
 - [ ] Both in-memory AND drizzle implementations exist
 - [ ] Drizzle table + transfer functions with round-trip spec exist
+- [ ] Drizzle migration generated (`pnpm db:generate`) if a new table was created
 - [ ] Cucumber steps call real mutations/queries (not store manipulation)
 - [ ] Cucumber steps import from switchable barrels (`./implementations`, `@/features/<feature>/infrastructure`), never directly from `in-memory/` or `drizzle/`
 - [ ] Unit tests cover domain logic with meaningful assertions
