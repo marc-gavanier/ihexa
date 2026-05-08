@@ -1,0 +1,95 @@
+{
+  "metadata": {
+    "title": "Configuration des conditions de paiement",
+    "description": "Configurez vos conditions de paiement par défaut."
+  },
+  "title": "Conditions de paiement",
+  "success": {
+    "saved": "Conditions de paiement enregistrées avec succès"
+  },
+  "error": {
+    "uponReceiptWithEndOfMonth": "La fin de mois n'est pas autorisée avec le paiement à réception",
+    "bankTransferRequiresIban": "Un IBAN est requis lorsque le virement bancaire est sélectionné",
+    "earlyPaymentDiscountNotSpecified": "L'escompte doit être spécifié",
+    "paymentDeadlineExceedsMaxDays": "Le délai de paiement dépasse le nombre maximum de jours"
+  },
+  "form": {
+    "startingPoint": {
+      "label": "Point de départ du délai",
+      "placeholder": "Sélectionnez un point de départ",
+      "options": {
+        "upon_receipt": "À réception",
+        "from_invoice_date": "À compter de la date de facturation"
+      },
+      "error": {
+        "required": "Le point de départ du délai est requis",
+        "invalid": "Le point de départ du délai est invalide"
+      }
+    },
+    "days": {
+      "label": "Nombre de jours",
+      "error": {
+        "invalid": "Le nombre de jours doit être un entier positif ou nul",
+        "exceeds_max": "Ne peut pas dépasser 60 jours",
+        "exceeds_max_eom": "Ne peut pas dépasser 45 jours avec fin de mois"
+      }
+    },
+    "endOfMonth": {
+      "label": "Fin de mois"
+    },
+    "penaltyRate": {
+      "label": "Taux de pénalité (%)",
+      "error": {
+        "invalid": "Le taux de pénalité doit être un nombre positif"
+      }
+    },
+    "earlyPaymentDiscount": {
+      "label": "Escompte pour paiement anticipé",
+      "placeholder": "Sélectionnez une option",
+      "options": {
+        "NoDiscount": "Pas d'escompte",
+        "WithDiscount": "Avec escompte"
+      },
+      "noDiscountMessage": "Pas d'escompte pour paiement anticipé",
+      "error": {
+        "required": "L'escompte doit être spécifié",
+        "invalid": "L'escompte est invalide"
+      }
+    },
+    "discountRate": {
+      "label": "Taux d'escompte (%)",
+      "error": {
+        "required": "Le taux d'escompte est requis",
+        "invalid": "Le taux d'escompte doit être un nombre positif"
+      }
+    },
+    "discountDelayThreshold": {
+      "label": "Délai d'escompte (jours)",
+      "error": {
+        "required": "Le délai d'escompte est requis",
+        "invalid": "Le délai d'escompte doit être un entier positif"
+      }
+    },
+    "paymentMethods": {
+      "label": "Modes de paiement",
+      "options": {
+        "bank_transfer": "Virement bancaire",
+        "check": "Chèque",
+        "direct_debit": "Prélèvement",
+        "credit_card": "Carte bancaire"
+      },
+      "error": {
+        "required": "Au moins un mode de paiement est requis"
+      }
+    },
+    "iban": {
+      "label": "IBAN",
+      "error": {
+        "required": "L'IBAN est requis lorsque le virement bancaire est sélectionné",
+        "invalid": "Le format de l'IBAN est invalide"
+      }
+    },
+    "recoveryFee": "Indemnité forfaitaire de recouvrement : 40 EUR (B2B, non configurable)",
+    "submit": "Enregistrer les conditions de paiement"
+  }
+}
