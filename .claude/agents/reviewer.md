@@ -98,6 +98,11 @@ Organize findings by severity:
 - [ ] User input fields use domain schemas (Email.schema, etc.)
 - [ ] Enum fields: `Schema.String.pipe(Schema.filter(...))` — NOT `Schema.Literal` in validation
 - [ ] Cross-field validation via `Schema.filter` on struct with `{ path, message }`
+- [ ] Schema field names match form field names (no nested paths that won't display)
+- [ ] Every field/group that can be invalid has a visible `field.Error`
+- [ ] Cross-field rules validated client-side (`onChange`), not only server-side
+- [ ] Error messages use distinct keys per cause, not generic `invalid` for everything
+- [ ] Conditional rules produce contextual messages based on related field state
 
 ### General UI
 - [ ] E2E tests exist for each page and cover key behaviors
