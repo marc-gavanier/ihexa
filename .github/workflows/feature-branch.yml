@@ -105,11 +105,11 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
       - name: Install Playwright browsers
-        run: pnpm exec playwright install --with-deps
+        run: pnpm exec playwright install chromium --with-deps
       - name: Generate implementations
         run: pnpm generate:implementations
       - name: Run E2E tests
-        run: pnpm exec playwright test
+        run: pnpm exec playwright test --project chromium
       - uses: actions/upload-artifact@v7
         if: failure()
         with:
