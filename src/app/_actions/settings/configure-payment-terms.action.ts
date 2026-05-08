@@ -13,16 +13,11 @@ import type { ValidatedPaymentTermsInput } from '@/features/settings/domain/paym
 import { noDiscount, withDiscount } from '@/features/settings/domain/payment-terms';
 
 const toValidatedInput = (input: ConfigurePaymentTermsFormData): ValidatedPaymentTermsInput => ({
-  startingPoint: input.startingPoint,
-  days: input.days,
-  ...(input.endOfMonth != null ? { endOfMonth: input.endOfMonth } : {}),
-  penaltyRate: input.penaltyRate,
+  ...input,
   earlyPaymentDiscount:
     input.earlyPaymentDiscountTag === 'WithDiscount' && input.discountRate != null && input.discountDelayThreshold != null
       ? withDiscount(input.discountRate, input.discountDelayThreshold)
-      : noDiscount,
-  paymentMethods: input.paymentMethods,
-  ...(input.iban != null ? { iban: input.iban } : {})
+      : noDiscount
 });
 
 export const configurePaymentTermsAction = actionBuilder()
