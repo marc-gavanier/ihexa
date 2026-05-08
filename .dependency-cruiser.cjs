@@ -365,7 +365,8 @@ const FORBIDDEN_FEATURES = {
           '^node_modules/[^/]+/effect',
           '^src/features/$1/domain',
           '^node_modules/.*@arckit[+/]effect',
-          '^node_modules/.*@arckit[+/]resultset'
+          '^node_modules/.*@arckit[+/]resultset',
+          '^src/libraries/modeling'
         ]
       }
     }
