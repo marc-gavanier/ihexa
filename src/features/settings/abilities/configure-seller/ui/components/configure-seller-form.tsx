@@ -88,20 +88,16 @@ export const ConfigureSellerForm = ({ seller }: { seller: ConfigureSellerViewMod
               {(field) => (
                 <div>
                   <field.Label>{t('form.vatRegime.label')}</field.Label>
-                  <select
-                    className='select select-bordered w-full'
-                    value={field.state.value}
-                    onChange={(e) => {
-                      field.handleChange(e.target.value);
-                      setCurrentVatRegime(e.target.value);
-                      if (e.target.value !== 'normal') {
+                  <field.Select
+                    isPending={isPending}
+                    aria-label={t('form.vatRegime.label')}
+                    onValueChange={(value) => {
+                      setCurrentVatRegime(value);
+                      if (value !== 'normal') {
                         form.setFieldValue('vatNumber', '');
                         form.setFieldValue('taxDebitOption', false);
                       }
                     }}
-                    onBlur={field.handleBlur}
-                    disabled={isPending}
-                    aria-label={t('form.vatRegime.label')}
                   >
                     <option disabled value=''>
                       {t('form.vatRegime.placeholder')}
@@ -111,7 +107,7 @@ export const ConfigureSellerForm = ({ seller }: { seller: ConfigureSellerViewMod
                         {t(`form.vatRegime.options.${regime}`)}
                       </option>
                     ))}
-                  </select>
+                  </field.Select>
                   <field.Error formatMessage={t} template={fieldErrorTranslation} />
                 </div>
               )}
