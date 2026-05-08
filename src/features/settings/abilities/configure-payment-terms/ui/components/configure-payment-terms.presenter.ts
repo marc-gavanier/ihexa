@@ -54,6 +54,4 @@ export const showEndOfMonth = (startingPoint: string): boolean => startingPoint 
 
 export const showDiscountFields = (earlyPaymentDiscountTag: string): boolean => earlyPaymentDiscountTag === 'WithDiscount';
 
-export const showNoDiscountMessage = (earlyPaymentDiscountTag: string): boolean => earlyPaymentDiscountTag === 'NoDiscount';
-
 export const showIban = (paymentMethods: Record<string, boolean>): boolean => paymentMethods['bank_transfer'] === true;

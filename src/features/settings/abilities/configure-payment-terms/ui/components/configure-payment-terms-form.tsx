@@ -15,8 +15,7 @@ import {
   showDeadlineDays,
   showDiscountFields,
   showEndOfMonth,
-  showIban,
-  showNoDiscountMessage
+  showIban
 } from './configure-payment-terms.presenter';
 import { toConfigurePaymentTermsInput } from './configure-payment-terms.submission';
 
@@ -50,20 +49,16 @@ export const ConfigurePaymentTermsForm = ({ paymentTerms }: { paymentTerms: Conf
           {(field) => (
             <div>
               <field.Label>{t('form.startingPoint.label')}</field.Label>
-              <select
-                className='select select-bordered w-full'
-                value={field.state.value}
-                onChange={(e) => {
-                  field.handleChange(e.target.value);
-                  setCurrentStartingPoint(e.target.value);
-                  if (e.target.value === 'upon_receipt') {
+              <field.Select
+                isPending={isPending}
+                aria-label={t('form.startingPoint.label')}
+                onValueChange={(value) => {
+                  setCurrentStartingPoint(value);
+                  if (value === 'upon_receipt') {
                     form.setFieldValue('days', '0');
                     form.setFieldValue('endOfMonth', false);
                   }
                 }}
-                onBlur={field.handleBlur}
-                disabled={isPending}
-                aria-label={t('form.startingPoint.label')}
               >
                 <option disabled value=''>
                   {t('form.startingPoint.placeholder')}
@@ -73,7 +68,7 @@ export const ConfigurePaymentTermsForm = ({ paymentTerms }: { paymentTerms: Conf
                     {t(`form.startingPoint.options.${sp}`)}
                   </option>
                 ))}
-              </select>
+              </field.Select>
               <field.Error formatMessage={t} template={fieldErrorTranslation} />
             </div>
           )}
@@ -114,39 +109,31 @@ export const ConfigurePaymentTermsForm = ({ paymentTerms }: { paymentTerms: Conf
         <form.AppField name='earlyPaymentDiscountTag'>
           {(field) => (
             <div>
-              <field.Label>{t('form.earlyPaymentDiscount.label')}</field.Label>
-              <select
-                className='select select-bordered w-full'
-                value={field.state.value}
-                onChange={(e) => {
-                  field.handleChange(e.target.value);
-                  setCurrentDiscountTag(e.target.value);
-                  if (e.target.value !== 'WithDiscount') {
+              <field.Label>{t('form.earlyPaymentDiscountTag.label')}</field.Label>
+              <field.Select
+                isPending={isPending}
+                aria-label={t('form.earlyPaymentDiscountTag.label')}
+                onValueChange={(value) => {
+                  setCurrentDiscountTag(value);
+                  if (value !== 'WithDiscount') {
                     form.setFieldValue('discountRate', '');
                     form.setFieldValue('discountDelayThreshold', '');
                   }
                 }}
-                onBlur={field.handleBlur}
-                disabled={isPending}
-                aria-label={t('form.earlyPaymentDiscount.label')}
               >
                 <option disabled value=''>
-                  {t('form.earlyPaymentDiscount.placeholder')}
+                  {t('form.earlyPaymentDiscountTag.placeholder')}
                 </option>
                 {EARLY_PAYMENT_DISCOUNT_OPTIONS.map((option) => (
                   <option key={option} value={option}>
-                    {t(`form.earlyPaymentDiscount.options.${option}`)}
+                    {t(`form.earlyPaymentDiscountTag.options.${option}`)}
                   </option>
                 ))}
-              </select>
+              </field.Select>
               <field.Error formatMessage={t} template={fieldErrorTranslation} />
             </div>
           )}
         </form.AppField>
-
-        {showNoDiscountMessage(currentDiscountTag) && (
-          <p className='text-sm text-base-content/70'>{t('form.earlyPaymentDiscount.noDiscountMessage')}</p>
-        )}
 
         {showDiscountFields(currentDiscountTag) && (
           <>
@@ -178,21 +165,14 @@ export const ConfigurePaymentTermsForm = ({ paymentTerms }: { paymentTerms: Conf
               <legend className='mb-1 font-medium'>{t('form.paymentMethods.label')}</legend>
               {PAYMENT_METHODS.map((method) => (
                 <form.AppField key={method} name={`paymentMethods.${method}`}>
-                  {(methodField) => (
-                    <label className='flex items-center gap-x-1.5'>
-                      <input
-                        type='checkbox'
-                        className='checkbox checkbox-primary not-checked:border-base-500'
-                        checked={methodField.state.value}
-                        disabled={isPending}
-                        onChange={(e) => {
-                          methodField.handleChange(e.target.checked);
-                          setCurrentPaymentMethods((prev) => ({ ...prev, [method]: e.target.checked }));
-                        }}
-                        onBlur={methodField.handleBlur}
-                      />
+                  {() => (
+                    <field.Checkbox
+                      isPending={isPending}
+                      isInvalid={!field.state.meta.isValid}
+                      onValueChange={(checked) => setCurrentPaymentMethods((prev) => ({ ...prev, [method]: checked }))}
+                    >
                       {t(`form.paymentMethods.options.${method}`)}
-                    </label>
+                    </field.Checkbox>
                   )}
                 </form.AppField>
               ))}
@@ -212,8 +192,6 @@ export const ConfigurePaymentTermsForm = ({ paymentTerms }: { paymentTerms: Conf
             )}
           </form.AppField>
         )}
-
-        <p className='text-sm text-base-content/70'>{t('form.recoveryFee')}</p>
 
         <form.Submit isPending={isPending}>{t('form.submit')}</form.Submit>
       </form>

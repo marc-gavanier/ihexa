@@ -8,8 +8,7 @@ import {
   showDeadlineDays,
   showDiscountFields,
   showEndOfMonth,
-  showIban,
-  showNoDiscountMessage
+  showIban
 } from './configure-payment-terms.presenter';
 
 const PAYMENT_TERMS_WITH_DISCOUNT: PaymentTerms = {
@@ -144,20 +143,6 @@ describe('showDiscountFields', () => {
 
   it('should return false for empty string', () => {
     expect(showDiscountFields('')).toBe(false);
-  });
-});
-
-describe('showNoDiscountMessage', () => {
-  it('should return true for NoDiscount', () => {
-    expect(showNoDiscountMessage('NoDiscount')).toBe(true);
-  });
-
-  it('should return false for WithDiscount', () => {
-    expect(showNoDiscountMessage('WithDiscount')).toBe(false);
-  });
-
-  it('should return false for empty string', () => {
-    expect(showNoDiscountMessage('')).toBe(false);
   });
 });
 
