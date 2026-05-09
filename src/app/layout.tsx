@@ -42,7 +42,7 @@ export default layoutBuilder()
                 <span className='font-bold text-lg'>IHexa</span>
               </Link>
               <nav className='flex items-center gap-4'>
-                <Link href='/clients/create' className='link link-hover text-sm'>
+                <Link href='/clients' className='link link-hover text-sm'>
                   Clients
                 </Link>
               </nav>
