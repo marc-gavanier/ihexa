@@ -1,0 +1,28 @@
+{
+  "metadata": {
+    "title": "Clients",
+    "description": "Liste de tous les clients."
+  },
+  "title": "Clients",
+  "search": {
+    "placeholder": "Rechercher des clients...",
+    "button": "Rechercher"
+  },
+  "addClient": "Ajouter un client",
+  "table": {
+    "name": "Nom",
+    "city": "Ville",
+    "zipcode": "Code postal"
+  },
+  "empty": {
+    "message": "Aucun client pour le moment. Ajoutez votre premier client pour commencer.",
+    "action": "Ajouter votre premier client"
+  },
+  "noResults": {
+    "message": "Aucun client ne correspond à \"{{search}}\".",
+    "action": "Réinitialiser la recherche"
+  },
+  "pagination": {
+    "summary": "Page {{currentPage}} sur {{totalPages}} ({{totalItems}} clients)"
+  }
+}
