@@ -105,7 +105,12 @@ jobs:
       - name: Setup
         uses: ./.github/actions/setup
       - name: Install Playwright Chromium
-        run: npx playwright install --with-deps chromium
+        run: npx playwright install chromium
+      - name: Install Playwright system dependencies
+        timeout-minutes: 5
+        env:
+          DEBIAN_FRONTEND: noninteractive
+        run: sudo apt-get update && sudo apt-get install -y libnss3 libatk-bridge2.0-0t64 libdrm2 libxcomposite1 libxdamage1 libxrandr2 libgbm1 libpango-1.0-0 libcairo2 libasound2t64 libxkbcommon0 libcups2t64
       - name: Generate implementations
         run: pnpm generate:implementations
       - name: Run E2E tests
