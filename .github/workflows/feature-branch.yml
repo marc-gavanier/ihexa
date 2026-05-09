@@ -104,20 +104,10 @@ jobs:
         uses: actions/checkout@v6
       - name: Setup
         uses: ./.github/actions/setup
-      - name: Install Playwright Chromium
-        timeout-minutes: 5
-        env:
-          PLAYWRIGHT_BROWSERS_PATH: 0
-        run: npx playwright install chromium
-      - name: Install Playwright system dependencies
-        timeout-minutes: 5
-        env:
-          DEBIAN_FRONTEND: noninteractive
-        run: npx playwright install-deps chromium
       - name: Generate implementations
         run: pnpm generate:implementations
       - name: Run E2E tests
-        run: pnpm exec playwright test --project chromium
+        run: pnpm exec playwright test --project ci
       - uses: actions/upload-artifact@v7
         if: failure()
         with:
