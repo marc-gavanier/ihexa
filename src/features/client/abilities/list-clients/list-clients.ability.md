@@ -49,3 +49,15 @@
   | dupont         | 550e8400-e29b-41d4-a716-446655440001                                         |
   | dup 75         | 550e8400-e29b-41d4-a716-446655440001,550e8400-e29b-41d4-a716-446655440003    |
   | rue            | 550e8400-e29b-41d4-a716-446655440001,550e8400-e29b-41d4-a716-446655440003    |
+
+---
+
+## Presentation rules
+
+- The page has a title "Clients"
+- A search input allows filtering clients by any visible field
+- An "Add client" button is visible (disabled/placeholder until #48)
+- Clients are displayed in a table with columns: Name (formatted as "Firstname LASTNAME"), City, Zipcode
+- An empty state message is shown if no clients exist
+- Pagination controls appear below the table if there are multiple pages
+- The current page, total pages, and total count are visible in the pagination area
