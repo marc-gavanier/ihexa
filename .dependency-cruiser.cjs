@@ -143,7 +143,8 @@ const FORBIDDEN_GLOBAL = [
       pathNot: [
         '[.](?:spec|test|e2e|feature|stories|steps)[.](?:js|mjs|cjs|jsx|ts|mts|cts|tsx)$',
         '^src/configuration/drizzle/config[.]ts$',
-        '^src/configuration/storybook/'
+        '^src/configuration/storybook/',
+        '/in-memory/'
       ]
     },
     to: {

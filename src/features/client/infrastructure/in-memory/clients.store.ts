@@ -1,9 +1,23 @@
+import { faker } from '@faker-js/faker/locale/fr';
 import { Client, type ClientId } from '../../domain';
-import seed from './seed.json';
+
+const generateClient = (): Client =>
+  Client({
+    id: faker.string.uuid(),
+    name: {
+      firstname: faker.person.firstName(),
+      lastname: faker.person.lastName().toUpperCase()
+    },
+    address: {
+      street: faker.location.streetAddress(),
+      city: faker.location.city(),
+      zipcode: faker.location.zipCode('#####')
+    }
+  });
 
 const CLIENTS = new Map<ClientId, Client>(
-  seed.map((raw) => {
-    const client = Client(raw);
+  Array.from({ length: 15 }, () => {
+    const client = generateClient();
     return [client.id, client] as const;
   })
 );
