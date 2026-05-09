@@ -1,3 +1,18 @@
+# [1.9.0](https://github.com/marc-gavanier/ihexa/compare/v1.8.0...v1.9.0) (2026-05-09)
+
+
+### Bug Fixes
+
+* pin playwright to 1.58.2 to fix CI install hang ([36cbccd](https://github.com/marc-gavanier/ihexa/commit/36cbccd26599f681c0e7dab1bb06819530f328a0))
+
+
+### Features
+
+* add modeling library with taggedError helper ([bd8ac78](https://github.com/marc-gavanier/ihexa/commit/bd8ac78327a3391dedb9fb40813dc95176034191))
+* **settings:** add configure-payment-terms ability ([bff380b](https://github.com/marc-gavanier/ihexa/commit/bff380b68c0cab935f0819aec40695b4c8641fe3))
+* **settings:** add configure-payment-terms UI ([193b836](https://github.com/marc-gavanier/ihexa/commit/193b836827edf32f5eeb50dec01014fd0f0ed69d))
+* **settings:** add payment_terms table migration ([830a14e](https://github.com/marc-gavanier/ihexa/commit/830a14e34011b5543cc5459ac91fb71589ea5146))
+
 # [1.8.0](https://github.com/marc-gavanier/ihexa/compare/v1.7.0...v1.8.0) (2026-05-05)
 
 
