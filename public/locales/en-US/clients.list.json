@@ -1,0 +1,28 @@
+{
+  "metadata": {
+    "title": "Clients",
+    "description": "List of all clients."
+  },
+  "title": "Clients",
+  "search": {
+    "placeholder": "Search clients...",
+    "button": "Search"
+  },
+  "addClient": "Add Client",
+  "table": {
+    "name": "Name",
+    "city": "City",
+    "zipcode": "Zip Code"
+  },
+  "empty": {
+    "message": "No clients yet. Add your first client to get started.",
+    "action": "Add your first client"
+  },
+  "noResults": {
+    "message": "No clients found matching \"{{search}}\".",
+    "action": "Clear search"
+  },
+  "pagination": {
+    "summary": "Page {{currentPage}} of {{totalPages}} ({{totalItems}} clients)"
+  }
+}
