@@ -52,7 +52,7 @@ export default defineConfig({
     {
       name: 'webkit',
       use: { ...devices['Desktop Safari'] }
-    }
+    },
 
     /* Test against mobile viewports. */
     // {
@@ -64,15 +64,11 @@ export default defineConfig({
     //   use: { ...devices['iPhone 12'] },
     // },
 
-    /* Test against branded browsers. */
-    // {
-    //   name: 'Microsoft Edge',
-    //   use: { ...devices['Desktop Edge'], channel: 'msedge' },
-    // },
-    // {
-    //   name: 'Google Chrome',
-    //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
-    // },
+    /* CI project — uses system Chrome to avoid download issues */
+    {
+      name: 'ci',
+      use: { ...devices['Desktop Chrome'], channel: 'chrome' }
+    }
   ],
 
   /* Run your local dev server before starting the tests */
