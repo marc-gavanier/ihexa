@@ -1,3 +1,19 @@
+# [1.10.0](https://github.com/marc-gavanier/ihexa/compare/v1.9.0...v1.10.0) (2026-05-09)
+
+
+### Bug Fixes
+
+* **client:** isolate E2E tests with unique names ([cccd388](https://github.com/marc-gavanier/ihexa/commit/cccd38848f1842af5dbdefffb02a1316b1b0cd0a))
+* **client:** update clients nav link to list page ([0e8e8f0](https://github.com/marc-gavanier/ihexa/commit/0e8e8f082019b283a02e53942318247dea61d5af))
+
+
+### Features
+
+* **client:** add list-clients frontend ([7a5563c](https://github.com/marc-gavanier/ihexa/commit/7a5563cb5d8c4818e7dcdad1d168ca1e95d268bc))
+* **client:** add list-clients presentation rules ([5124efc](https://github.com/marc-gavanier/ihexa/commit/5124efcbc279a22c47df3137eaf1267b0045d665))
+* **client:** seed in-memory store with faker ([27e46e7](https://github.com/marc-gavanier/ihexa/commit/27e46e7d27c15934eff6bda237347e6d467791d2))
+* **client:** seed in-memory store with sample clients ([2a5a684](https://github.com/marc-gavanier/ihexa/commit/2a5a6840c217e149fa66a02b65f4c56971747ec0))
+
 # [1.9.0](https://github.com/marc-gavanier/ihexa/compare/v1.8.0...v1.9.0) (2026-05-09)
 
 
