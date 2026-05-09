@@ -54,4 +54,5 @@ export const showEndOfMonth = (startingPoint: string): boolean => startingPoint 
 
 export const showDiscountFields = (earlyPaymentDiscountTag: string): boolean => earlyPaymentDiscountTag === 'WithDiscount';
 
+// biome-ignore lint/complexity/useLiteralKeys: required by noPropertyAccessFromIndexSignature
 export const showIban = (paymentMethods: Record<string, boolean>): boolean => paymentMethods['bank_transfer'] === true;
