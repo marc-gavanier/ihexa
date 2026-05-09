@@ -17,6 +17,8 @@ const searchClients = async (page: Page, searchTerm: string) => {
   await page.waitForURL(/search=/);
 };
 
+const uniqueName = () => `e2e${Date.now()}${Math.random().toString(36).slice(2, 6)}`;
+
 test.describe('List clients page', () => {
   test('should display the page title "Clients"', async ({ page }) => {
     await page.goto('/clients', { waitUntil: 'networkidle' });
@@ -36,25 +38,25 @@ test.describe('List clients page', () => {
     await expect(page.getByRole('button', { name: /^search$/i })).toBeVisible();
   });
 
-  test('should display the "Add client" button (disabled)', async ({ page }) => {
+  test('should display the "Add client" link', async ({ page }) => {
     await page.goto('/clients', { waitUntil: 'networkidle' });
 
-    const addButton = page.getByRole('button', { name: /add client/i });
-    await expect(addButton).toBeVisible();
-    await expect(addButton).toBeDisabled();
+    const addLink = page.getByRole('link', { name: /add client/i });
+    await expect(addLink).toBeVisible();
+    await expect(addLink).toHaveAttribute('href', '/clients/create');
   });
 
-  test('should show empty state when search yields no results', async ({ page }) => {
+  test('should show no results state when search yields no results', async ({ page }) => {
     await page.goto('/clients', { waitUntil: 'networkidle' });
 
     await searchClients(page, 'zzzznonexistent999');
 
-    await expect(page.getByText(/no clients yet/i)).toBeVisible();
+    await expect(page.getByText(/no clients found matching/i)).toBeVisible();
   });
 
   test('should display clients in a table with Name, City, Zipcode columns', async ({ page }) => {
-    await createClient(page, 'alphonse', 'lamartine', 'Bordeaux', '33000');
-    await createClient(page, 'colette', 'beauvoir', 'Toulouse', '31000');
+    const tag = uniqueName();
+    await createClient(page, `col${tag}`, `tbl${tag}`, 'Bordeaux', '33000');
 
     await page.goto('/clients', { waitUntil: 'networkidle' });
 
@@ -62,35 +64,31 @@ test.describe('List clients page', () => {
     await expect(page.getByRole('columnheader', { name: /city/i })).toBeVisible();
     await expect(page.getByRole('columnheader', { name: /zip code/i })).toBeVisible();
 
-    await expect(page.getByRole('cell', { name: 'Alphonse LAMARTINE' })).toBeVisible();
-    await expect(page.getByRole('cell', { name: 'Bordeaux' }).first()).toBeVisible();
-    await expect(page.getByRole('cell', { name: '33000' }).first()).toBeVisible();
+    await searchClients(page, `tbl${tag}`);
 
-    await expect(page.getByRole('cell', { name: 'Colette BEAUVOIR' })).toBeVisible();
-    await expect(page.getByRole('cell', { name: 'Toulouse' }).first()).toBeVisible();
-    await expect(page.getByRole('cell', { name: '31000' }).first()).toBeVisible();
+    await expect(page.getByRole('cell', { name: new RegExp(`Col${tag}`, 'i') })).toBeVisible();
+    await expect(page.getByRole('cell', { name: 'Bordeaux' })).toBeVisible();
+    await expect(page.getByRole('cell', { name: '33000' })).toBeVisible();
   });
 
   test('should filter clients by search', async ({ page }) => {
-    await createClient(page, 'fabrice', 'moliere', 'Strasbourg', '67000');
-    await createClient(page, 'gaelle', 'ronsard', 'Nantes', '44000');
+    const tag = uniqueName();
+    await createClient(page, `fab${tag}`, `mol${tag}`, 'Strasbourg', '67000');
+    await createClient(page, `gae${tag}`, `ron${tag}`, 'Nantes', '44000');
 
     await page.goto('/clients', { waitUntil: 'networkidle' });
 
-    await expect(page.getByRole('cell', { name: 'Fabrice MOLIERE' }).first()).toBeVisible();
-    await expect(page.getByRole('cell', { name: 'Gaelle RONSARD' }).first()).toBeVisible();
+    await searchClients(page, `mol${tag}`);
 
-    await searchClients(page, 'moliere');
-
-    await expect(page.getByRole('cell', { name: 'Fabrice MOLIERE' }).first()).toBeVisible();
-    await expect(page.getByRole('cell', { name: 'Gaelle RONSARD' })).not.toBeVisible();
+    await expect(page.getByRole('cell', { name: new RegExp(`Fab${tag}`, 'i') })).toBeVisible();
+    await expect(page.getByRole('cell', { name: new RegExp(`Ron${tag}`, 'i') })).not.toBeVisible();
   });
 
-  test('should display pagination controls when there are multiple pages', async ({ page, browserName }) => {
-    const tag = browserName.slice(0, 3);
+  test('should display pagination controls when there are multiple pages', async ({ page }) => {
+    const tag = uniqueName();
     const names = Array.from({ length: 11 }, (_, i) => ({
-      firstname: `xpag${tag}${String(i + 1).padStart(2, '0')}`,
-      lastname: `xpaguniq${tag}${String(i + 1).padStart(2, '0')}`,
+      firstname: `pag${tag}${String(i + 1).padStart(2, '0')}`,
+      lastname: `paguniq${tag}`,
       city: `PagCity${i + 1}`,
       zipcode: `${30001 + i}`
     }));
@@ -101,7 +99,7 @@ test.describe('List clients page', () => {
 
     await page.goto('/clients', { waitUntil: 'networkidle' });
 
-    await searchClients(page, `xpaguniq${tag}`);
+    await searchClients(page, `paguniq${tag}`);
 
     await expect(page.getByText(/page 1/i)).toBeVisible();
 
