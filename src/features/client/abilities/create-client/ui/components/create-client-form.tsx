@@ -5,12 +5,12 @@ import { toastError, toastSuccess } from '@arckit/nextjs';
 import { useTranslation } from 'react-i18next';
 import { inject } from '@/configuration/injection';
 import { useServerAction } from '@/configuration/nextjs/client';
-import { CREATE_CLIENT_ACTION_KEY } from '../../action/create-client.key';
-import { createClientValidation } from '../../action/create-client.validation';
+import { CREATE_B2C_CLIENT_ACTION_KEY } from '../../action/create-client.key';
+import { createB2CClientValidation } from '../../action/create-client.validation';
 
 export const CreateClientForm = () => {
   const { t } = useTranslation('clients.create');
-  const [action, isPending] = useServerAction(inject(CREATE_CLIENT_ACTION_KEY), {
+  const [action, isPending] = useServerAction(inject(CREATE_B2C_CLIENT_ACTION_KEY), {
     onSuccess: (state) => {
       toastSuccess(state)(({ name }) => t('success.created', name));
       form.reset();
@@ -27,7 +27,7 @@ export const CreateClientForm = () => {
       city: '',
       zipcode: ''
     },
-    validators: { onSubmit: applyEffectSchema(createClientValidation) },
+    validators: { onSubmit: applyEffectSchema(createB2CClientValidation) },
     onSubmit: handleAction(action)
   });
 

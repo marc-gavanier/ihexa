@@ -1,9 +1,15 @@
 import { defineModel, type Model } from '@arckit/effect';
 import { Data, type Either, Schema } from 'effect';
 import { Address } from '@/features/client/domain/address';
-import type { Client } from '@/features/client/domain/client';
+import type { B2BClient, B2CClient, Client } from '@/features/client/domain/client';
 import { ClientId } from '@/features/client/domain/client';
+import { DenominationSociale } from '@/features/client/domain/denomination-sociale';
+import { Email } from '@/features/client/domain/email';
+import { FormeJuridique } from '@/features/client/domain/forme-juridique';
 import { Name } from '@/features/client/domain/name';
+import { Phone } from '@/features/client/domain/phone';
+import { Siret } from '@/features/client/domain/siret';
+import { computeTvaIntracommunautaire } from '@/features/client/domain/tva-intracommunautaire';
 
 const FIRSTNAME_PATTERN = /(?<=^|[\s-])\p{L}/gu;
 
@@ -15,19 +21,68 @@ const formatName = ({ firstname, lastname }: Model.EncodedOf<typeof Name>) => ({
   lastname: lastname.toUpperCase()
 });
 
-export const ClientToCreate = defineModel(
+const lowercaseEmail = <T extends { email?: string }>(input: T): T =>
+  input.email != null ? { ...input, email: input.email.toLowerCase() } : input;
+
+export const B2CClientToCreate = defineModel(
   Schema.Struct({
     id: ClientId.schema,
     name: Name.schema,
-    address: Address.schema
+    address: Address.schema,
+    email: Schema.optionalWith(Email.schema, { exact: true }),
+    phone: Schema.optionalWith(Phone.schema, { exact: true })
   }),
-  ({ name, ...input }) => ({ ...input, name: formatName(name) })
+  ({ name, ...input }) => lowercaseEmail({ ...input, name: formatName(name) })
 );
 
-export type ClientToCreate = Model.TypeOf<typeof ClientToCreate>;
+export type B2CClientToCreate = Model.TypeOf<typeof B2CClientToCreate>;
+
+export const B2BClientToCreate = defineModel(
+  Schema.Struct({
+    id: ClientId.schema,
+    denominationSociale: DenominationSociale.schema,
+    formeJuridique: FormeJuridique,
+    siret: Siret.schema,
+    address: Address.schema,
+    email: Schema.optionalWith(Email.schema, { exact: true }),
+    phone: Schema.optionalWith(Phone.schema, { exact: true })
+  }),
+  (input) => lowercaseEmail(input)
+);
+
+export type B2BClientToCreate = Model.TypeOf<typeof B2BClientToCreate>;
+
+export type ClientToCreate = B2CClientToCreate | B2BClientToCreate;
 
 export class ClientAlreadyExists extends Data.TaggedError('ClientAlreadyExists')<{
   readonly clientId: ClientId;
 }> {}
 
-export type CreateClient = (clientToCreate: ClientToCreate) => Promise<Either.Either<Client, ClientAlreadyExists>>;
+export class SiretAlreadyExists extends Data.TaggedError('SiretAlreadyExists')<{
+  readonly siret: string;
+}> {}
+
+export type CreateClient = (
+  clientToCreate: ClientToCreate
+) => Promise<Either.Either<Client, ClientAlreadyExists | SiretAlreadyExists>>;
+
+export const toB2BClient = (clientToCreate: B2BClientToCreate): B2BClient => ({
+  _tag: 'B2BClient',
+  id: clientToCreate.id,
+  denominationSociale: clientToCreate.denominationSociale,
+  formeJuridique: clientToCreate.formeJuridique,
+  siret: clientToCreate.siret,
+  tvaIntracommunautaire: computeTvaIntracommunautaire(clientToCreate.siret),
+  address: clientToCreate.address,
+  ...(clientToCreate.email != null ? { email: clientToCreate.email } : {}),
+  ...(clientToCreate.phone != null ? { phone: clientToCreate.phone } : {})
+});
+
+export const toB2CClient = (clientToCreate: B2CClientToCreate): B2CClient => ({
+  _tag: 'B2CClient',
+  id: clientToCreate.id,
+  name: clientToCreate.name,
+  address: clientToCreate.address,
+  ...(clientToCreate.email != null ? { email: clientToCreate.email } : {}),
+  ...(clientToCreate.phone != null ? { phone: clientToCreate.phone } : {})
+});
