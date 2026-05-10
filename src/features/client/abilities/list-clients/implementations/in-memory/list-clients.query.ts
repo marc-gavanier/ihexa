@@ -7,7 +7,11 @@ import { normalizeSearchText } from './normalize-search-text';
 
 const clientToSearchableText = (client: Client): string =>
   normalizeSearchText(
-    [client.name.firstname, client.name.lastname, client.address.street, client.address.city, client.address.zipcode].join(' ')
+    client._tag === 'B2CClient'
+      ? [client.name.firstname, client.name.lastname, client.address.street, client.address.city, client.address.zipcode].join(
+          ' '
+        )
+      : [client.denominationSociale, client.siret, client.address.street, client.address.city, client.address.zipcode].join(' ')
   );
 
 const matchesSearch = (client: Client, search: string = ''): boolean =>

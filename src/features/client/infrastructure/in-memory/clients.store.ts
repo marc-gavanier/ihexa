@@ -1,8 +1,9 @@
 import { faker } from '@faker-js/faker/locale/fr';
-import { Client, type ClientId } from '../../domain';
+import { B2CClient, type Client, type ClientId } from '../../domain';
 
 const generateClient = (): Client =>
-  Client({
+  B2CClient({
+    _tag: 'B2CClient',
     id: faker.string.uuid(),
     name: {
       firstname: faker.person.firstName(),
