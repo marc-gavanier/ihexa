@@ -2,6 +2,7 @@ import assert from 'node:assert';
 import type { DataTable } from '@cucumber/cucumber';
 import { Given, Then, When } from '@cucumber/cucumber';
 import { Either, Schema } from 'effect';
+import { setSearchResults } from '@/configuration/cucumber/company-search-results';
 import { InseeCode, SellerCity, SellerStreet, SellerZipcode } from '@/features/settings/domain/seller/address';
 import { CompanyName } from '@/features/settings/domain/seller/company-name';
 import { Email } from '@/features/settings/domain/seller/email';
@@ -188,10 +189,12 @@ Given(
 
 When(/^I search for a company with SIRET "([^"]*)"$/, async (siret: string) => {
   searchResults = await searchCompany(siret);
+  setSearchResults(searchResults);
 });
 
 When(/^I search for a company with name "([^"]*)"$/, async (name: string) => {
   searchResults = await searchCompany(name);
+  setSearchResults(searchResults);
 });
 
 When(/^I save the seller configuration with$/, async (dataTable: DataTable) => {
@@ -374,12 +377,6 @@ When(/^I save the seller configuration with SIREN "([^"]*)"$/, async (siren: str
 
 // --- Then ---
 
-Then(/^the results should include a company named "([^"]*)"$/, (name: string) => {
-  assert.ok(searchResults, 'Search results should be defined');
-  const found = searchResults.some((r) => r.companyName === name);
-  assert.ok(found, `Expected to find company "${name}" in results`);
-});
-
 Then(/^the seller configuration should be saved successfully$/, () => {
   assert.ok(savedSeller, `Seller configuration should be saved. Error: ${saveError}`);
   assert.strictEqual(saveError, undefined);
@@ -398,11 +395,6 @@ Then(/^the seller should have no intra-EU VAT number$/, () => {
 Then(/^the seller should have no tax debit option$/, () => {
   assert.ok(savedSeller, 'Seller should be configured');
   assert.strictEqual('taxDebitOption' in savedSeller, false);
-});
-
-Then(/^no companies should be found$/, () => {
-  assert.ok(searchResults, 'Search results should be defined');
-  assert.strictEqual(searchResults.length, 0);
 });
 
 Then(/^the seller configuration should have email "([^"]*)"$/, async (email: string) => {
