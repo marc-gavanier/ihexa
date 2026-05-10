@@ -4,8 +4,8 @@ import translations from '@public/locales/en-US/clients.create.json';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { provide } from '@/configuration/injection';
 import { withI18nProvider } from '@/configuration/storybook';
-import { CREATE_CLIENT_ACTION_KEY } from '../../action/create-client.key';
-import type { ClientToCreate } from '../../domain';
+import { B2CClient } from '@/features/client/domain';
+import { CREATE_B2C_CLIENT_ACTION_KEY } from '../../action/create-client.key';
 import { CreateClientPage } from './create-client.page';
 
 const meta = {
@@ -30,12 +30,15 @@ type Story = StoryObj<typeof meta>;
 export const Default: Story = {
   decorators: [
     (Story) => {
-      provide(CREATE_CLIENT_ACTION_KEY, async () =>
-        ServerActionSuccess({
-          id: crypto.randomUUID(),
-          name: { firstname: 'Jean-Pierre', lastname: 'DUPONT' },
-          address: { street: '123 Rue de la Paix', city: 'Paris', zipcode: '75001' }
-        } as ClientToCreate)
+      provide(CREATE_B2C_CLIENT_ACTION_KEY, async () =>
+        ServerActionSuccess(
+          B2CClient({
+            _tag: 'B2CClient',
+            id: crypto.randomUUID(),
+            name: { firstname: 'Jean-Pierre', lastname: 'DUPONT' },
+            address: { street: '123 Rue de la Paix', city: 'Paris', zipcode: '75001' }
+          })
+        )
       );
       return <Story />;
     }
@@ -45,7 +48,7 @@ export const Default: Story = {
 export const WithError: Story = {
   decorators: [
     (Story) => {
-      provide(CREATE_CLIENT_ACTION_KEY, async () => ServerActionError('error.clientAlreadyExists'));
+      provide(CREATE_B2C_CLIENT_ACTION_KEY, async () => ServerActionError('error.clientAlreadyExists'));
       return <Story />;
     }
   ]
