@@ -1,15 +1,17 @@
 import { filtered, Page, PageSize, paginate } from '@arckit/resultset';
 import { describe, expect, it } from 'vitest';
-import { Client } from '@/features/client/domain';
+import { B2CClient } from '@/features/client/domain';
 import { presentListClients } from './list-clients.presenter';
 
-const CLIENT_JEAN = Client({
+const CLIENT_JEAN = B2CClient({
+  _tag: 'B2CClient',
   id: '550e8400-e29b-41d4-a716-446655440001',
   name: { firstname: 'Jean', lastname: 'DUPONT' },
   address: { street: '123 Rue de la Paix', city: 'Paris', zipcode: '75001' }
 });
 
-const CLIENT_MARIE = Client({
+const CLIENT_MARIE = B2CClient({
+  _tag: 'B2CClient',
   id: '550e8400-e29b-41d4-a716-446655440002',
   name: { firstname: 'Marie', lastname: 'MARTIN' },
   address: { street: '456 Avenue Foch', city: 'Lyon', zipcode: '69001' }
@@ -67,7 +69,8 @@ describe('presentListClients', () => {
 
   it('should include pagination in results', () => {
     const allClients = Array.from({ length: 25 }, (_, i) =>
-      Client({
+      B2CClient({
+        _tag: 'B2CClient',
         id: `550e8400-e29b-41d4-a716-4466554400${String(i + 1).padStart(2, '0')}`,
         name: { firstname: `Client${i + 1}`, lastname: 'TEST' },
         address: { street: '1 Rue A', city: 'Paris', zipcode: '75001' }

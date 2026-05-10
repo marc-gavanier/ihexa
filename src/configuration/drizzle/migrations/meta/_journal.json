@@ -36,6 +36,13 @@
       "when": 1778239299388,
       "tag": "0004_simple_hellfire_club",
       "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1778409191231,
+      "tag": "0005_harsh_night_thrasher",
+      "breakpoints": true
     }
   ]
 }

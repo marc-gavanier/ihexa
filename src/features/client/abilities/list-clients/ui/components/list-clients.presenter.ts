@@ -26,11 +26,12 @@ export type ListClientsView =
       readonly search: string;
     };
 
-const formatName = (client: Client): string => `${client.name.firstname} ${client.name.lastname}`;
+const formatClientName = (client: Client): string =>
+  client._tag === 'B2CClient' ? `${client.name.firstname} ${client.name.lastname}` : client.denominationSociale;
 
 const toClientRow = (client: Client): ClientRow => ({
   id: client.id,
-  name: formatName(client),
+  name: formatClientName(client),
   city: client.address.city,
   zipcode: client.address.zipcode
 });

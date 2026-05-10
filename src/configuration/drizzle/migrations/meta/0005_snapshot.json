@@ -1,0 +1,319 @@
+{
+  "id": "495bd65d-392d-4091-b30a-2c3ed2191b27",
+  "prevId": "95cd3d3e-dfc3-42dc-bb0a-c35a7c5029ee",
+  "version": "7",
+  "dialect": "postgresql",
+  "tables": {
+    "public.client": {
+      "name": "client",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "uuid",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "type": {
+          "name": "type",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'B2C'"
+        },
+        "firstname": {
+          "name": "firstname",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "lastname": {
+          "name": "lastname",
+          "type": "varchar(100)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "denomination_sociale": {
+          "name": "denomination_sociale",
+          "type": "varchar(400)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "forme_juridique": {
+          "name": "forme_juridique",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "siret": {
+          "name": "siret",
+          "type": "varchar(14)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tva_intracommunautaire": {
+          "name": "tva_intracommunautaire",
+          "type": "varchar(13)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "street": {
+          "name": "street",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "city": {
+          "name": "city",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "zipcode": {
+          "name": "zipcode",
+          "type": "varchar(5)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(320)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar(16)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "search_text": {
+          "name": "search_text",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false,
+          "generated": {
+            "as": "lower(immutable_unaccent(coalesce(firstname, '') || ' ' || coalesce(lastname, '') || ' ' || coalesce(denomination_sociale, '') || ' ' || street || ' ' || city || ' ' || zipcode))",
+            "type": "stored"
+          }
+        }
+      },
+      "indexes": {
+        "client_search_text_trgm_idx": {
+          "name": "client_search_text_trgm_idx",
+          "columns": [
+            {
+              "expression": "\"search_text\" gin_trgm_ops",
+              "asc": true,
+              "isExpression": true,
+              "nulls": "last"
+            }
+          ],
+          "isUnique": false,
+          "concurrently": false,
+          "method": "gin",
+          "with": {}
+        }
+      },
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {
+        "client_siret_unique": {
+          "name": "client_siret_unique",
+          "nullsNotDistinct": false,
+          "columns": ["siret"]
+        }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.payment_terms": {
+      "name": "payment_terms",
+      "schema": "",
+      "columns": {
+        "starting_point": {
+          "name": "starting_point",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "days": {
+          "name": "days",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "end_of_month": {
+          "name": "end_of_month",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "penalty_rate": {
+          "name": "penalty_rate",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "discount_tag": {
+          "name": "discount_tag",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "discount_rate": {
+          "name": "discount_rate",
+          "type": "real",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "discount_delay_threshold": {
+          "name": "discount_delay_threshold",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "payment_methods": {
+          "name": "payment_methods",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "iban": {
+          "name": "iban",
+          "type": "varchar(34)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    },
+    "public.seller": {
+      "name": "seller",
+      "schema": "",
+      "columns": {
+        "company_name": {
+          "name": "company_name",
+          "type": "varchar(400)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "legal_form": {
+          "name": "legal_form",
+          "type": "varchar(10)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "siren": {
+          "name": "siren",
+          "type": "varchar(9)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "siret": {
+          "name": "siret",
+          "type": "varchar(14)",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "street": {
+          "name": "street",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "zipcode": {
+          "name": "zipcode",
+          "type": "varchar(5)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "city": {
+          "name": "city",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "insee_code": {
+          "name": "insee_code",
+          "type": "varchar(5)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "vat_regime": {
+          "name": "vat_regime",
+          "type": "varchar(20)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "vat_number": {
+          "name": "vat_number",
+          "type": "varchar(13)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "tax_debit_option": {
+          "name": "tax_debit_option",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "rcs_registration": {
+          "name": "rcs_registration",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "share_capital": {
+          "name": "share_capital",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "email": {
+          "name": "email",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "phone": {
+          "name": "phone",
+          "type": "varchar(16)",
+          "primaryKey": false,
+          "notNull": false
+        },
+        "website": {
+          "name": "website",
+          "type": "varchar(255)",
+          "primaryKey": false,
+          "notNull": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
+    }
+  },
+  "enums": {},
+  "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
+  "_meta": {
+    "columns": {},
+    "schemas": {},
+    "tables": {}
+  }
+}
