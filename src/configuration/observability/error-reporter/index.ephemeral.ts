@@ -3,3 +3,5 @@ import { withErrorReporter as createWithErrorReporter, loggerReporter } from '@/
 
 export const errorReporter = loggerReporter(logger);
 export const withErrorReporter = createWithErrorReporter(errorReporter);
+
+// todo: regarder combien consome le service GlitchTip

@@ -51,7 +51,7 @@ services:
   glitchtip:
     image: glitchtip/glitchtip
     ports:
-      - '8090:8080'
+      - '8090:8000'
     environment:
       DATABASE_URL: postgres://glitchtip:glitchtip@glitchtip-db:5432/glitchtip
       REDIS_URL: redis://glitchtip-redis:6379/0
@@ -59,6 +59,7 @@ services:
       GLITCHTIP_DOMAIN: http://localhost:8090
       DEFAULT_FROM_EMAIL: glitchtip@local.dev
       ENABLE_OPEN_USER_REGISTRATION: 'true'
+      EMAIL_URL: 'consolemail://'
     depends_on:
       - glitchtip-db
       - glitchtip-redis
