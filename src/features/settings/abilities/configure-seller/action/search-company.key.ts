@@ -1,4 +1,4 @@
-import type { ServerActionResult } from '@arckit/nextjs';
+import type { ServerActionResult } from '@arckit/nextjs/client';
 import { keyFor } from 'piqure';
 import type { CompanySummary } from '@/libraries/recherche-entreprises';
 

@@ -4,11 +4,21 @@
     "description": "Formulaire de création d'un nouveau client."
   },
   "title": "Créer un client",
+  "modal": {
+    "close": "Fermer la fenêtre de création de client"
+  },
+  "tab": {
+    "label": "Type de client",
+    "b2c": "Particulier (B2C)",
+    "b2b": "Entreprise (B2B)"
+  },
   "success": {
-    "created": "Le client {{firstname}} {{lastname}} a bien été créé"
+    "created": "Le client {{firstname}} {{lastname}} a bien été créé",
+    "createdB2B": "Le client {{denominationSociale}} a bien été créé"
   },
   "error": {
-    "clientAlreadyExists": "Il existe déjà un client avec cet identifiant"
+    "clientAlreadyExists": "Il existe déjà un client avec cet identifiant",
+    "siretAlreadyExists": "Un client avec ce SIRET existe déjà"
   },
   "form": {
     "firstname": {
@@ -45,6 +55,39 @@
         "required": "Le code postal est requis",
         "invalid": "Le code postal doit contenir 5 chiffres"
       }
+    },
+    "email": {
+      "label": "Email (optionnel)",
+      "error": {
+        "invalid": "L'email doit être une adresse valide"
+      }
+    },
+    "phone": {
+      "label": "Téléphone (optionnel)",
+      "error": {
+        "invalid": "Le téléphone doit être au format international (ex. +33612345678)"
+      }
+    },
+    "company": {
+      "label": "Rechercher une entreprise",
+      "placeholder": "Rechercher par nom ou SIRET (2 caractères min.)",
+      "noResults": "Aucune entreprise correspondante",
+      "minChars": "Saisissez au moins 2 caractères pour rechercher",
+      "error": {
+        "required": "Veuillez sélectionner une entreprise"
+      }
+    },
+    "denominationSociale": {
+      "label": "Dénomination sociale"
+    },
+    "formeJuridique": {
+      "label": "Forme juridique"
+    },
+    "siret": {
+      "label": "SIRET"
+    },
+    "address": {
+      "label": "Adresse du siège social"
     },
     "submit": "Créer le client"
   }

@@ -14,7 +14,7 @@ export const TvaIntracommunautaire = defineModel(
 export type TvaIntracommunautaire = Model.TypeOf<typeof TvaIntracommunautaire>;
 
 export const computeTvaIntracommunautaire = (siret: string): TvaIntracommunautaire => {
-  const siren = Number(siret.slice(0, 9));
-  const key = String((12 + 3 * (siren % 97)) % 97).padStart(2, '0');
-  return TvaIntracommunautaire(`FR${key}${String(siren)}`);
+  const siren = siret.slice(0, 9);
+  const key = String((12 + 3 * (Number(siren) % 97)) % 97).padStart(2, '0');
+  return TvaIntracommunautaire(`FR${key}${siren}`);
 };

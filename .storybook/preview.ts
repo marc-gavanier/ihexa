@@ -1,5 +1,5 @@
 import type { Preview } from '@storybook/nextjs-vite';
-import '@/libraries/i18n/resource-loader.fetch';
+import '@arckit/i18n/resource-loader/fetch';
 import '@/styles/globals.css';
 import './storybook.css';
 import { darkTheme, lightTheme } from './themes';
@@ -13,6 +13,9 @@ const getInitialTheme = () => {
 
 const preview: Preview = {
   parameters: {
+    nextjs: {
+      appDirectory: true
+    },
     options: {
       storySort: {
         method: 'alphabetical'

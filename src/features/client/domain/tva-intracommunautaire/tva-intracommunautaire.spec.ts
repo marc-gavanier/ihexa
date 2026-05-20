@@ -26,8 +26,14 @@ describe('TvaIntracommunautaire validation', () => {
 describe('computeTvaIntracommunautaire', () => {
   it.each([
     { siret: '44306184100047', expected: 'FR64443061841' },
-    { siret: '80295478500028', expected: 'FR26802954785' }
+    { siret: '80295478500028', expected: 'FR26802954785' },
+    { siret: '01234567800013', expected: 'FR21012345678' }
   ])('should compute $expected from SIRET $siret', ({ siret, expected }) => {
     expect(computeTvaIntracommunautaire(siret)).toBe(expected);
+  });
+
+  it('should preserve leading zeros in SIREN', () => {
+    const tva = computeTvaIntracommunautaire('01234567800013');
+    expect(tva).toMatch(/^FR\d{11}$/);
   });
 });

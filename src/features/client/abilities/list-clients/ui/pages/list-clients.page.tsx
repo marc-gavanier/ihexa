@@ -1,11 +1,11 @@
 import { PageHeader } from '@arckit/daisyui/blocks';
 import { ICON_LG } from '@arckit/daisyui/icons';
-import { ButtonLink } from '@arckit/daisyui/primitives';
 import type { TranslationProps } from '@arckit/i18n';
 import type { Search } from '@arckit/resultset';
 import { Match, pipe } from 'effect';
-import { RiAddLine, RiTeamLine } from 'react-icons/ri';
+import { RiTeamLine } from 'react-icons/ri';
 import { withTranslation } from '@/configuration/i18n';
+import { AddClientButton } from '@/features/client/abilities/create-client/ui/components';
 import type { ListClientsView } from '../components/list-clients.presenter';
 import { ListClientsEmpty } from '../components/list-clients-empty';
 import { ListClientsNoResults } from '../components/list-clients-no-results';
@@ -21,10 +21,7 @@ type ListClientsPageProps = TranslationProps & {
 export const ListClientsPage = withTranslation(({ t, view, search }: ListClientsPageProps) => (
   <div className='flex flex-col gap-8'>
     <PageHeader title={t('title')} icon={<RiTeamLine size={ICON_LG} />}>
-      <ButtonLink color='btn-primary' href='/clients/create'>
-        <RiAddLine size={ICON_LG} />
-        {t('addClient')}
-      </ButtonLink>
+      <AddClientButton />
     </PageHeader>
     <ListClientsSearch search={search} />
     {pipe(

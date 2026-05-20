@@ -1,5 +1,5 @@
 import { Toaster } from '@arckit/daisyui/blocks-client';
-import { ServerActionError, ServerActionSuccess } from '@arckit/nextjs';
+import { ServerActionError, ServerActionSuccess } from '@arckit/nextjs/client';
 import translations from '@public/locales/en-US/settings.configure-payment-terms.json';
 import type { Meta, StoryObj } from '@storybook/nextjs-vite';
 import { provide } from '@/configuration/injection';

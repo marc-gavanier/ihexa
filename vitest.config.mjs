@@ -12,6 +12,7 @@ export default defineConfig({
   },
   test: {
     environment: 'node',
+    exclude: ['**/node_modules/**', '**/dist/**', '.matomo/**', '.matomo-db/**', '.glitchtip-db/**', '.database/**'],
     coverage: {
       provider: 'v8',
       reporter: ['text', 'html', 'lcov'],

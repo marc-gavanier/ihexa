@@ -1,11 +1,9 @@
-import { Schema, Struct, UUID } from 'effect/Schema';
+import { Schema } from 'effect';
+import { Struct, UUID } from 'effect/Schema';
 import { City, Street, Zipcode } from '@/features/client/domain/address';
-import { DenominationSociale } from '@/features/client/domain/denomination-sociale';
 import { Email } from '@/features/client/domain/email';
-import { FormeJuridique } from '@/features/client/domain/forme-juridique';
 import { Firstname, Lastname } from '@/features/client/domain/name';
 import { Phone } from '@/features/client/domain/phone';
-import { Siret } from '@/features/client/domain/siret';
 
 export const createB2CClientValidation = Struct({
   id: UUID,
@@ -21,14 +19,18 @@ export const createB2CClientValidation = Struct({
 export type CreateB2CClientFormData = typeof createB2CClientValidation.Type;
 export type CreateB2CClientInput = typeof createB2CClientValidation.Encoded;
 
+const companyValidation = Schema.Struct({
+  companyName: Schema.String.pipe(Schema.nonEmptyString({ message: () => 'required' })),
+  legalForm: Schema.String,
+  siret: Schema.String.pipe(Schema.nonEmptyString({ message: () => 'required' })),
+  street: Schema.String,
+  zipcode: Schema.String,
+  city: Schema.String
+});
+
 export const createB2BClientValidation = Struct({
   id: UUID,
-  denominationSociale: DenominationSociale.schema,
-  formeJuridique: FormeJuridique,
-  siret: Siret.schema,
-  street: Street.schema,
-  city: City.schema,
-  zipcode: Zipcode.schema,
+  company: companyValidation,
   email: Schema.optionalWith(Email.schema, { exact: true }),
   phone: Schema.optionalWith(Phone.schema, { exact: true })
 });
