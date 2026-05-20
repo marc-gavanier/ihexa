@@ -1,3 +1,21 @@
+# [1.11.0](https://github.com/marc-gavanier/ihexa/compare/v1.10.0...v1.11.0) (2026-05-20)
+
+
+### Bug Fixes
+
+* **client:** bridge InsertRow → SelectRow in transfer round-trip spec ([b36963b](https://github.com/marc-gavanier/ihexa/commit/b36963bce49ad7d61b360d4fbabb787c41c6ac78))
+* **client:** narrow createClient to B2C/B2B for type-safe action returns ([4146ecd](https://github.com/marc-gavanier/ihexa/commit/4146ecd1a81828687fa1ddbf3efbec8995071561))
+* **db:** reorder migration 0005 — add B2B columns before regenerating search_text ([9d16e83](https://github.com/marc-gavanier/ihexa/commit/9d16e8316d4db8d68f9a65c97f854800d657fdcb))
+
+
+### Features
+
+* **client:** add B2B domain value objects ([68d9772](https://github.com/marc-gavanier/ihexa/commit/68d9772aa147081f862586c8989dbb9c07c3cb69))
+* **client:** add B2B/B2C create-client ability ([beac9d8](https://github.com/marc-gavanier/ihexa/commit/beac9d8d02a570c4e34a5e0cc86bb2dfb0004fe5))
+* **client:** create-client modal with B2B/B2C flow ([53e47dc](https://github.com/marc-gavanier/ihexa/commit/53e47dc9899f48d97e50672da105e3da3e5137a8))
+* **client:** refactor client model to B2B/B2C discriminated union ([de3e370](https://github.com/marc-gavanier/ihexa/commit/de3e370fad30e5b2e18449ca493591322de0ee8d))
+* **client:** wire empty state button to create-client modal ([9951a27](https://github.com/marc-gavanier/ihexa/commit/9951a27cf10243ba54f90b66f1daed0648156e51))
+
 # [1.10.0](https://github.com/marc-gavanier/ihexa/compare/v1.9.0...v1.10.0) (2026-05-09)
 
 
