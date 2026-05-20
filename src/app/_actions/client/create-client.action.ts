@@ -9,7 +9,7 @@ import {
   createB2CClientValidation
 } from '@/features/client/abilities/create-client';
 import { B2BClientToCreate, B2CClientToCreate } from '@/features/client/abilities/create-client/domain';
-import { createClient } from '@/features/client/abilities/create-client/implementations';
+import { createB2BClient, createB2CClient } from '@/features/client/abilities/create-client/implementations';
 
 export const createB2CClientAction = actionBuilder()
   .use(withInput(createB2CClientValidation))
@@ -17,7 +17,7 @@ export const createB2CClientAction = actionBuilder()
   .execute(
     fromEither(
       async ({ input }) =>
-        createClient(
+        createB2CClient(
           B2CClientToCreate({
             id: input.id,
             name: input,
@@ -38,7 +38,7 @@ export const createB2BClientAction = actionBuilder()
   .execute(
     fromEither(
       async ({ input }) =>
-        createClient(
+        createB2BClient(
           B2BClientToCreate({
             id: input.id,
             denominationSociale: input.company.companyName,
