@@ -12,7 +12,7 @@ import {
 } from '../../domain';
 
 const siretExists = (siret: string): boolean =>
-  Array.from(clientsStore().values()).some((client) => client._tag === 'B2BClient' && client.siret === siret);
+  Array.from(clientsStore().values()).some((client) => 'siret' in client && client.siret === siret);
 
 export const createB2CClient: CreateB2CClient = async (clientToCreate) => {
   const store = clientsStore();

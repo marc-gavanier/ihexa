@@ -73,7 +73,6 @@ export type CreateClient = (
 ) => Promise<Either.Either<Client, ClientAlreadyExists | SiretAlreadyExists>>;
 
 export const toB2BClient = (clientToCreate: B2BClientToCreate): B2BClient => ({
-  _tag: 'B2BClient',
   id: clientToCreate.id,
   denominationSociale: clientToCreate.denominationSociale,
   formeJuridique: clientToCreate.formeJuridique,
@@ -85,7 +84,6 @@ export const toB2BClient = (clientToCreate: B2BClientToCreate): B2BClient => ({
 });
 
 export const toB2CClient = (clientToCreate: B2CClientToCreate): B2CClient => ({
-  _tag: 'B2CClient',
   id: clientToCreate.id,
   name: clientToCreate.name,
   address: clientToCreate.address,

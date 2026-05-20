@@ -9,7 +9,6 @@ type ClientInsertRow = typeof clientsTable.$inferInsert;
 export const clientToDomain = (row: ClientRow): Client =>
   row.type === 'B2B'
     ? B2BClient({
-        _tag: 'B2BClient',
         id: row.id,
         denominationSociale: row.denominationSociale ?? '',
         formeJuridique: Schema.decodeUnknownSync(FormeJuridique)(row.formeJuridique),
@@ -20,7 +19,6 @@ export const clientToDomain = (row: ClientRow): Client =>
         ...(row.phone != null ? { phone: row.phone } : {})
       })
     : B2CClient({
-        _tag: 'B2CClient',
         id: row.id,
         name: { firstname: row.firstname ?? '', lastname: row.lastname ?? '' },
         address: { street: row.street, city: row.city, zipcode: row.zipcode },
@@ -29,7 +27,7 @@ export const clientToDomain = (row: ClientRow): Client =>
       });
 
 export const clientFromDomain = (client: Client): ClientInsertRow =>
-  client._tag === 'B2BClient'
+  'siret' in client
     ? {
         id: client.id,
         type: 'B2B',

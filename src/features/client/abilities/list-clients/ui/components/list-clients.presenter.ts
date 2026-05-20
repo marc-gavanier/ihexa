@@ -27,7 +27,7 @@ export type ListClientsView =
     };
 
 const formatClientName = (client: Client): string =>
-  client._tag === 'B2CClient' ? `${client.name.firstname} ${client.name.lastname}` : client.denominationSociale;
+  'name' in client ? `${client.name.firstname} ${client.name.lastname}` : client.denominationSociale;
 
 const toClientRow = (client: Client): ClientRow => ({
   id: client.id,

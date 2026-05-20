@@ -3,7 +3,6 @@ import { B2CClient, type Client, type ClientId } from '../../domain';
 
 const generateClient = (): Client =>
   B2CClient({
-    _tag: 'B2CClient',
     id: faker.string.uuid(),
     name: {
       firstname: faker.person.firstName(),
