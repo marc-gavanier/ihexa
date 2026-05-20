@@ -62,6 +62,12 @@ export class SiretAlreadyExists extends Data.TaggedError('SiretAlreadyExists')<{
   readonly siret: string;
 }> {}
 
+export type CreateB2CClient = (clientToCreate: B2CClientToCreate) => Promise<Either.Either<B2CClient, ClientAlreadyExists>>;
+
+export type CreateB2BClient = (
+  clientToCreate: B2BClientToCreate
+) => Promise<Either.Either<B2BClient, ClientAlreadyExists | SiretAlreadyExists>>;
+
 export type CreateClient = (
   clientToCreate: ClientToCreate
 ) => Promise<Either.Either<Client, ClientAlreadyExists | SiretAlreadyExists>>;

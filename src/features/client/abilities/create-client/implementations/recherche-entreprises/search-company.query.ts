@@ -1,8 +1,9 @@
+import type { FormeJuridique } from '@/features/client/domain/forme-juridique';
 import type { Company, Establishment } from '@/libraries/recherche-entreprises';
 import { search } from '@/libraries/recherche-entreprises';
 import type { CompanySearchResult, SearchCompany } from '../../domain';
 
-const NATURE_JURIDIQUE: Record<string, string> = {
+const NATURE_JURIDIQUE: Record<string, FormeJuridique> = {
   '1000': 'EI',
   '5306': 'SNC',
   '5308': 'SCS',
@@ -33,18 +34,29 @@ const NATURE_JURIDIQUE: Record<string, string> = {
   '9260': 'Association'
 };
 
-const toLegalForm = (code: string): string => NATURE_JURIDIQUE[code] ?? code;
+const toLegalForm = (code: string): FormeJuridique | undefined => NATURE_JURIDIQUE[code];
 
-type CompanyWithCompleteHeadquarters = Company & {
+type CompanyWithKnownLegalForm = Company & {
   readonly headquarters: Establishment & { readonly postalCode: string };
+  readonly resolvedLegalForm: FormeJuridique;
 };
 
-const hasCompleteHeadquarters = (company: Company): company is CompanyWithCompleteHeadquarters =>
-  company.headquarters !== null && company.headquarters.postalCode !== null;
+const withKnownLegalForm = (company: Company): CompanyWithKnownLegalForm | null => {
+  if (company.headquarters === null || company.headquarters.postalCode === null) return null;
+  const resolvedLegalForm = toLegalForm(company.legalForm);
+  if (resolvedLegalForm === undefined) return null;
+  return {
+    ...company,
+    headquarters: { ...company.headquarters, postalCode: company.headquarters.postalCode },
+    resolvedLegalForm
+  };
+};
 
-const toCompanySearchResult = (company: CompanyWithCompleteHeadquarters): CompanySearchResult => ({
+const isPresent = <T>(value: T | null): value is T => value !== null;
+
+const toCompanySearchResult = (company: CompanyWithKnownLegalForm): CompanySearchResult => ({
   companyName: company.fullName,
-  legalForm: toLegalForm(company.legalForm),
+  legalForm: company.resolvedLegalForm,
   siren: company.siren,
   siret: company.headquarters.siret,
   street: company.headquarters.address,
@@ -55,5 +67,5 @@ const toCompanySearchResult = (company: CompanyWithCompleteHeadquarters): Compan
 
 export const searchCompany: SearchCompany = async (query) => {
   const result = await search(query).include(['headquarters']).execute();
-  return result.companies.filter(hasCompleteHeadquarters).map(toCompanySearchResult);
+  return result.companies.map(withKnownLegalForm).filter(isPresent).map(toCompanySearchResult);
 };
