@@ -7,7 +7,7 @@ import { normalizeSearchText } from './normalize-search-text';
 
 const clientToSearchableText = (client: Client): string =>
   normalizeSearchText(
-    client._tag === 'B2CClient'
+    'name' in client
       ? [client.name.firstname, client.name.lastname, client.address.street, client.address.city, client.address.zipcode].join(
           ' '
         )

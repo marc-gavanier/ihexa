@@ -25,7 +25,6 @@ export const provideCreateClientDefaults = () => {
   provide(CREATE_B2C_CLIENT_ACTION_KEY, async () =>
     ServerActionSuccess(
       B2CClient({
-        _tag: 'B2CClient',
         id: crypto.randomUUID(),
         name: { firstname: 'Jean-Pierre', lastname: 'DUPONT' },
         address: { street: '123 Rue de la Paix', city: 'Paris', zipcode: '75001' }
@@ -35,7 +34,6 @@ export const provideCreateClientDefaults = () => {
   provide(CREATE_B2B_CLIENT_ACTION_KEY, async () =>
     ServerActionSuccess(
       B2BClient({
-        _tag: 'B2BClient',
         id: crypto.randomUUID(),
         denominationSociale: GOOGLE_FRANCE.companyName,
         formeJuridique: 'SAS',

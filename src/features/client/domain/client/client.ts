@@ -12,7 +12,6 @@ import { ClientId } from './client-id';
 
 export const B2CClient = defineModel(
   Schema.Struct({
-    _tag: Schema.Literal('B2CClient'),
     id: ClientId.schema,
     name: Name.schema,
     address: Address.schema,
@@ -24,7 +23,6 @@ export type B2CClient = Model.TypeOf<typeof B2CClient>;
 
 export const B2BClient = defineModel(
   Schema.Struct({
-    _tag: Schema.Literal('B2BClient'),
     id: ClientId.schema,
     denominationSociale: DenominationSociale.schema,
     formeJuridique: FormeJuridique,

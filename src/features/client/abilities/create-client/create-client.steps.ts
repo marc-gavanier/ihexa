@@ -172,18 +172,14 @@ Then(/^the client should be created with formatted data$/, (dataTable: DataTable
 
 Then(/^the client firstname should be "([^"]*)"$/, (expected: string) => {
   assert.ok(lastCreatedClient, 'No client created');
-  assert.strictEqual(lastCreatedClient._tag, 'B2CClient');
-  if (lastCreatedClient._tag === 'B2CClient') {
-    assert.strictEqual(lastCreatedClient.name.firstname, expected);
-  }
+  assert.ok('name' in lastCreatedClient, 'Expected a B2C client');
+  assert.strictEqual(lastCreatedClient.name.firstname, expected);
 });
 
 Then(/^the client lastname should be "([^"]*)"$/, (expected: string) => {
   assert.ok(lastCreatedClient, 'No client created');
-  assert.strictEqual(lastCreatedClient._tag, 'B2CClient');
-  if (lastCreatedClient._tag === 'B2CClient') {
-    assert.strictEqual(lastCreatedClient.name.lastname, expected);
-  }
+  assert.ok('name' in lastCreatedClient, 'Expected a B2C client');
+  assert.strictEqual(lastCreatedClient.name.lastname, expected);
 });
 
 Then(/^the client should be created with the following data$/, (dataTable: DataTable) => {
@@ -203,10 +199,8 @@ Then(/^the client should be created with phone "([^"]*)"$/, (phone: string) => {
 
 Then(/^the TVA intracommunautaire should be "([^"]*)"$/, (tva: string) => {
   assert.ok(lastCreatedClient, 'No client created');
-  assert.strictEqual(lastCreatedClient._tag, 'B2BClient');
-  if (lastCreatedClient._tag === 'B2BClient') {
-    assert.strictEqual(lastCreatedClient.tvaIntracommunautaire, tva);
-  }
+  assert.ok('tvaIntracommunautaire' in lastCreatedClient, 'Expected a B2B client');
+  assert.strictEqual(lastCreatedClient.tvaIntracommunautaire, tva);
 });
 
 Then(/^the client should not be created$/, () => {
