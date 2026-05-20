@@ -3,7 +3,7 @@ import type { Filtered } from '@arckit/resultset';
 import { Page, PageSize, type Paginated } from '@arckit/resultset';
 import type { DataTable } from '@cucumber/cucumber';
 import { Then, When } from '@cucumber/cucumber';
-import { listClients } from '@/features/client/abilities/list-clients';
+import { listClients } from '@/features/client/abilities/list-clients/implementations';
 import type { Client } from '@/features/client/domain';
 
 let result: Filtered<Paginated<Client>> = {

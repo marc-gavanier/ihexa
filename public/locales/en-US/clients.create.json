@@ -4,11 +4,21 @@
     "description": "Form to create a new client."
   },
   "title": "Create Client",
+  "modal": {
+    "close": "Close create client modal"
+  },
+  "tab": {
+    "label": "Client type",
+    "b2c": "Individual (B2C)",
+    "b2b": "Company (B2B)"
+  },
   "success": {
-    "created": "Client {{firstname}} {{lastname}} successfully created"
+    "created": "Client {{firstname}} {{lastname}} successfully created",
+    "createdB2B": "Client {{denominationSociale}} successfully created"
   },
   "error": {
-    "clientAlreadyExists": "A client with this ID already exists"
+    "clientAlreadyExists": "A client with this ID already exists",
+    "siretAlreadyExists": "A client with this SIRET already exists"
   },
   "form": {
     "firstname": {
@@ -45,6 +55,39 @@
         "required": "Zip code is required",
         "invalid": "Zip code must contain 5 digits"
       }
+    },
+    "email": {
+      "label": "Email (optional)",
+      "error": {
+        "invalid": "Email must be a valid email address"
+      }
+    },
+    "phone": {
+      "label": "Phone (optional)",
+      "error": {
+        "invalid": "Phone must be in international format (e.g. +33612345678)"
+      }
+    },
+    "company": {
+      "label": "Search company",
+      "placeholder": "Search by company name or SIRET (min 2 chars)",
+      "noResults": "No matching company found",
+      "minChars": "Type at least 2 characters to search",
+      "error": {
+        "required": "Please select a company"
+      }
+    },
+    "denominationSociale": {
+      "label": "Company name"
+    },
+    "formeJuridique": {
+      "label": "Legal form"
+    },
+    "siret": {
+      "label": "SIRET"
+    },
+    "address": {
+      "label": "Headquarters address"
     },
     "submit": "Create client"
   }

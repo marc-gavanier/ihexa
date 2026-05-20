@@ -8,7 +8,7 @@ import { withTranslation } from '@/configuration/i18n';
 export const ListClientsEmpty = withTranslation(({ t }: TranslationProps) => (
   <EmptyState icon={<RiTeamLine className='text-primary' size={ICON_2XL} />}>
     <p className='mb-6 max-w-sm text-neutral'>{t('empty.message')}</p>
-    <Button scale='btn-lg' color='btn-primary' disabled>
+    <Button scale='btn-lg' color='btn-primary'>
       <RiAddLine size={ICON_LG} />
       {t('empty.action')}
     </Button>

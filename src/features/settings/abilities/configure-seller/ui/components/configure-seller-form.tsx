@@ -2,7 +2,7 @@
 
 import { Options } from '@arckit/daisyui/primitives-client';
 import { applyEffectSchema, fieldErrorTranslation, handleAction, handleSubmit, transformValue, useAppForm } from '@arckit/form';
-import { toastError, toastSuccess } from '@arckit/nextjs';
+import { toastError, toastSuccess } from '@arckit/nextjs/client';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { inject } from '@/configuration/injection';

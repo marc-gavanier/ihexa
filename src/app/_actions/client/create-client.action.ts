@@ -41,10 +41,14 @@ export const createB2BClientAction = actionBuilder()
         createClient(
           B2BClientToCreate({
             id: input.id,
-            denominationSociale: input.denominationSociale,
-            formeJuridique: input.formeJuridique,
-            siret: input.siret,
-            address: input,
+            denominationSociale: input.company.companyName,
+            formeJuridique: input.company.legalForm,
+            siret: input.company.siret,
+            address: {
+              street: input.company.street,
+              city: input.company.city,
+              zipcode: input.company.zipcode
+            },
             ...(input.email != null ? { email: input.email } : {}),
             ...(input.phone != null ? { phone: input.phone } : {})
           })

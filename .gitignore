@@ -170,3 +170,10 @@ src/@arckit/
 
 # PostgreSQL data
 .database/
+
+# Matomo data
+.matomo/
+.matomo-db/
+
+# GlitchTip data
+.glitchtip-db/

@@ -1,4 +1,4 @@
-import type { ServerActionResult } from '@arckit/nextjs';
+import type { ServerActionResult } from '@arckit/nextjs/client';
 import { keyFor } from 'piqure';
 import type { Seller } from '@/features/settings/domain/seller';
 import type { ConfigureSellerErrorKey } from './configure-seller.errors';
