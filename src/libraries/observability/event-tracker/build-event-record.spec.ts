@@ -59,16 +59,28 @@ describe('buildEventRecord track', () => {
     ).toBe('u1');
   });
 
-  it('falls back to user store userId when input userId is absent', () => {
+  it('falls back to identified identity userId when input userId is absent', () => {
     expect(
       buildEventRecord({
         type: 'track',
         event: 'X',
-        user: { userId: 'u-store' },
+        identity: { kind: 'identified', anonymousId: 'a1', userId: 'u-store' },
         timestamp: fixedTimestamp,
         messageId: fixedMessageId
       }).userId
     ).toBe('u-store');
+  });
+
+  it('uses identity anonymousId when input anonymousId is absent', () => {
+    expect(
+      buildEventRecord({
+        type: 'track',
+        event: 'X',
+        identity: { kind: 'anonymous', anonymousId: 'a-store' },
+        timestamp: fixedTimestamp,
+        messageId: fixedMessageId
+      }).anonymousId
+    ).toBe('a-store');
   });
 
   it('places the anonymousId at top-level when provided in input', () => {

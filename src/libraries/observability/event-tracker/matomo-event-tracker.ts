@@ -16,7 +16,7 @@ export const createMatomoEventTracker = ({ config, ...getters }: CreateMatomoEve
     timestamp: new Date().toISOString(),
     messageId: crypto.randomUUID(),
     scope: getters.getScope?.(),
-    user: getters.getUser?.(),
+    identity: getters.getIdentity?.(),
     trace: getters.getTrace?.()
   });
 

@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { buildSpanAttributes } from './build-span-attributes';
 
 describe('buildSpanAttributes', () => {
-  it('returns an empty object when no scope, user or attributes are provided', () => {
+  it('returns an empty object when no scope, identity or attributes are provided', () => {
     expect(buildSpanAttributes({ namespace: 'app' })).toEqual({});
   });
 
@@ -44,8 +44,24 @@ describe('buildSpanAttributes', () => {
     ).toBe('server');
   });
 
-  it('includes the userId under enduser.id', () => {
-    expect(buildSpanAttributes({ namespace: 'app', user: { userId: 'u1' } })['enduser.id']).toBe('u1');
+  it('emits the anonymous identity under enduser.anonymous_id', () => {
+    expect(
+      buildSpanAttributes({ namespace: 'app', identity: { kind: 'anonymous', anonymousId: 'a1' } })['enduser.anonymous_id']
+    ).toBe('a1');
+  });
+
+  it('emits the identified userId under enduser.id', () => {
+    expect(
+      buildSpanAttributes({ namespace: 'app', identity: { kind: 'identified', anonymousId: 'a1', userId: 'u1' } })['enduser.id']
+    ).toBe('u1');
+  });
+
+  it('emits the identified anonymousId alongside enduser.id', () => {
+    expect(
+      buildSpanAttributes({ namespace: 'app', identity: { kind: 'identified', anonymousId: 'a1', userId: 'u1' } })[
+        'enduser.anonymous_id'
+      ]
+    ).toBe('a1');
   });
 
   it('lets the base attributes override the merged context fields', () => {

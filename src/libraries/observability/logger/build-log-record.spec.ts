@@ -48,8 +48,32 @@ describe('buildLogRecord', () => {
     });
   });
 
-  it('merges the user fields into the record', () => {
-    expect(buildLogRecord({ level: 'info', event: 'x', user: { userId: 'u1' } }).userId).toBe('u1');
+  it('emits the anonymous identity under enduser.anonymous_id', () => {
+    expect(
+      buildLogRecord({ level: 'info', event: 'x', identity: { kind: 'anonymous', anonymousId: 'a1' } })['enduser.anonymous_id']
+    ).toBe('a1');
+  });
+
+  it('emits the identified identity under enduser.id', () => {
+    expect(
+      buildLogRecord({ level: 'info', event: 'x', identity: { kind: 'identified', anonymousId: 'a1', userId: 'u1' } })[
+        'enduser.id'
+      ]
+    ).toBe('u1');
+  });
+
+  it('emits the identified anonymous id alongside enduser.id', () => {
+    expect(
+      buildLogRecord({ level: 'info', event: 'x', identity: { kind: 'identified', anonymousId: 'a1', userId: 'u1' } })[
+        'enduser.anonymous_id'
+      ]
+    ).toBe('a1');
+  });
+
+  it('omits the kind discriminant from the record', () => {
+    expect(
+      Object.keys(buildLogRecord({ level: 'info', event: 'x', identity: { kind: 'anonymous', anonymousId: 'a1' } }))
+    ).not.toContain('kind');
   });
 
   it('merges the trace fields into the record', () => {

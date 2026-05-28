@@ -1,4 +1,4 @@
-import type { Authenticated, ObservabilityScope } from '../context';
+import type { Identity, ObservabilityScope } from '../context';
 import { buildSpanAttributes, type SpanAttributes } from '../tracer';
 import type { Measurement } from './metrics.type';
 
@@ -8,7 +8,7 @@ type BuildMeasurementInput = {
   readonly namespace: string;
   readonly attributes?: SpanAttributes | undefined;
   readonly scope?: ObservabilityScope | undefined;
-  readonly user?: Authenticated | undefined;
+  readonly identity?: Identity | undefined;
 };
 
 export const buildMeasurement = ({
@@ -17,9 +17,9 @@ export const buildMeasurement = ({
   namespace,
   attributes,
   scope,
-  user
+  identity
 }: BuildMeasurementInput): Measurement => ({
   instrumentName,
   value,
-  attributes: buildSpanAttributes({ namespace, attributes, scope, user })
+  attributes: buildSpanAttributes({ namespace, attributes, scope, identity })
 });

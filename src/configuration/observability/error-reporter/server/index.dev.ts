@@ -1,9 +1,9 @@
 import { after } from 'next/server';
 import { createLoggerReporter, withErrorReporter as createWithErrorReporter } from '@/libraries/observability';
-import { getScope, getTrace, getUser } from '@/libraries/observability/context';
+import { getIdentity, getScope, getTrace } from '@/libraries/observability/context';
 import { logger } from '../../logger/server';
 
-export const errorReporter = createLoggerReporter({ logger, getScope, getUser, getTrace });
+export const errorReporter = createLoggerReporter({ logger, getScope, getIdentity, getTrace });
 
 export const withErrorReporter = createWithErrorReporter(errorReporter, after);
 

@@ -1,7 +1,7 @@
 import { after } from 'next/server';
 import { createNoopEventTracker, withEventTracker as createWithEventTracker } from '@/libraries/observability';
-import { getScope, getTrace, getUser } from '@/libraries/observability/context';
+import { getIdentity, getScope, getTrace } from '@/libraries/observability/context';
 
-export const eventTracker = createNoopEventTracker({ getScope, getUser, getTrace });
+export const eventTracker = createNoopEventTracker({ getScope, getIdentity, getTrace });
 
 export const withEventTracker = createWithEventTracker(eventTracker, after);

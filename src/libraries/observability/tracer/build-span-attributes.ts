@@ -1,11 +1,11 @@
-import type { Authenticated, ObservabilityScope } from '../context';
+import type { Identity, ObservabilityScope } from '../context';
 import type { SpanAttributes } from './tracer.type';
 
 type BuildSpanAttributesInput = {
   readonly namespace: string;
   readonly attributes?: SpanAttributes | undefined;
   readonly scope?: ObservabilityScope | undefined;
-  readonly user?: Authenticated | undefined;
+  readonly identity?: Identity | undefined;
 };
 
 const scopeAttributes = (namespace: string, scope: ObservabilityScope | undefined): Readonly<Record<string, string>> => {
@@ -14,11 +14,14 @@ const scopeAttributes = (namespace: string, scope: ObservabilityScope | undefine
   return { [`${namespace}.source`]: scope.source, [`${namespace}.request_id`]: scope.requestId };
 };
 
-const userAttributes = (user: Authenticated | undefined): Readonly<Record<string, string>> =>
-  user ? { 'enduser.id': user.userId } : {};
+const identityAttributes = (identity: Identity | undefined): Readonly<Record<string, string>> => {
+  if (!identity) return {};
+  if (identity.kind === 'identified') return { 'enduser.id': identity.userId, 'enduser.anonymous_id': identity.anonymousId };
+  return { 'enduser.anonymous_id': identity.anonymousId };
+};
 
-export const buildSpanAttributes = ({ namespace, attributes, scope, user }: BuildSpanAttributesInput): SpanAttributes => ({
+export const buildSpanAttributes = ({ namespace, attributes, scope, identity }: BuildSpanAttributesInput): SpanAttributes => ({
   ...scopeAttributes(namespace, scope),
-  ...userAttributes(user),
+  ...identityAttributes(identity),
   ...attributes
 });

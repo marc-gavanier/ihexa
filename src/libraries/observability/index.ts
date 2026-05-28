@@ -1,4 +1,4 @@
-export type { Authenticated, ContextGetters, ObservabilityScope, ObservabilitySource, Traced } from './context';
+export type { ContextGetters, Identity, ObservabilityScope, ObservabilitySource, Traced } from './context';
 // Note: ALS runtime functions (getScope/runWithScope/...) are not re-exported here because
 // they import node:async_hooks which cannot be bundled for the browser. Server code that needs
 // them imports directly from '@/libraries/observability/context'.

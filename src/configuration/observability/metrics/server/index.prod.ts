@@ -1,4 +1,4 @@
 import { createOtelMetrics } from '@/libraries/observability';
-import { getScope, getUser } from '@/libraries/observability/context';
+import { getIdentity, getScope } from '@/libraries/observability/context';
 
-export const metrics = createOtelMetrics({ namespace: 'ihexa', getScope, getUser });
+export const metrics = createOtelMetrics({ namespace: 'ihexa', getScope, getIdentity });

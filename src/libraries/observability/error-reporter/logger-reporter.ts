@@ -7,7 +7,12 @@ type CreateLoggerReporterOptions = {
   readonly logger: Logger;
 } & ContextGetters;
 
-export const createLoggerReporter = ({ logger, getScope, getUser, getTrace }: CreateLoggerReporterOptions): ErrorReporter => ({
+export const createLoggerReporter = ({
+  logger,
+  getScope,
+  getIdentity,
+  getTrace
+}: CreateLoggerReporterOptions): ErrorReporter => ({
   captureException: (capture: ErrorCapture): ErrorRecord => {
     const level = capture.level ?? 'error';
     logger.log({
@@ -20,7 +25,7 @@ export const createLoggerReporter = ({ logger, getScope, getUser, getTrace }: Cr
       ...capture,
       level,
       scope: getScope?.(),
-      user: getUser?.(),
+      identity: getIdentity?.(),
       trace: getTrace?.()
     });
   },
@@ -33,7 +38,7 @@ export const createLoggerReporter = ({ logger, getScope, getUser, getTrace }: Cr
     return buildErrorRecord({
       ...capture,
       scope: getScope?.(),
-      user: getUser?.(),
+      identity: getIdentity?.(),
       trace: getTrace?.()
     });
   }

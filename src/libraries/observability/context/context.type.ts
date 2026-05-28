@@ -17,7 +17,18 @@ export type ObservabilityScope = ServerScope | EdgeScope | ClientScope;
 
 export type ObservabilitySource = ObservabilityScope['source'];
 
-export type Authenticated = { readonly userId: string };
+type Anonymous = {
+  readonly kind: 'anonymous';
+  readonly anonymousId: string;
+};
+
+type Identified = {
+  readonly kind: 'identified';
+  readonly anonymousId: string;
+  readonly userId: string;
+};
+
+export type Identity = Anonymous | Identified;
 
 export type Traced = {
   readonly traceId: string;
@@ -26,6 +37,6 @@ export type Traced = {
 
 export type ContextGetters = {
   readonly getScope?: () => ObservabilityScope | undefined;
-  readonly getUser?: () => Authenticated | undefined;
+  readonly getIdentity?: () => Identity | undefined;
   readonly getTrace?: () => Traced | undefined;
 };

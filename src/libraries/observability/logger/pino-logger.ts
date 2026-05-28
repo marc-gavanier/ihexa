@@ -16,7 +16,7 @@ export const createPinoLogger = ({ options = {}, destination, ...getters }: Crea
       const record = buildLogRecord({
         ...entry,
         scope: getters.getScope?.(),
-        user: getters.getUser?.(),
+        identity: getters.getIdentity?.(),
         trace: getters.getTrace?.()
       });
       instance[entry.level](record);

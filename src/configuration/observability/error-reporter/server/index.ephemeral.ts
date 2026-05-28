@@ -1,8 +1,8 @@
 import { after } from 'next/server';
 import { createNoopReporter, withErrorReporter as createWithErrorReporter } from '@/libraries/observability';
-import { getScope, getTrace, getUser } from '@/libraries/observability/context';
+import { getIdentity, getScope, getTrace } from '@/libraries/observability/context';
 
-export const errorReporter = createNoopReporter({ getScope, getUser, getTrace });
+export const errorReporter = createNoopReporter({ getScope, getIdentity, getTrace });
 
 export const withErrorReporter = createWithErrorReporter(errorReporter, after);
 

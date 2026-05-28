@@ -1,9 +1,12 @@
-export type { Authenticated, ContextGetters, ObservabilityScope, ObservabilitySource, Traced } from './context.type';
+export type { ContextGetters, Identity, ObservabilityScope, ObservabilitySource, Traced } from './context.type';
 export {
+  enterIdentity,
+  enterScope,
+  enterTrace,
+  getIdentity,
   getScope,
   getTrace,
-  getUser,
+  runWithIdentity,
   runWithScope,
-  runWithTrace,
-  runWithUser
+  runWithTrace
 } from './observability-context';
