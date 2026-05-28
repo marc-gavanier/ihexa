@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, type MockInstance, vi } from 'vitest';
-import { runWithContext } from '../context';
+import { runWithScope } from '../context';
 import { consoleLogger } from './console-logger';
 
 type Spies = {
@@ -51,12 +51,12 @@ describe('consoleLogger', () => {
   });
 
   it('merges the active observability context', () => {
-    runWithContext({ source: 'server', requestId: 'r1', traceId: 't1' }, () => {
+    runWithScope({ source: 'server', requestId: 'r1' }, () => {
       consoleLogger().log({ level: 'info', event: 'x' });
     });
 
     const record = JSON.parse(spies.log.mock.calls[0][0] as string);
-    expect(record).toMatchObject({ traceId: 't1' });
+    expect(record).toMatchObject({ source: 'server', requestId: 'r1' });
   });
 
   it('attaches exception.* fields when an error is provided', () => {

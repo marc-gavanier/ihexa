@@ -1,24 +1,25 @@
-export type EnrichableFields = {
-  readonly userId?: string;
-  readonly traceId?: string;
-  readonly spanId?: string;
-};
-
-type ServerContext = EnrichableFields & {
+type ServerScope = {
   readonly source: 'server';
   readonly requestId: string;
 };
 
-type EdgeContext = EnrichableFields & {
+type EdgeScope = {
   readonly source: 'edge';
   readonly requestId: string;
 };
 
-type ClientContext = EnrichableFields & {
+type ClientScope = {
   readonly source: 'client';
   readonly anonymousId: string;
 };
 
-export type ObservabilityContext = ServerContext | EdgeContext | ClientContext;
+export type ObservabilityScope = ServerScope | EdgeScope | ClientScope;
 
-export type ObservabilitySource = ObservabilityContext['source'];
+export type ObservabilitySource = ObservabilityScope['source'];
+
+export type Authenticated = { readonly userId: string };
+
+export type Traced = {
+  readonly traceId: string;
+  readonly spanId: string;
+};

@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { runWithContext } from '../context';
+import { runWithScope, runWithTrace, runWithUser } from '../context';
 import { pinoLogger } from './pino-logger';
 
 const captureStream = (): { write: (chunk: string) => void; lines: string[] } => {
@@ -57,16 +57,22 @@ describe('pinoLogger', () => {
     const stream = captureStream();
     const logger = pinoLogger({}, stream);
 
-    runWithContext({ source: 'server', requestId: 'r1', userId: 'u1', traceId: 't1' }, () => {
-      logger.log({ level: 'info', event: 'page.viewed' });
+    runWithScope({ source: 'server', requestId: 'r1' }, () => {
+      runWithUser({ userId: 'u1' }, () => {
+        runWithTrace({ traceId: 't1', spanId: 's1' }, () => {
+          logger.log({ level: 'info', event: 'page.viewed' });
+        });
+      });
     });
 
     const record = JSON.parse(stream.lines[0]);
     expect(record).toMatchObject({
       event: 'page.viewed',
-      traceId: 't1',
+      source: 'server',
       requestId: 'r1',
-      userId: 'u1'
+      userId: 'u1',
+      traceId: 't1',
+      spanId: 's1'
     });
   });
 

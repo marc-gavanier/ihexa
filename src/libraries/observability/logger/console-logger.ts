@@ -1,4 +1,4 @@
-import { getContext } from '../context';
+import { getScope, getTrace, getUser } from '../context';
 import type { LogEntry, Logger, LogLevel } from './logger.type';
 
 const SEVERITY_NUMBER: Readonly<Record<LogLevel, number>> = {
@@ -25,7 +25,9 @@ export const consoleLogger = (): Logger => ({
       time: new Date().toISOString(),
       severityText: level.toUpperCase(),
       severityNumber: SEVERITY_NUMBER[level],
-      ...getContext(),
+      ...getScope(),
+      ...getUser(),
+      ...getTrace(),
       event,
       ...attributes
     };
