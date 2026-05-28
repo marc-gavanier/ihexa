@@ -1,4 +1,3 @@
-import { randomUUID } from 'node:crypto';
 import type { ContextGetters } from '../context';
 import type { Logger } from '../logger';
 import { buildEventRecord } from './build-event-record';
@@ -11,7 +10,7 @@ type CreateLoggerEventTrackerOptions = {
 export const createLoggerEventTracker = ({ logger, ...getters }: CreateLoggerEventTrackerOptions): EventTracker => {
   const envelope = () => ({
     timestamp: new Date().toISOString(),
-    messageId: randomUUID(),
+    messageId: crypto.randomUUID(),
     scope: getters.getScope?.(),
     user: getters.getUser?.(),
     trace: getters.getTrace?.()
