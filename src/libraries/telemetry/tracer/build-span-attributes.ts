@@ -1,4 +1,5 @@
 import type { Identity, TelemetryScope } from '../context';
+import { identityAttributes } from '../otel-record';
 import type { SpanAttributes } from './tracer.type';
 
 type BuildSpanAttributesInput = {
@@ -12,12 +13,6 @@ const scopeAttributes = (namespace: string, scope: TelemetryScope | undefined): 
   if (!scope) return {};
   if (scope.source === 'client') return { [`${namespace}.source`]: 'client', [`${namespace}.anonymous_id`]: scope.anonymousId };
   return { [`${namespace}.source`]: scope.source, [`${namespace}.request_id`]: scope.requestId };
-};
-
-const identityAttributes = (identity: Identity | undefined): Readonly<Record<string, string>> => {
-  if (!identity) return {};
-  if (identity.kind === 'identified') return { 'enduser.id': identity.userId, 'enduser.anonymous_id': identity.anonymousId };
-  return { 'enduser.anonymous_id': identity.anonymousId };
 };
 
 export const buildSpanAttributes = ({ namespace, attributes, scope, identity }: BuildSpanAttributesInput): SpanAttributes => ({
