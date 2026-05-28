@@ -1,8 +1,8 @@
 'use server';
 
-import { consoleLogger, type ErrorCapture, loggerReporter, type MessageCapture } from '@/libraries/observability';
+import { createConsoleLogger, createLoggerReporter, type ErrorCapture, type MessageCapture } from '@/libraries/observability';
 
-const reporter = loggerReporter(consoleLogger());
+const reporter = createLoggerReporter({ logger: createConsoleLogger() });
 
 export const reportClientException = async (capture: ErrorCapture): Promise<void> => {
   reporter.captureException({

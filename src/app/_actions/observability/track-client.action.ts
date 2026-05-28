@@ -1,14 +1,14 @@
 'use server';
 
 import {
-  consoleLogger,
+  createConsoleLogger,
+  createLoggerEventTracker,
   type IdentifyEvent,
-  loggerEventTracker,
   type PageEvent,
   type TrackedEvent
 } from '@/libraries/observability';
 
-const tracker = loggerEventTracker(consoleLogger());
+const tracker = createLoggerEventTracker({ logger: createConsoleLogger() });
 
 export const trackClientEvent = async (event: TrackedEvent): Promise<void> => {
   tracker.track({

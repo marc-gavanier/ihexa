@@ -1,8 +1,8 @@
 'use server';
 
-import { consoleLogger, type LogEntry } from '@/libraries/observability';
+import { createConsoleLogger, type LogEntry } from '@/libraries/observability';
 
-const logger = consoleLogger();
+const logger = createConsoleLogger();
 
 export const logClientAction = async (entry: LogEntry): Promise<void> => {
   logger.log({

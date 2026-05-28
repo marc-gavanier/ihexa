@@ -1,51 +1,57 @@
 import { randomUUID } from 'node:crypto';
-import { getScope, getTrace, getUser } from '../context';
+import type { ContextGetters } from '../context';
 import { buildEventRecord } from './build-event-record';
 import { buildMatomoPageParams, buildMatomoTrackParams, type MatomoConfig } from './build-matomo-params';
 import type { EventRecord, EventTracker, IdentifyEvent, PageEvent, TrackedEvent } from './event-tracker.type';
 
-const envelope = () => ({
-  timestamp: new Date().toISOString(),
-  messageId: randomUUID(),
-  scope: getScope(),
-  user: getUser(),
-  trace: getTrace()
-});
+type CreateMatomoEventTrackerOptions = {
+  readonly config: MatomoConfig;
+} & ContextGetters;
 
 const matomoFetch = (config: MatomoConfig, params: URLSearchParams): void => {
   fetch(`${config.url}/matomo.php?${params.toString()}`).catch(() => undefined);
 };
 
-export const matomoEventTracker = (config: MatomoConfig): EventTracker => ({
-  track: (event: TrackedEvent): EventRecord => {
-    const record = buildEventRecord({ type: 'track', ...event, ...envelope() });
-    matomoFetch(
-      config,
-      buildMatomoTrackParams({
+export const createMatomoEventTracker = ({ config, ...getters }: CreateMatomoEventTrackerOptions): EventTracker => {
+  const envelope = () => ({
+    timestamp: new Date().toISOString(),
+    messageId: randomUUID(),
+    scope: getters.getScope?.(),
+    user: getters.getUser?.(),
+    trace: getters.getTrace?.()
+  });
+
+  return {
+    track: (event: TrackedEvent): EventRecord => {
+      const record = buildEventRecord({ type: 'track', ...event, ...envelope() });
+      matomoFetch(
         config,
-        event: event.event,
-        userId: record['userId'] as string | undefined,
-        anonymousId: record['anonymousId'] as string | undefined,
-        timestamp: record['timestamp'] as string,
-        properties: event.properties
-      })
-    );
-    return record;
-  },
-  identify: (event: IdentifyEvent): EventRecord => buildEventRecord({ type: 'identify', ...event, ...envelope() }),
-  page: (event: PageEvent): EventRecord => {
-    const record = buildEventRecord({ type: 'page', ...event, ...envelope() });
-    matomoFetch(
-      config,
-      buildMatomoPageParams({
+        buildMatomoTrackParams({
+          config,
+          event: event.event,
+          userId: record['userId'] as string | undefined,
+          anonymousId: record['anonymousId'] as string | undefined,
+          timestamp: record['timestamp'] as string,
+          properties: event.properties
+        })
+      );
+      return record;
+    },
+    identify: (event: IdentifyEvent): EventRecord => buildEventRecord({ type: 'identify', ...event, ...envelope() }),
+    page: (event: PageEvent): EventRecord => {
+      const record = buildEventRecord({ type: 'page', ...event, ...envelope() });
+      matomoFetch(
         config,
-        name: event.name,
-        url: event.properties?.['url'] as string | undefined,
-        userId: record['userId'] as string | undefined,
-        anonymousId: record['anonymousId'] as string | undefined,
-        timestamp: record['timestamp'] as string
-      })
-    );
-    return record;
-  }
-});
+        buildMatomoPageParams({
+          config,
+          name: event.name,
+          url: event.properties?.['url'] as string | undefined,
+          userId: record['userId'] as string | undefined,
+          anonymousId: record['anonymousId'] as string | undefined,
+          timestamp: record['timestamp'] as string
+        })
+      );
+      return record;
+    }
+  };
+};

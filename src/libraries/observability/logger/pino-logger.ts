@@ -1,14 +1,24 @@
-import pino, { type DestinationStream, type LoggerOptions } from 'pino';
-import { getScope, getTrace, getUser } from '../context';
+import pinoFactory, { type DestinationStream, type LoggerOptions } from 'pino';
+import type { ContextGetters } from '../context';
 import { buildLogRecord } from './build-log-record';
 import type { LogEntry, Logger, LogRecord } from './logger.type';
 
-export const pinoLogger = (options: LoggerOptions = {}, destination?: DestinationStream): Logger => {
-  const instance = destination ? pino(options, destination) : pino(options);
+type CreatePinoLoggerOptions = {
+  readonly options?: LoggerOptions;
+  readonly destination?: DestinationStream;
+} & ContextGetters;
+
+export const createPinoLogger = ({ options = {}, destination, ...getters }: CreatePinoLoggerOptions = {}): Logger => {
+  const instance = destination ? pinoFactory(options, destination) : pinoFactory(options);
 
   return {
     log: (entry: LogEntry): LogRecord => {
-      const record = buildLogRecord({ ...entry, scope: getScope(), user: getUser(), trace: getTrace() });
+      const record = buildLogRecord({
+        ...entry,
+        scope: getters.getScope?.(),
+        user: getters.getUser?.(),
+        trace: getters.getTrace?.()
+      });
       instance[entry.level](record);
       return record;
     }
