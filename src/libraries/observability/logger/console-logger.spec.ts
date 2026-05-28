@@ -51,7 +51,7 @@ describe('consoleLogger', () => {
   });
 
   it('merges the active observability context', () => {
-    runWithContext({ traceId: 't1' }, () => {
+    runWithContext({ source: 'server', requestId: 'r1', traceId: 't1' }, () => {
       consoleLogger().log({ level: 'info', event: 'x' });
     });
 
