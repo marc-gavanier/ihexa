@@ -1,4 +1,6 @@
 export { buildEventRecord } from './build-event-record';
+export type { MatomoConfig } from './build-matomo-params';
+export { buildMatomoPageParams, buildMatomoTrackParams, matomoVisitorId } from './build-matomo-params';
 export type {
   AnonymousId,
   EventName,
@@ -11,7 +13,6 @@ export type {
   UserId
 } from './event-tracker.type';
 export { loggerEventTracker } from './logger-event-tracker';
-export type { MatomoConfig } from './matomo-event-tracker';
 export { matomoEventTracker } from './matomo-event-tracker';
 export { noopEventTracker } from './noop-event-tracker';
 export { withEventTracker } from './with-event-tracker';
