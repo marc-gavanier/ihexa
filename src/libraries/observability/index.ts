@@ -1,18 +1,23 @@
 export type { Authenticated, ObservabilityScope, ObservabilitySource, Traced } from './context';
 export { getScope, getTrace, getUser, runWithScope, runWithTrace, runWithUser } from './context';
 export type {
+  CaptureExceptionAction,
+  CaptureMessageAction,
   ErrorAttributes,
   ErrorCapture,
   ErrorLevel,
   ErrorRecord,
   ErrorReporter,
-  MessageCapture
+  MessageCapture,
+  ServerActionReporterActions
 } from './error-reporter';
 export {
   buildErrorRecord,
   loggerReporter,
   noopReporter,
+  sentryBrowserReporter,
   sentryReporter,
+  serverActionReporter,
   withErrorReporter
 } from './error-reporter';
 
@@ -22,21 +27,36 @@ export type {
   EventProperties,
   EventRecord,
   EventTracker,
+  IdentifyAction,
   IdentifyEvent,
   MatomoConfig,
+  PageAction,
   PageEvent,
+  ServerActionEventTrackerActions,
+  TrackAction,
   TrackedEvent,
   UserId
 } from './event-tracker';
 export {
   buildEventRecord,
   loggerEventTracker,
+  matomoBrowserEventTracker,
   matomoEventTracker,
   noopEventTracker,
+  serverActionEventTracker,
   withEventTracker
 } from './event-tracker';
-export type { AttributeValue, LogAttributes, LogEntry, Logger, LogLevel, LogRecord, Scheduler } from './logger';
-export { buildLogRecord, consoleLogger, pinoLogger, withLogger } from './logger';
+export type {
+  AttributeValue,
+  LogAttributes,
+  LogClientAction,
+  LogEntry,
+  Logger,
+  LogLevel,
+  LogRecord,
+  Scheduler
+} from './logger';
+export { buildLogRecord, consoleLogger, pinoLogger, serverActionLogger, withLogger } from './logger';
 export type {
   Counter,
   Gauge,

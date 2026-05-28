@@ -13,6 +13,14 @@ export type {
   UserId
 } from './event-tracker.type';
 export { loggerEventTracker } from './logger-event-tracker';
+export { matomoBrowserEventTracker } from './matomo-browser-event-tracker';
 export { matomoEventTracker } from './matomo-event-tracker';
 export { noopEventTracker } from './noop-event-tracker';
+export type {
+  IdentifyAction,
+  PageAction,
+  ServerActionEventTrackerActions,
+  TrackAction
+} from './server-action-event-tracker';
+export { serverActionEventTracker } from './server-action-event-tracker';
 export { withEventTracker } from './with-event-tracker';
