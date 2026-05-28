@@ -3,6 +3,7 @@ export { getScope, getTrace, getUser, runWithScope, runWithTrace, runWithUser } 
 export type {
   CaptureExceptionAction,
   CaptureMessageAction,
+  ContextGetters,
   ErrorAttributes,
   ErrorCapture,
   ErrorLevel,
@@ -13,10 +14,9 @@ export type {
 } from './error-reporter';
 export {
   buildErrorRecord,
+  createSentryReporter,
   loggerReporter,
   noopReporter,
-  sentryBrowserReporter,
-  sentryReporter,
   serverActionReporter,
   withErrorReporter
 } from './error-reporter';

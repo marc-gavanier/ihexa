@@ -9,8 +9,8 @@ export type {
 } from './error-reporter.type';
 export { loggerReporter } from './logger-reporter';
 export { noopReporter } from './noop-reporter';
-export { sentryBrowserReporter } from './sentry-browser-reporter';
-export { sentryReporter } from './sentry-reporter';
+export type { ContextGetters } from './sentry-reporter';
+export { createSentryReporter } from './sentry-reporter';
 export type {
   CaptureExceptionAction,
   CaptureMessageAction,
