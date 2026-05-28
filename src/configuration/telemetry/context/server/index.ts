@@ -1,1 +1,1 @@
-export { withActionScope, withPageScope } from './with-scope';
+export { withActionScope, wrapWithScope } from './with-scope';
