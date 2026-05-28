@@ -177,3 +177,6 @@ src/@arckit/
 
 # GlitchTip data
 .glitchtip-db/
+
+# Research notes (not committed by default)
+.research/
