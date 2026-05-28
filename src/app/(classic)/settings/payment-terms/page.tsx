@@ -2,7 +2,7 @@ import { withOptionalEither } from '@arckit/nextjs';
 import { configurePaymentTermsAction } from '@/app/_actions/settings/configure-payment-terms.action';
 import { i18n, type MetadataTranslation, metadataTranslation, withI18n } from '@/configuration/i18n';
 import { pageBuilder, withClientBinder } from '@/configuration/nextjs';
-import { withPageView } from '@/configuration/observability/event-tracker/server';
+import { withPageView } from '@/configuration/telemetry/event-tracker/server';
 import {
   CONFIGURE_PAYMENT_TERMS_KEY,
   ConfigurePaymentTermsPage,

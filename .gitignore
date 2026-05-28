@@ -163,14 +163,14 @@ storybook-static
 # generated implementations (DI)
 **/implementations/index.ts
 **/infrastructure/index.ts
-src/configuration/observability/logger/server/index.ts
-src/configuration/observability/logger/client/index.ts
-src/configuration/observability/error-reporter/server/index.ts
-src/configuration/observability/error-reporter/client/index.ts
-src/configuration/observability/event-tracker/server/index.ts
-src/configuration/observability/event-tracker/client/index.ts
-src/configuration/observability/tracer/server/index.ts
-src/configuration/observability/metrics/server/index.ts
+src/configuration/telemetry/logger/server/index.ts
+src/configuration/telemetry/logger/client/index.ts
+src/configuration/telemetry/error-reporter/server/index.ts
+src/configuration/telemetry/error-reporter/client/index.ts
+src/configuration/telemetry/event-tracker/server/index.ts
+src/configuration/telemetry/event-tracker/client/index.ts
+src/configuration/telemetry/tracer/server/index.ts
+src/configuration/telemetry/metrics/server/index.ts
 
 # @arckit packages (separate repos)
 src/@arckit/

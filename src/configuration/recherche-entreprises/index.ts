@@ -1,6 +1,6 @@
-import { errorReporter } from '@/configuration/observability/error-reporter/server';
-import { metrics } from '@/configuration/observability/metrics/server';
-import { tracer } from '@/configuration/observability/tracer/server';
+import { errorReporter } from '@/configuration/telemetry/error-reporter/server';
+import { metrics } from '@/configuration/telemetry/metrics/server';
+import { tracer } from '@/configuration/telemetry/tracer/server';
 import { search as baseSearch, type SearchResult } from '@/libraries/recherche-entreprises';
 
 const SERVICE = 'recherche-entreprises';

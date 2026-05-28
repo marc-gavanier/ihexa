@@ -5,7 +5,7 @@ import { createB2BClientAction, createB2CClientAction } from '@/app/_actions/cli
 import { searchCompanyForClientAction } from '@/app/_actions/client/search-company.action';
 import { i18n, type MetadataTranslation, metadataTranslation, withI18n } from '@/configuration/i18n';
 import { pageBuilder, withClientBinder } from '@/configuration/nextjs';
-import { withPageView } from '@/configuration/observability/event-tracker/server';
+import { withPageView } from '@/configuration/telemetry/event-tracker/server';
 import {
   CREATE_B2B_CLIENT_ACTION_KEY,
   CREATE_B2C_CLIENT_ACTION_KEY,

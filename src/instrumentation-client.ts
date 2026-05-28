@@ -1,3 +1,3 @@
-import { register } from '@/configuration/observability/error-reporter/client';
+import { register } from '@/configuration/telemetry/error-reporter/client';
 
 register();
