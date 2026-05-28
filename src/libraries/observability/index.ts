@@ -70,7 +70,7 @@ export type {
   Measurement,
   Metrics
 } from './metrics';
-export { buildMeasurement, createOtelMetrics, noopMetrics } from './metrics';
+export { buildMeasurement, createOtelMetrics, noopMetrics, withMetrics } from './metrics';
 
 export type { Span, SpanAttributes, SpanKind, SpanStatus, StartSpanOptions, Tracer } from './tracer';
 export { buildSpanAttributes, noopTracer, otelTracer, withTracer } from './tracer';

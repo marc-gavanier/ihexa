@@ -3,3 +3,4 @@ export type { Counter, Gauge, Histogram, InstrumentOptions, Measurement, Metrics
 export { noopMetrics } from './noop-metrics';
 export type { CreateOtelMetricsOptions } from './otel-metrics';
 export { createOtelMetrics } from './otel-metrics';
+export { withMetrics } from './with-metrics';
