@@ -2,6 +2,7 @@
 
 import { fromEither, withInput } from '@arckit/nextjs';
 import { actionBuilder } from '@/configuration/nextjs';
+import { withErrorReporter } from '@/configuration/observability/error-reporter/server';
 import { withEventTracker } from '@/configuration/observability/event-tracker/server';
 import { withLogger } from '@/configuration/observability/logger/server';
 import { withTracer } from '@/configuration/observability/tracer/server';
@@ -13,6 +14,7 @@ export const configureSellerAction = actionBuilder()
   .use(withTracer('action.configureSeller', { kind: 'server' }))
   .use(withInput(configureSellerValidation))
   .use(withLogger('configureSellerAction'))
+  .use(withErrorReporter('configureSellerAction'))
   .use(withEventTracker('Seller Configured'))
   .execute(
     fromEither(
