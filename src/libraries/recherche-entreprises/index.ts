@@ -1,5 +1,6 @@
 export { nearPoint } from './near-point';
-export { search } from './search';
+export type { ExecuteInterceptor } from './search';
+export { createSearch, search } from './search';
 export type {
   Company,
   CompanySummary,
