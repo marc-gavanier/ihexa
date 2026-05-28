@@ -1,4 +1,3 @@
-import { randomUUID } from 'node:crypto';
 import type { ContextGetters } from '../context';
 import { buildEventRecord } from './build-event-record';
 import type { EventRecord, EventTracker, IdentifyEvent, PageEvent, TrackedEvent } from './event-tracker.type';
@@ -6,7 +5,7 @@ import type { EventRecord, EventTracker, IdentifyEvent, PageEvent, TrackedEvent 
 export const createNoopEventTracker = ({ getScope, getUser, getTrace }: ContextGetters = {}): EventTracker => {
   const envelope = () => ({
     timestamp: new Date().toISOString(),
-    messageId: randomUUID(),
+    messageId: crypto.randomUUID(),
     scope: getScope?.(),
     user: getUser?.(),
     trace: getTrace?.()

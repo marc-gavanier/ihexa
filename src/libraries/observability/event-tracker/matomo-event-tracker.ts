@@ -1,4 +1,3 @@
-import { randomUUID } from 'node:crypto';
 import type { ContextGetters } from '../context';
 import { buildEventRecord } from './build-event-record';
 import { buildMatomoPageParams, buildMatomoTrackParams, type MatomoConfig } from './build-matomo-params';
@@ -15,7 +14,7 @@ const matomoFetch = (config: MatomoConfig, params: URLSearchParams): void => {
 export const createMatomoEventTracker = ({ config, ...getters }: CreateMatomoEventTrackerOptions): EventTracker => {
   const envelope = () => ({
     timestamp: new Date().toISOString(),
-    messageId: randomUUID(),
+    messageId: crypto.randomUUID(),
     scope: getters.getScope?.(),
     user: getters.getUser?.(),
     trace: getters.getTrace?.()

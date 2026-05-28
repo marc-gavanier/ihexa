@@ -1,4 +1,3 @@
-import { createHash } from 'node:crypto';
 import type { AttributeValue } from '../logger';
 import type { AnonymousId, EventName, EventProperties, UserId } from './event-tracker.type';
 
@@ -54,8 +53,17 @@ const numericValue = (properties: EventProperties | undefined): string | undefin
   return typeof value === 'number' ? String(value) : undefined;
 };
 
-export const matomoVisitorId = (anonymousId: AnonymousId): string =>
-  createHash('sha256').update(anonymousId).digest('hex').slice(0, 16);
+const FNV_OFFSET = 0xcbf29ce484222325n;
+const FNV_PRIME = 0x100000001b3n;
+const MASK_64 = 0xffffffffffffffffn;
+
+export const matomoVisitorId = (anonymousId: AnonymousId): string => {
+  const hash = Array.from(anonymousId).reduce(
+    (acc, char) => ((acc ^ BigInt(char.charCodeAt(0))) * FNV_PRIME) & MASK_64,
+    FNV_OFFSET
+  );
+  return hash.toString(16).padStart(16, '0');
+};
 
 export const buildMatomoTrackParams = ({
   config,
