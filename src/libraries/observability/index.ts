@@ -37,3 +37,5 @@ export {
 } from './event-tracker';
 export type { AttributeValue, LogAttributes, LogEntry, Logger, LogLevel, LogRecord, Scheduler } from './logger';
 export { buildLogRecord, consoleLogger, pinoLogger, withLogger } from './logger';
+export type { Span, SpanAttributes, SpanKind, SpanStatus, StartSpanOptions, Tracer } from './tracer';
+export { buildSpanAttributes, noopTracer, otelTracer, withTracer } from './tracer';
