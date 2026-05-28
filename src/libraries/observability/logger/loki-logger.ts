@@ -1,12 +1,14 @@
 import type { Logger } from './logger.type';
 
 type LokiLoggerConfig = {
-  url: string;
+  url?: string;
   labels?: Record<string, string>;
 };
 
 export const lokiLogger = (config: LokiLoggerConfig): Logger => ({
   log: (entry) => {
+    if (!config.url) return;
+
     const { level, event, source, payload, error } = entry;
 
     fetch(`${config.url}/loki/api/v1/push`, {
