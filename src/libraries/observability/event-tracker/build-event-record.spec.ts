@@ -167,7 +167,7 @@ describe('buildEventRecord context', () => {
         buildEventRecord({ type: 'track', event: 'X', timestamp: fixedTimestamp, messageId: fixedMessageId })
           .context as Readonly<Record<string, unknown>>
       )['library']
-    ).toEqual({ name: 'ihexa-observability', version: '0.1.0' });
+    ).toEqual({ name: 'arckit-observability', version: '0.1.0' });
   });
 
   it('includes the scope source in context', () => {
