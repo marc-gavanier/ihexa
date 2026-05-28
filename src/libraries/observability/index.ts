@@ -1,9 +1,9 @@
-export type { Authenticated, ObservabilityScope, ObservabilitySource, Traced } from './context';
+export type { Authenticated, ContextGetters, ObservabilityScope, ObservabilitySource, Traced } from './context';
 export { getScope, getTrace, getUser, runWithScope, runWithTrace, runWithUser } from './context';
+
 export type {
   CaptureExceptionAction,
   CaptureMessageAction,
-  ContextGetters,
   ErrorAttributes,
   ErrorCapture,
   ErrorLevel,
@@ -14,9 +14,9 @@ export type {
 } from './error-reporter';
 export {
   buildErrorRecord,
+  createLoggerReporter,
+  createNoopReporter,
   createSentryReporter,
-  loggerReporter,
-  noopReporter,
   serverActionReporter,
   withErrorReporter
 } from './error-reporter';
@@ -39,13 +39,14 @@ export type {
 } from './event-tracker';
 export {
   buildEventRecord,
-  loggerEventTracker,
+  createLoggerEventTracker,
+  createMatomoEventTracker,
+  createNoopEventTracker,
   matomoBrowserEventTracker,
-  matomoEventTracker,
-  noopEventTracker,
   serverActionEventTracker,
   withEventTracker
 } from './event-tracker';
+
 export type {
   AttributeValue,
   LogAttributes,
@@ -56,16 +57,18 @@ export type {
   LogRecord,
   Scheduler
 } from './logger';
-export { buildLogRecord, consoleLogger, pinoLogger, serverActionLogger, withLogger } from './logger';
+export { buildLogRecord, createConsoleLogger, createPinoLogger, serverActionLogger, withLogger } from './logger';
+
 export type {
   Counter,
+  CreateOtelMetricsOptions,
   Gauge,
   Histogram,
   InstrumentOptions,
   Measurement,
-  Metrics,
-  OtelMetricsOptions
+  Metrics
 } from './metrics';
-export { buildMeasurement, noopMetrics, otelMetrics } from './metrics';
+export { buildMeasurement, createOtelMetrics, noopMetrics } from './metrics';
+
 export type { Span, SpanAttributes, SpanKind, SpanStatus, StartSpanOptions, Tracer } from './tracer';
 export { buildSpanAttributes, noopTracer, otelTracer, withTracer } from './tracer';

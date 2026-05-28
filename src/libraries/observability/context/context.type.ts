@@ -23,3 +23,9 @@ export type Traced = {
   readonly traceId: string;
   readonly spanId: string;
 };
+
+export type ContextGetters = {
+  readonly getScope?: () => ObservabilityScope | undefined;
+  readonly getUser?: () => Authenticated | undefined;
+  readonly getTrace?: () => Traced | undefined;
+};

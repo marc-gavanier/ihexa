@@ -12,10 +12,10 @@ export type {
   TrackedEvent,
   UserId
 } from './event-tracker.type';
-export { loggerEventTracker } from './logger-event-tracker';
+export { createLoggerEventTracker } from './logger-event-tracker';
 export { matomoBrowserEventTracker } from './matomo-browser-event-tracker';
-export { matomoEventTracker } from './matomo-event-tracker';
-export { noopEventTracker } from './noop-event-tracker';
+export { createMatomoEventTracker } from './matomo-event-tracker';
+export { createNoopEventTracker } from './noop-event-tracker';
 export type {
   IdentifyAction,
   PageAction,

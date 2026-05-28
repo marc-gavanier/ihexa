@@ -7,9 +7,8 @@ export type {
   ErrorReporter,
   MessageCapture
 } from './error-reporter.type';
-export { loggerReporter } from './logger-reporter';
-export { noopReporter } from './noop-reporter';
-export type { ContextGetters } from './sentry-reporter';
+export { createLoggerReporter } from './logger-reporter';
+export { createNoopReporter } from './noop-reporter';
 export { createSentryReporter } from './sentry-reporter';
 export type {
   CaptureExceptionAction,
