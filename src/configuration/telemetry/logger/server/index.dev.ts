@@ -1,5 +1,5 @@
-import { after } from 'next/server';
 import pino from 'pino';
+import { preservingAfter } from '@/configuration/telemetry/scheduler';
 import { createPinoLogger, withLogger as createWithLogger } from '@/libraries/telemetry';
 import { getIdentity, getScope, getTrace } from '@/libraries/telemetry/context';
 
@@ -12,4 +12,4 @@ const transport = pino.transport({
 
 export const logger = createPinoLogger({ destination: transport, getScope, getIdentity, getTrace });
 
-export const withLogger = createWithLogger(logger, after);
+export const withLogger = createWithLogger(logger, preservingAfter);
