@@ -37,5 +37,15 @@ export {
 } from './event-tracker';
 export type { AttributeValue, LogAttributes, LogEntry, Logger, LogLevel, LogRecord, Scheduler } from './logger';
 export { buildLogRecord, consoleLogger, pinoLogger, withLogger } from './logger';
+export type {
+  Counter,
+  Gauge,
+  Histogram,
+  InstrumentOptions,
+  Measurement,
+  Metrics,
+  OtelMetricsOptions
+} from './metrics';
+export { buildMeasurement, noopMetrics, otelMetrics } from './metrics';
 export type { Span, SpanAttributes, SpanKind, SpanStatus, StartSpanOptions, Tracer } from './tracer';
 export { buildSpanAttributes, noopTracer, otelTracer, withTracer } from './tracer';
