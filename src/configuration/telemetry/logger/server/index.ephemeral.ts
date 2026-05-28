@@ -1,7 +1,6 @@
 import { after } from 'next/server';
-import { createConsoleLogger, withLogger as createWithLogger } from '@/libraries/telemetry';
-import { getIdentity, getScope, getTrace } from '@/libraries/telemetry/context';
+import { withLogger as createWithLogger, noopLogger } from '@/libraries/telemetry';
 
-export const logger = createConsoleLogger({ getScope, getIdentity, getTrace });
+export const logger = noopLogger();
 
 export const withLogger = createWithLogger(logger, after);
