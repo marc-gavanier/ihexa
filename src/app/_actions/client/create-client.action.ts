@@ -4,6 +4,7 @@ import { fromEither, withInput } from '@arckit/nextjs';
 import { actionBuilder } from '@/configuration/nextjs';
 import { withEventTracker } from '@/configuration/observability/event-tracker/server';
 import { withLogger } from '@/configuration/observability/logger/server';
+import { withTracer } from '@/configuration/observability/tracer/server';
 import {
   CREATE_CLIENT_ERRORS,
   createB2BClientValidation,
@@ -13,6 +14,7 @@ import { B2BClientToCreate, B2CClientToCreate } from '@/features/client/abilitie
 import { createB2BClient, createB2CClient } from '@/features/client/abilities/create-client/implementations';
 
 export const createB2CClientAction = actionBuilder()
+  .use(withTracer('action.createB2CClient', { kind: 'server' }))
   .use(withInput(createB2CClientValidation))
   .use(withLogger('createB2CClientAction', { extractAttributes: ({ input: { id } }) => ({ id }) }))
   .use(withEventTracker('Client Created', { extractProperties: () => ({ type: 'b2c' }) }))
@@ -35,6 +37,7 @@ export const createB2CClientAction = actionBuilder()
   );
 
 export const createB2BClientAction = actionBuilder()
+  .use(withTracer('action.createB2BClient', { kind: 'server' }))
   .use(withInput(createB2BClientValidation))
   .use(withLogger('createB2BClientAction', { extractAttributes: ({ input: { id } }) => ({ id }) }))
   .use(withEventTracker('Client Created', { extractProperties: () => ({ type: 'b2b' }) }))
