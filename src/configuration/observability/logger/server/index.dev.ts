@@ -1,7 +1,7 @@
 import { after } from 'next/server';
 import pino from 'pino';
 import { createPinoLogger, withLogger as createWithLogger } from '@/libraries/observability';
-import { getScope, getTrace, getUser } from '@/libraries/observability/context';
+import { getIdentity, getScope, getTrace } from '@/libraries/observability/context';
 
 const transport = pino.transport({
   targets: [
@@ -10,6 +10,6 @@ const transport = pino.transport({
   ]
 });
 
-export const logger = createPinoLogger({ destination: transport, getScope, getUser, getTrace });
+export const logger = createPinoLogger({ destination: transport, getScope, getIdentity, getTrace });
 
 export const withLogger = createWithLogger(logger, after);

@@ -2,12 +2,12 @@ import type { ContextGetters } from '../context';
 import { buildEventRecord } from './build-event-record';
 import type { EventRecord, EventTracker, IdentifyEvent, PageEvent, TrackedEvent } from './event-tracker.type';
 
-export const createNoopEventTracker = ({ getScope, getUser, getTrace }: ContextGetters = {}): EventTracker => {
+export const createNoopEventTracker = ({ getScope, getIdentity, getTrace }: ContextGetters = {}): EventTracker => {
   const envelope = () => ({
     timestamp: new Date().toISOString(),
     messageId: crypto.randomUUID(),
     scope: getScope?.(),
-    user: getUser?.(),
+    identity: getIdentity?.(),
     trace: getTrace?.()
   });
 

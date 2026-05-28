@@ -1,5 +1,18 @@
 import { describe, expect, it } from 'vitest';
-import { getScope, getTrace, getUser, runWithScope, runWithTrace, runWithUser } from './observability-context';
+import type { Identity, ObservabilityScope, Traced } from './context.type';
+import {
+  enterIdentity,
+  enterScope,
+  enterTrace,
+  getIdentity,
+  getScope,
+  getTrace,
+  runWithIdentity,
+  runWithScope,
+  runWithTrace
+} from './observability-context';
+
+const inFreshContext = <T>(fn: () => T | Promise<T>): Promise<T> => new Promise((resolve) => setImmediate(() => resolve(fn())));
 
 describe('scope store', () => {
   it('returns undefined when called outside any scope', () => {
@@ -41,24 +54,29 @@ describe('scope store', () => {
   });
 });
 
-describe('user store', () => {
-  it('returns undefined when called outside runWithUser', () => {
-    expect(getUser()).toBeUndefined();
+describe('identity store', () => {
+  it('returns undefined when called outside runWithIdentity', () => {
+    expect(getIdentity()).toBeUndefined();
   });
 
-  it('exposes the active user inside runWithUser', () => {
-    const observed = runWithUser({ userId: 'u1' }, () => getUser());
-    expect(observed).toEqual({ userId: 'u1' });
+  it('exposes the active anonymous identity inside runWithIdentity', () => {
+    const observed = runWithIdentity({ kind: 'anonymous', anonymousId: 'a1' }, () => getIdentity());
+    expect(observed).toEqual({ kind: 'anonymous', anonymousId: 'a1' });
+  });
+
+  it('exposes the active identified identity inside runWithIdentity', () => {
+    const observed = runWithIdentity({ kind: 'identified', anonymousId: 'a1', userId: 'u1' }, () => getIdentity());
+    expect(observed).toEqual({ kind: 'identified', anonymousId: 'a1', userId: 'u1' });
   });
 
   it('does not affect the scope store', () => {
-    const observed = runWithUser({ userId: 'u1' }, () => getScope());
+    const observed = runWithIdentity({ kind: 'anonymous', anonymousId: 'a1' }, () => getScope());
     expect(observed).toBeUndefined();
   });
 
-  it('returns undefined again once runWithUser exits', () => {
-    runWithUser({ userId: 'u1' }, () => undefined);
-    expect(getUser()).toBeUndefined();
+  it('returns undefined again once runWithIdentity exits', () => {
+    runWithIdentity({ kind: 'anonymous', anonymousId: 'a1' }, () => undefined);
+    expect(getIdentity()).toBeUndefined();
   });
 });
 
@@ -77,26 +95,56 @@ describe('trace store', () => {
     expect(observed).toBeUndefined();
   });
 
-  it('does not affect the user store', () => {
-    const observed = runWithTrace({ traceId: 't1', spanId: 's1' }, () => getUser());
+  it('does not affect the identity store', () => {
+    const observed = runWithTrace({ traceId: 't1', spanId: 's1' }, () => getIdentity());
     expect(observed).toBeUndefined();
+  });
+});
+
+describe('enterScope', () => {
+  it('makes the scope visible to getScope from within the fresh async context', async () => {
+    const observed = await inFreshContext<ObservabilityScope | undefined>(() => {
+      enterScope({ source: 'server', requestId: 'r1' });
+      return getScope();
+    });
+    expect(observed).toEqual({ source: 'server', requestId: 'r1' });
+  });
+});
+
+describe('enterIdentity', () => {
+  it('makes the identity visible to getIdentity from within the fresh async context', async () => {
+    const observed = await inFreshContext<Identity | undefined>(() => {
+      enterIdentity({ kind: 'anonymous', anonymousId: 'a1' });
+      return getIdentity();
+    });
+    expect(observed).toEqual({ kind: 'anonymous', anonymousId: 'a1' });
+  });
+});
+
+describe('enterTrace', () => {
+  it('makes the trace visible to getTrace from within the fresh async context', async () => {
+    const observed = await inFreshContext<Traced | undefined>(() => {
+      enterTrace({ traceId: 't1', spanId: 's1' });
+      return getTrace();
+    });
+    expect(observed).toEqual({ traceId: 't1', spanId: 's1' });
   });
 });
 
 describe('nested stores', () => {
   it('exposes all three stores when fully nested', () => {
     const observed = runWithScope({ source: 'server', requestId: 'r1' }, () =>
-      runWithUser({ userId: 'u1' }, () =>
+      runWithIdentity({ kind: 'identified', anonymousId: 'a1', userId: 'u1' }, () =>
         runWithTrace({ traceId: 't1', spanId: 's1' }, () => ({
           scope: getScope(),
-          user: getUser(),
+          identity: getIdentity(),
           trace: getTrace()
         }))
       )
     );
     expect(observed).toEqual({
       scope: { source: 'server', requestId: 'r1' },
-      user: { userId: 'u1' },
+      identity: { kind: 'identified', anonymousId: 'a1', userId: 'u1' },
       trace: { traceId: 't1', spanId: 's1' }
     });
   });

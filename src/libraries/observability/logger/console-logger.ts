@@ -11,12 +11,12 @@ const CONSOLE_METHOD: Readonly<Record<LogLevel, 'debug' | 'log' | 'warn' | 'erro
   fatal: 'error'
 };
 
-export const createConsoleLogger = ({ getScope, getUser, getTrace }: ContextGetters = {}): Logger => ({
+export const createConsoleLogger = ({ getScope, getIdentity, getTrace }: ContextGetters = {}): Logger => ({
   log: (entry: LogEntry): LogRecord => {
     const record = buildLogRecord({
       ...entry,
       scope: getScope?.(),
-      user: getUser?.(),
+      identity: getIdentity?.(),
       trace: getTrace?.()
     });
     console[CONSOLE_METHOD[entry.level]](JSON.stringify({ time: new Date().toISOString(), ...record }));

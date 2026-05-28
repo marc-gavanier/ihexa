@@ -1,5 +1,5 @@
 import * as Sentry from '@sentry/nextjs';
-import type { Authenticated, ObservabilityScope, Traced } from '../context';
+import type { ContextGetters } from '../context';
 import { buildErrorRecord } from './build-error-record';
 import type { ErrorCapture, ErrorLevel, ErrorRecord, ErrorReporter, MessageCapture } from './error-reporter.type';
 
@@ -19,20 +19,14 @@ const sentryOptions = (
   ...(fingerprint ? { fingerprint: [...fingerprint] } : {})
 });
 
-export type ContextGetters = {
-  readonly getScope?: () => ObservabilityScope | undefined;
-  readonly getUser?: () => Authenticated | undefined;
-  readonly getTrace?: () => Traced | undefined;
-};
-
-export const createSentryReporter = ({ getScope, getUser, getTrace }: ContextGetters = {}): ErrorReporter => ({
+export const createSentryReporter = ({ getScope, getIdentity, getTrace }: ContextGetters = {}): ErrorReporter => ({
   captureException: (capture: ErrorCapture): ErrorRecord => {
     const level = capture.level ?? 'error';
     Sentry.captureException(capture.error, sentryOptions(capture.attributes, capture.fingerprint, level));
-    return buildErrorRecord({ ...capture, level, scope: getScope?.(), user: getUser?.(), trace: getTrace?.() });
+    return buildErrorRecord({ ...capture, level, scope: getScope?.(), identity: getIdentity?.(), trace: getTrace?.() });
   },
   captureMessage: (capture: MessageCapture): ErrorRecord => {
     Sentry.captureMessage(capture.message, sentryOptions(capture.attributes, capture.fingerprint, capture.level));
-    return buildErrorRecord({ ...capture, scope: getScope?.(), user: getUser?.(), trace: getTrace?.() });
+    return buildErrorRecord({ ...capture, scope: getScope?.(), identity: getIdentity?.(), trace: getTrace?.() });
   }
 });

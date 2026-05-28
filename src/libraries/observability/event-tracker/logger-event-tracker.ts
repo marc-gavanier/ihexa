@@ -12,7 +12,7 @@ export const createLoggerEventTracker = ({ logger, ...getters }: CreateLoggerEve
     timestamp: new Date().toISOString(),
     messageId: crypto.randomUUID(),
     scope: getters.getScope?.(),
-    user: getters.getUser?.(),
+    identity: getters.getIdentity?.(),
     trace: getters.getTrace?.()
   });
 

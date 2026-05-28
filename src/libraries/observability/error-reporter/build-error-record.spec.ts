@@ -74,14 +74,36 @@ describe('buildErrorRecord', () => {
     ).toMatchObject({ source: 'server', requestId: 'r1' });
   });
 
-  it('merges user identity into the record', () => {
+  it('emits the anonymous identity under enduser.anonymous_id', () => {
     expect(
       buildErrorRecord({
         error: new Error('x'),
         level: 'error',
-        user: { userId: 'u1' }
-      }).userId
+        identity: { kind: 'anonymous', anonymousId: 'a1' }
+      })['enduser.anonymous_id']
+    ).toBe('a1');
+  });
+
+  it('emits the identified identity under enduser.id', () => {
+    expect(
+      buildErrorRecord({
+        error: new Error('x'),
+        level: 'error',
+        identity: { kind: 'identified', anonymousId: 'a1', userId: 'u1' }
+      })['enduser.id']
     ).toBe('u1');
+  });
+
+  it('omits the kind discriminant from the record', () => {
+    expect(
+      Object.keys(
+        buildErrorRecord({
+          error: new Error('x'),
+          level: 'error',
+          identity: { kind: 'anonymous', anonymousId: 'a1' }
+        })
+      )
+    ).not.toContain('kind');
   });
 
   it('merges trace identity into the record', () => {

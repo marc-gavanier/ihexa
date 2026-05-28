@@ -33,7 +33,7 @@ export const createOtelMetrics = ({
       namespace,
       attributes,
       scope: getters.getScope?.(),
-      user: getters.getUser?.()
+      identity: getters.getIdentity?.()
     });
     forward(value, toOtelAttributes(measurement.attributes));
     return measurement;

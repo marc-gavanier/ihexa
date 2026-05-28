@@ -2,9 +2,9 @@ import * as Sentry from '@sentry/nextjs';
 import { after } from 'next/server';
 import { serverEnv } from '@/env/env.server';
 import { createSentryReporter, withErrorReporter as createWithErrorReporter } from '@/libraries/observability';
-import { getScope, getTrace, getUser } from '@/libraries/observability/context';
+import { getIdentity, getScope, getTrace } from '@/libraries/observability/context';
 
-export const errorReporter = createSentryReporter({ getScope, getUser, getTrace });
+export const errorReporter = createSentryReporter({ getScope, getIdentity, getTrace });
 
 export const withErrorReporter = createWithErrorReporter(errorReporter, after);
 

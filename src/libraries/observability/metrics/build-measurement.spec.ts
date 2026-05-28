@@ -34,13 +34,13 @@ describe('buildMeasurement', () => {
     ).toBe('server');
   });
 
-  it('merges the user identity under enduser.id', () => {
+  it('merges the identified userId under enduser.id', () => {
     expect(
       buildMeasurement({
         instrumentName: 'x',
         value: 1,
         namespace: 'app',
-        user: { userId: 'u1' }
+        identity: { kind: 'identified', anonymousId: 'a1', userId: 'u1' }
       }).attributes['enduser.id']
     ).toBe('u1');
   });

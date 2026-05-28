@@ -1,4 +1,4 @@
-import type { Authenticated, ObservabilityScope, Traced } from '../context';
+import type { Identity, ObservabilityScope, Traced } from '../context';
 import type { ErrorAttributes, ErrorLevel, ErrorRecord } from './error-reporter.type';
 
 type BuildErrorRecordInput = {
@@ -8,7 +8,7 @@ type BuildErrorRecordInput = {
   readonly attributes?: ErrorAttributes | undefined;
   readonly fingerprint?: ReadonlyArray<string> | undefined;
   readonly scope?: ObservabilityScope | undefined;
-  readonly user?: Authenticated | undefined;
+  readonly identity?: Identity | undefined;
   readonly trace?: Traced | undefined;
 };
 
@@ -16,6 +16,12 @@ const SEVERITY_NUMBER: Readonly<Record<ErrorLevel, number>> = {
   warn: 13,
   error: 17,
   fatal: 21
+};
+
+const identityAttributes = (identity: Identity | undefined): Readonly<Record<string, string>> => {
+  if (!identity) return {};
+  if (identity.kind === 'identified') return { 'enduser.id': identity.userId, 'enduser.anonymous_id': identity.anonymousId };
+  return { 'enduser.anonymous_id': identity.anonymousId };
 };
 
 const exceptionAttributes = (error: Error | undefined): Readonly<Record<string, unknown>> =>
@@ -39,13 +45,13 @@ export const buildErrorRecord = ({
   attributes,
   fingerprint,
   scope,
-  user,
+  identity,
   trace
 }: BuildErrorRecordInput): ErrorRecord => ({
   severityText: level.toUpperCase(),
   severityNumber: SEVERITY_NUMBER[level],
   ...scope,
-  ...user,
+  ...identityAttributes(identity),
   ...trace,
   event: error ? 'exception' : 'message',
   ...messageAttribute(message),

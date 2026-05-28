@@ -1,4 +1,4 @@
-import type { Authenticated, ObservabilityScope, Traced } from '../context';
+import type { Identity, ObservabilityScope, Traced } from '../context';
 import type { AnonymousId, EventName, EventProperties, EventRecord, UserId } from './event-tracker.type';
 
 type CommonInput = {
@@ -7,7 +7,7 @@ type CommonInput = {
   readonly timestamp: string;
   readonly messageId: string;
   readonly scope?: ObservabilityScope | undefined;
-  readonly user?: Authenticated | undefined;
+  readonly identity?: Identity | undefined;
   readonly trace?: Traced | undefined;
 };
 
@@ -33,10 +33,13 @@ export type BuildEventRecordInput = TrackInput | IdentifyInput | PageInput;
 
 const LIBRARY = { name: 'arckit-observability', version: '0.1.0' } as const;
 
-const resolveUserId = (input: BuildEventRecordInput): UserId | undefined => input.userId ?? input.user?.userId;
+const identifiedUserId = (identity: Identity | undefined): UserId | undefined =>
+  identity?.kind === 'identified' ? identity.userId : undefined;
+
+const resolveUserId = (input: BuildEventRecordInput): UserId | undefined => input.userId ?? identifiedUserId(input.identity);
 
 const resolveAnonymousId = (input: BuildEventRecordInput): AnonymousId | undefined =>
-  input.anonymousId ?? (input.scope?.source === 'client' ? input.scope.anonymousId : undefined);
+  input.anonymousId ?? input.identity?.anonymousId ?? (input.scope?.source === 'client' ? input.scope.anonymousId : undefined);
 
 const scopeContextFields = (scope: ObservabilityScope | undefined): Readonly<Record<string, unknown>> => {
   if (!scope) return {};
