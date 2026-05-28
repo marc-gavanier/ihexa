@@ -11,6 +11,8 @@ export type LogEntry = {
   readonly error?: Error;
 };
 
+export type LogRecord = Readonly<Record<string, unknown>>;
+
 export type Logger = {
-  readonly log: (entry: LogEntry) => void;
+  readonly log: (entry: LogEntry) => LogRecord;
 };

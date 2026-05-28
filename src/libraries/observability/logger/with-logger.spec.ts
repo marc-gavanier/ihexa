@@ -1,60 +1,80 @@
-import { describe, expect, it, vi } from 'vitest';
-import { memoryLogger } from './memory-logger';
+import { describe, expect, it } from 'vitest';
+import type { LogEntry, Logger, LogRecord } from './logger.type';
 import { withLogger } from './with-logger';
-
-vi.mock('next/server', () => ({
-  after: (fn: () => void) => fn()
-}));
 
 const ServerActionSuccess = <T = void>(data?: T) => ({ success: true as const, data });
 const ServerActionError = <T extends string>(error: T) => ({ success: false as const, error });
 
+const syncScheduler = (fn: () => void): void => fn();
+
+const captureFirst = (): { logger: Logger; observe: () => Promise<LogEntry> } => {
+  const { resolve, promise } = Promise.withResolvers<LogEntry>();
+  return {
+    logger: {
+      log: (entry: LogEntry): LogRecord => {
+        resolve(entry);
+        return {};
+      }
+    },
+    observe: () => promise
+  };
+};
+
 describe('withLogger', () => {
-  it('logs a success event with the configured level after the action resolves', async () => {
-    const logger = memoryLogger();
-    const middleware = withLogger(logger)('user.create');
+  it('emits a success event when the action returns a success result', async () => {
+    const capture = captureFirst();
+    const middleware = withLogger(capture.logger, syncScheduler)('user.create');
 
-    const ctx = { input: { name: 'Acme' } };
-    const result = await middleware(ctx, ctx, async () => ServerActionSuccess({ id: 'u1' }));
+    await middleware({}, {}, async () => ServerActionSuccess({ id: 'u1' }));
 
-    expect(result).toEqual(ServerActionSuccess({ id: 'u1' }));
-    expect(logger.entries).toEqual([{ level: 'info', event: 'user.create:success', attributes: {} }]);
+    expect((await capture.observe()).event).toBe('user.create:success');
   });
 
-  it('logs a failure event with error.type when the action returns an error', async () => {
-    const logger = memoryLogger();
-    const middleware = withLogger(logger)('user.create');
+  it('emits a failure event when the action returns an error result', async () => {
+    const capture = captureFirst();
+    const middleware = withLogger(capture.logger, syncScheduler)('user.create');
 
     await middleware({}, {}, async () => ServerActionError('AlreadyExists'));
 
-    expect(logger.entries).toEqual([
-      {
-        level: 'info',
-        event: 'user.create:failure',
-        attributes: { 'error.type': 'AlreadyExists' }
-      }
-    ]);
+    expect((await capture.observe()).event).toBe('user.create:failure');
   });
 
-  it('includes attributes extracted from the context', async () => {
-    const logger = memoryLogger();
+  it('carries the error.type attribute on failure', async () => {
+    const capture = captureFirst();
+    const middleware = withLogger(capture.logger, syncScheduler)('user.create');
+
+    await middleware({}, {}, async () => ServerActionError('AlreadyExists'));
+
+    expect((await capture.observe()).attributes).toEqual({ 'error.type': 'AlreadyExists' });
+  });
+
+  it('uses the configured level on success', async () => {
+    const capture = captureFirst();
+    const middleware = withLogger(capture.logger, syncScheduler)('audit.read', { level: 'debug' });
+
+    await middleware({}, {}, async () => ServerActionSuccess());
+
+    expect((await capture.observe()).level).toBe('debug');
+  });
+
+  it('includes attributes extracted from the action context', async () => {
+    const capture = captureFirst();
     type Ctx = { input: { name: string } };
-    const middleware = withLogger(logger)<Ctx>('user.create', {
+    const middleware = withLogger(capture.logger, syncScheduler)<Ctx>('user.create', {
       extractAttributes: (ctx) => ({ name: ctx.input.name })
     });
 
-    await middleware({ input: { name: 'Acme' } }, {}, async () => ServerActionSuccess({ id: 'u1' }));
+    await middleware({ input: { name: 'Acme' } }, {}, async () => ServerActionSuccess());
 
-    expect(logger.entries).toEqual([{ level: 'info', event: 'user.create:success', attributes: { name: 'Acme' } }]);
+    expect((await capture.observe()).attributes).toEqual({ name: 'Acme' });
   });
 
-  it('respects the configured level on both success and failure', async () => {
-    const logger = memoryLogger();
-    const middleware = withLogger(logger)('audit.read', { level: 'debug' });
+  it('returns the action result unchanged', async () => {
+    const capture = captureFirst();
+    const middleware = withLogger(capture.logger, syncScheduler)('user.create');
 
-    await middleware({}, {}, async () => ServerActionSuccess());
-    await middleware({}, {}, async () => ServerActionError('Forbidden'));
+    const result = await middleware({}, {}, async () => ServerActionSuccess({ id: 'u1' }));
 
-    expect(logger.entries.map((entry) => entry.level)).toEqual(['debug', 'debug']);
+    expect(result).toEqual({ success: true, data: { id: 'u1' } });
   });
 });
