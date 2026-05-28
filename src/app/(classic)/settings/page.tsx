@@ -3,6 +3,7 @@ import { configureSellerAction } from '@/app/_actions/settings/configure-seller.
 import { searchCompanyAction } from '@/app/_actions/settings/search-company.action';
 import { i18n, type MetadataTranslation, metadataTranslation, withI18n } from '@/configuration/i18n';
 import { pageBuilder, withClientBinder } from '@/configuration/nextjs';
+import { withPageView } from '@/configuration/observability/event-tracker/server';
 import {
   CONFIGURE_SELLER_KEY,
   ConfigureSellerPage,
@@ -20,4 +21,5 @@ export default pageBuilder()
     withI18n(i18n)('settings.configure-seller', 'global.server-action')
   )
   .use(withOptionalEither('seller', () => getSellerConfiguration()))
+  .use(withPageView('Seller Settings'))
   .render(async ({ seller }) => <ConfigureSellerPage seller={presentSeller(seller)} />);
