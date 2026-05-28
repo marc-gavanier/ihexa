@@ -1,2 +1,9 @@
-export type { EnrichableFields, ObservabilityContext, ObservabilitySource } from './context.type';
-export { enrichContext, getContext, runWithContext } from './observability-context';
+export type { Authenticated, ObservabilityScope, ObservabilitySource, Traced } from './context.type';
+export {
+  getScope,
+  getTrace,
+  getUser,
+  runWithScope,
+  runWithTrace,
+  runWithUser
+} from './observability-context';

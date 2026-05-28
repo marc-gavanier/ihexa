@@ -1,5 +1,5 @@
 import pino, { type DestinationStream, type LoggerOptions } from 'pino';
-import { getContext } from '../context';
+import { getScope, getTrace, getUser } from '../context';
 import type { LogEntry, Logger, LogLevel } from './logger.type';
 
 const emit = (instance: pino.Logger, level: LogLevel, payload: Record<string, unknown>): void => {
@@ -30,7 +30,13 @@ export const pinoLogger = (options: LoggerOptions = {}, destination?: Destinatio
 
   return {
     log: ({ level, event, attributes, error }: LogEntry): void => {
-      const payload: Record<string, unknown> = { ...getContext(), event, ...attributes };
+      const payload: Record<string, unknown> = {
+        ...getScope(),
+        ...getUser(),
+        ...getTrace(),
+        event,
+        ...attributes
+      };
 
       if (error) {
         payload['exception.type'] = error.name;
