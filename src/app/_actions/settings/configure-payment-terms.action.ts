@@ -4,6 +4,7 @@ import { fromEither, withInput } from '@arckit/nextjs';
 import { actionBuilder } from '@/configuration/nextjs';
 import { withEventTracker } from '@/configuration/observability/event-tracker/server';
 import { withLogger } from '@/configuration/observability/logger/server';
+import { withTracer } from '@/configuration/observability/tracer/server';
 import {
   CONFIGURE_PAYMENT_TERMS_ERRORS,
   type ConfigurePaymentTermsFormData,
@@ -22,6 +23,7 @@ const toValidatedInput = (input: ConfigurePaymentTermsFormData): ValidatedPaymen
 });
 
 export const configurePaymentTermsAction = actionBuilder()
+  .use(withTracer('action.configurePaymentTerms', { kind: 'server' }))
   .use(withInput(configurePaymentTermsValidation))
   .use(withLogger('configurePaymentTermsAction'))
   .use(withEventTracker('Payment Terms Configured'))
