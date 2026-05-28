@@ -2,6 +2,7 @@
 
 import { fromEither, withInput } from '@arckit/nextjs';
 import { actionBuilder } from '@/configuration/nextjs';
+import { withErrorReporter } from '@/configuration/observability/error-reporter/server';
 import { withEventTracker } from '@/configuration/observability/event-tracker/server';
 import { withLogger } from '@/configuration/observability/logger/server';
 import { withTracer } from '@/configuration/observability/tracer/server';
@@ -17,6 +18,7 @@ export const createB2CClientAction = actionBuilder()
   .use(withTracer('action.createB2CClient', { kind: 'server' }))
   .use(withInput(createB2CClientValidation))
   .use(withLogger('createB2CClientAction', { extractAttributes: ({ input: { id } }) => ({ id }) }))
+  .use(withErrorReporter('createB2CClientAction', { extractAttributes: ({ input: { id } }) => ({ id }) }))
   .use(withEventTracker('Client Created', { extractProperties: () => ({ type: 'b2c' }) }))
   .execute(
     fromEither(
@@ -40,6 +42,7 @@ export const createB2BClientAction = actionBuilder()
   .use(withTracer('action.createB2BClient', { kind: 'server' }))
   .use(withInput(createB2BClientValidation))
   .use(withLogger('createB2BClientAction', { extractAttributes: ({ input: { id } }) => ({ id }) }))
+  .use(withErrorReporter('createB2BClientAction', { extractAttributes: ({ input: { id } }) => ({ id }) }))
   .use(withEventTracker('Client Created', { extractProperties: () => ({ type: 'b2b' }) }))
   .execute(
     fromEither(

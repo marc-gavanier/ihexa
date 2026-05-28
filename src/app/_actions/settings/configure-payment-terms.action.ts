@@ -2,6 +2,7 @@
 
 import { fromEither, withInput } from '@arckit/nextjs';
 import { actionBuilder } from '@/configuration/nextjs';
+import { withErrorReporter } from '@/configuration/observability/error-reporter/server';
 import { withEventTracker } from '@/configuration/observability/event-tracker/server';
 import { withLogger } from '@/configuration/observability/logger/server';
 import { withTracer } from '@/configuration/observability/tracer/server';
@@ -26,6 +27,7 @@ export const configurePaymentTermsAction = actionBuilder()
   .use(withTracer('action.configurePaymentTerms', { kind: 'server' }))
   .use(withInput(configurePaymentTermsValidation))
   .use(withLogger('configurePaymentTermsAction'))
+  .use(withErrorReporter('configurePaymentTermsAction'))
   .use(withEventTracker('Payment Terms Configured'))
   .execute(
     fromEither(async ({ input }) => savePaymentTermsConfiguration(toValidatedInput(input)), {
