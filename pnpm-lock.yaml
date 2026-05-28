@@ -23,9 +23,6 @@ importers:
       '@arckit/nextjs':
         specifier: ^1.7.0
         version: 1.7.0(fe8ba2dbc5cad371f499ddd3744f7749)
-      '@arckit/observability':
-        specifier: ^1.0.0
-        version: 1.0.0(pino@10.3.1)
       '@arckit/pipeline':
         specifier: ^1.0.0
         version: 1.0.0(react@19.2.6)
@@ -368,15 +365,6 @@ packages:
       effect:
         optional: true
       i18next:
-        optional: true
-
-  '@arckit/observability@1.0.0':
-    resolution: {integrity: sha512-2pPEvbaqAzF1lhGiVi9LJaRMxSQMQdBz4ahfWKeU5gsRXlYVEfd6mWqPJNnVEeni4Rxvk6EPv0SCtFVYLCXnTQ==}
-    engines: {node: '>=22'}
-    peerDependencies:
-      pino: '>=9'
-    peerDependenciesMeta:
-      pino:
         optional: true
 
   '@arckit/pipeline@1.0.0':
@@ -6683,10 +6671,6 @@ snapshots:
       '@arckit/resultset': 1.1.0(effect@3.21.2)
       effect: 3.21.2
       i18next: 26.0.8(typescript@6.0.3)
-
-  '@arckit/observability@1.0.0(pino@10.3.1)':
-    optionalDependencies:
-      pino: 10.3.1
 
   '@arckit/pipeline@1.0.0(react@19.2.6)':
     dependencies:

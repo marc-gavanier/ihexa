@@ -100,7 +100,6 @@
     "@arckit/form": "^1.2.0",
     "@arckit/i18n": "^1.1.1",
     "@arckit/nextjs": "^1.7.0",
-    "@arckit/observability": "^1.0.0",
     "@arckit/pipeline": "^1.0.0",
     "@arckit/resultset": "^1.1.0",
     "@dnd-kit/core": "^6.3.1",
