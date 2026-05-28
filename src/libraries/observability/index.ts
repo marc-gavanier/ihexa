@@ -15,5 +15,25 @@ export {
   sentryReporter,
   withErrorReporter
 } from './error-reporter';
+
+export type {
+  AnonymousId,
+  EventName,
+  EventProperties,
+  EventRecord,
+  EventTracker,
+  IdentifyEvent,
+  MatomoConfig,
+  PageEvent,
+  TrackedEvent,
+  UserId
+} from './event-tracker';
+export {
+  buildEventRecord,
+  loggerEventTracker,
+  matomoEventTracker,
+  noopEventTracker,
+  withEventTracker
+} from './event-tracker';
 export type { AttributeValue, LogAttributes, LogEntry, Logger, LogLevel, LogRecord, Scheduler } from './logger';
 export { buildLogRecord, consoleLogger, pinoLogger, withLogger } from './logger';
