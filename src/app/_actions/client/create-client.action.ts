@@ -1,8 +1,8 @@
 'use server';
 
 import { fromEither, withInput } from '@arckit/nextjs';
-import { withLogger } from '@/configuration/logger';
 import { actionBuilder } from '@/configuration/nextjs';
+import { withLogger } from '@/configuration/observability/logger/server';
 import {
   CREATE_CLIENT_ERRORS,
   createB2BClientValidation,
@@ -13,7 +13,7 @@ import { createB2BClient, createB2CClient } from '@/features/client/abilities/cr
 
 export const createB2CClientAction = actionBuilder()
   .use(withInput(createB2CClientValidation))
-  .use(withLogger('createB2CClientAction', { extractPayload: ({ input: { id } }) => ({ id }) }))
+  .use(withLogger('createB2CClientAction', { extractAttributes: ({ input: { id } }) => ({ id }) }))
   .execute(
     fromEither(
       async ({ input }) =>
@@ -34,7 +34,7 @@ export const createB2CClientAction = actionBuilder()
 
 export const createB2BClientAction = actionBuilder()
   .use(withInput(createB2BClientValidation))
-  .use(withLogger('createB2BClientAction', { extractPayload: ({ input: { id } }) => ({ id }) }))
+  .use(withLogger('createB2BClientAction', { extractAttributes: ({ input: { id } }) => ({ id }) }))
   .execute(
     fromEither(
       async ({ input }) =>

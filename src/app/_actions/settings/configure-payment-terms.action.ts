@@ -1,8 +1,8 @@
 'use server';
 
 import { fromEither, withInput } from '@arckit/nextjs';
-import { withLogger } from '@/configuration/logger';
 import { actionBuilder } from '@/configuration/nextjs';
+import { withLogger } from '@/configuration/observability/logger/server';
 import {
   CONFIGURE_PAYMENT_TERMS_ERRORS,
   type ConfigurePaymentTermsFormData,

@@ -163,7 +163,6 @@ storybook-static
 # generated implementations (DI)
 **/implementations/index.ts
 **/infrastructure/index.ts
-src/configuration/logger/index.ts
 src/configuration/observability/**/server/index.ts
 src/configuration/observability/**/client/index.ts
 
