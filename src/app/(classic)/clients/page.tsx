@@ -5,6 +5,7 @@ import { createB2BClientAction, createB2CClientAction } from '@/app/_actions/cli
 import { searchCompanyForClientAction } from '@/app/_actions/client/search-company.action';
 import { i18n, type MetadataTranslation, metadataTranslation, withI18n } from '@/configuration/i18n';
 import { pageBuilder, withClientBinder } from '@/configuration/nextjs';
+import { withPageView } from '@/configuration/observability/event-tracker/server';
 import {
   CREATE_B2B_CLIENT_ACTION_KEY,
   CREATE_B2C_CLIENT_ACTION_KEY,
@@ -25,4 +26,5 @@ export default pageBuilder()
   .use(withSearchTerm(), withPagination())
   .use(withFetch('result', ({ search, page }) => listClients({ search, page, pageSize: PageSize(10) })))
   .use(withI18n(i18n)('clients.list', 'clients.create', 'global.server-action'))
+  .use(withPageView('Clients List'))
   .render(async ({ result, search }) => <ListClientsPage view={presentListClients(result, search)} search={search} />);

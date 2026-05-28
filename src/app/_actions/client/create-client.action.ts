@@ -2,6 +2,7 @@
 
 import { fromEither, withInput } from '@arckit/nextjs';
 import { actionBuilder } from '@/configuration/nextjs';
+import { withEventTracker } from '@/configuration/observability/event-tracker/server';
 import { withLogger } from '@/configuration/observability/logger/server';
 import {
   CREATE_CLIENT_ERRORS,
@@ -14,6 +15,7 @@ import { createB2BClient, createB2CClient } from '@/features/client/abilities/cr
 export const createB2CClientAction = actionBuilder()
   .use(withInput(createB2CClientValidation))
   .use(withLogger('createB2CClientAction', { extractAttributes: ({ input: { id } }) => ({ id }) }))
+  .use(withEventTracker('Client Created', { extractProperties: () => ({ type: 'b2c' }) }))
   .execute(
     fromEither(
       async ({ input }) =>
@@ -35,6 +37,7 @@ export const createB2CClientAction = actionBuilder()
 export const createB2BClientAction = actionBuilder()
   .use(withInput(createB2BClientValidation))
   .use(withLogger('createB2BClientAction', { extractAttributes: ({ input: { id } }) => ({ id }) }))
+  .use(withEventTracker('Client Created', { extractProperties: () => ({ type: 'b2b' }) }))
   .execute(
     fromEither(
       async ({ input }) =>
