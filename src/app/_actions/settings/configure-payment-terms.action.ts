@@ -5,6 +5,7 @@ import { actionBuilder } from '@/configuration/nextjs';
 import { withErrorReporter } from '@/configuration/observability/error-reporter/server';
 import { withEventTracker } from '@/configuration/observability/event-tracker/server';
 import { withLogger } from '@/configuration/observability/logger/server';
+import { withMetrics } from '@/configuration/observability/metrics/server';
 import { withTracer } from '@/configuration/observability/tracer/server';
 import {
   CONFIGURE_PAYMENT_TERMS_ERRORS,
@@ -25,6 +26,7 @@ const toValidatedInput = (input: ConfigurePaymentTermsFormData): ValidatedPaymen
 
 export const configurePaymentTermsAction = actionBuilder()
   .use(withTracer('action.configurePaymentTerms', { kind: 'server' }))
+  .use(withMetrics('configurePaymentTerms'))
   .use(withInput(configurePaymentTermsValidation))
   .use(withLogger('configurePaymentTermsAction'))
   .use(withErrorReporter('configurePaymentTermsAction'))

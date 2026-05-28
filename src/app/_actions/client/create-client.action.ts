@@ -5,6 +5,7 @@ import { actionBuilder } from '@/configuration/nextjs';
 import { withErrorReporter } from '@/configuration/observability/error-reporter/server';
 import { withEventTracker } from '@/configuration/observability/event-tracker/server';
 import { withLogger } from '@/configuration/observability/logger/server';
+import { withMetrics } from '@/configuration/observability/metrics/server';
 import { withTracer } from '@/configuration/observability/tracer/server';
 import {
   CREATE_CLIENT_ERRORS,
@@ -16,6 +17,7 @@ import { createB2BClient, createB2CClient } from '@/features/client/abilities/cr
 
 export const createB2CClientAction = actionBuilder()
   .use(withTracer('action.createB2CClient', { kind: 'server' }))
+  .use(withMetrics('createB2CClient'))
   .use(withInput(createB2CClientValidation))
   .use(withLogger('createB2CClientAction', { extractAttributes: ({ input: { id } }) => ({ id }) }))
   .use(withErrorReporter('createB2CClientAction', { extractAttributes: ({ input: { id } }) => ({ id }) }))
@@ -40,6 +42,7 @@ export const createB2CClientAction = actionBuilder()
 
 export const createB2BClientAction = actionBuilder()
   .use(withTracer('action.createB2BClient', { kind: 'server' }))
+  .use(withMetrics('createB2BClient'))
   .use(withInput(createB2BClientValidation))
   .use(withLogger('createB2BClientAction', { extractAttributes: ({ input: { id } }) => ({ id }) }))
   .use(withErrorReporter('createB2BClientAction', { extractAttributes: ({ input: { id } }) => ({ id }) }))
