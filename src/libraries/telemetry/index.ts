@@ -1,4 +1,5 @@
 export type { ContextGetters, Identity, TelemetryScope, TelemetrySource, Traced } from './context';
+
 export type {
   CaptureExceptionAction,
   CaptureMessageAction,
