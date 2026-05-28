@@ -1,6 +1,7 @@
 import { after } from 'next/server';
-import { withMetrics as createWithMetrics, noopMetrics } from '@/libraries/telemetry';
+import { createLoggerMetrics, withMetrics as createWithMetrics } from '@/libraries/telemetry';
+import { logger } from '../../logger/server';
 
-export const metrics = noopMetrics();
+export const metrics = createLoggerMetrics({ logger, namespace: 'ihexa' });
 
 export const withMetrics = createWithMetrics(metrics, after);

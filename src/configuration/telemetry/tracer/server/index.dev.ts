@@ -1,5 +1,6 @@
-import { withTracer as createWithTracer, noopTracer } from '@/libraries/telemetry';
+import { createLoggerTracer, withTracer as createWithTracer } from '@/libraries/telemetry';
+import { logger } from '../../logger/server';
 
-export const tracer = noopTracer();
+export const tracer = createLoggerTracer({ logger, namespace: 'ihexa' });
 
 export const withTracer = createWithTracer(tracer);
