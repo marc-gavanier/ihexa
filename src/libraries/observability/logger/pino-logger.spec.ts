@@ -57,7 +57,7 @@ describe('pinoLogger', () => {
     const stream = captureStream();
     const logger = pinoLogger({}, stream);
 
-    runWithContext({ traceId: 't1', requestId: 'r1', userId: 'u1' }, () => {
+    runWithContext({ source: 'server', requestId: 'r1', userId: 'u1', traceId: 't1' }, () => {
       logger.log({ level: 'info', event: 'page.viewed' });
     });
 
