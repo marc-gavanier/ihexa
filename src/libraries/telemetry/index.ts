@@ -45,7 +45,8 @@ export {
   serverActionEventTracker,
   withEventTracker
 } from './event-tracker';
-
+export type { Instrument } from './instrument';
+export { createInstrument } from './instrument';
 export type {
   AttributeValue,
   LogAttributes,
@@ -57,7 +58,6 @@ export type {
   Scheduler
 } from './logger';
 export { buildLogRecord, createConsoleLogger, createPinoLogger, noopLogger, serverActionLogger, withLogger } from './logger';
-
 export type {
   Counter,
   CreateOtelMetricsOptions,
@@ -68,6 +68,5 @@ export type {
   Metrics
 } from './metrics';
 export { buildMeasurement, createLoggerMetrics, createOtelMetrics, noopMetrics, withMetrics } from './metrics';
-
 export type { Span, SpanAttributes, SpanKind, SpanStatus, StartSpanOptions, Tracer } from './tracer';
 export { buildSpanAttributes, createLoggerTracer, noopTracer, otelTracer, withTracer } from './tracer';
