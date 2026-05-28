@@ -1,5 +1,5 @@
+import { search } from '@/configuration/recherche-entreprises';
 import type { Company, CompanySummary } from '@/libraries/recherche-entreprises';
-import { search } from '@/libraries/recherche-entreprises';
 
 type SearchCompany = (query: string) => Promise<readonly CompanySummary[]>;
 
