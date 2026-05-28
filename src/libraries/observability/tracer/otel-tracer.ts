@@ -1,5 +1,10 @@
-import { type Span as OtelSpan, SpanKind as OtelSpanKind, SpanStatusCode, trace } from '@opentelemetry/api';
-import type { Span, SpanKind, SpanStatus, StartSpanOptions, Tracer } from './tracer.type';
+import { type Attributes, type Span as OtelSpan, SpanKind as OtelSpanKind, SpanStatusCode, trace } from '@opentelemetry/api';
+import type { Span, SpanAttributes, SpanKind, SpanStatus, StartSpanOptions, Tracer } from './tracer.type';
+
+const toOtelAttributes = (attributes: SpanAttributes): Attributes =>
+  Object.fromEntries(
+    Object.entries(attributes).map(([key, value]) => [key, Array.isArray(value) ? [...value] : value])
+  ) as Attributes;
 
 const SPAN_KIND: Readonly<Record<SpanKind, OtelSpanKind>> = {
   internal: OtelSpanKind.INTERNAL,
@@ -38,9 +43,9 @@ export const otelTracer = (instrumentationName = 'arckit-observability'): Tracer
         name,
         {
           ...(options?.kind ? { kind: SPAN_KIND[options.kind] } : {}),
-          ...(options?.attributes ? { attributes: { ...options.attributes } } : {})
+          ...(options?.attributes ? { attributes: toOtelAttributes(options.attributes) } : {})
         },
-        async (otelSpan) => {
+        async (otelSpan): Promise<T> => {
           const span = wrapSpan(otelSpan);
           try {
             const result = await fn(span);
@@ -55,6 +60,6 @@ export const otelTracer = (instrumentationName = 'arckit-observability'): Tracer
             otelSpan.end();
           }
         }
-      )
+      ) as Promise<T>
   };
 };
