@@ -1,6 +1,6 @@
+import { search } from '@/configuration/recherche-entreprises';
 import type { FormeJuridique } from '@/features/client/domain/forme-juridique';
 import type { Company, Establishment } from '@/libraries/recherche-entreprises';
-import { search } from '@/libraries/recherche-entreprises';
 import type { CompanySearchResult, SearchCompany } from '../../domain';
 
 const NATURE_JURIDIQUE: Record<string, FormeJuridique> = {
