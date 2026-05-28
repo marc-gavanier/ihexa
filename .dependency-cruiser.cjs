@@ -28,7 +28,8 @@ const FORBIDDEN_GLOBAL = [
         '[.]d[.]ts$', // TypeScript declaration files
         '(^|/)tsconfig[.]json$', // TypeScript config
         '(^|/)(?:babel|webpack)[.]config[.](?:js|cjs|mjs|ts|cts|mts|json)$', // other configs
-        '@[^/]+/default[.]tsx$' // Next.js parallel routes default files
+        '@[^/]+/default[.]tsx$', // Next.js parallel routes default files
+        'index[.](?:client[.])?(?:dev|prod|ephemeral)[.]ts$' // env-swapped DI implementation sources (build inputs)
       ]
     },
     to: {}

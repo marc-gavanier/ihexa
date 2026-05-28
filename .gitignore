@@ -163,6 +163,7 @@ src/@arckit/
 **/implementations/index.ts
 **/infrastructure/index.ts
 src/configuration/observability/*/index.ts
+src/configuration/observability/*/index.client.ts
 
 # PostgreSQL data
 .database/

@@ -1,10 +1,1 @@
-import * as Sentry from '@sentry/nextjs';
-
-export const register = async (): Promise<void> => {
-  if (process.env.NEXT_RUNTIME === 'nodejs' || process.env.NEXT_RUNTIME === 'edge') {
-    Sentry.init({
-      dsn: process.env['NEXT_PUBLIC_SENTRY_DSN'],
-      tracesSampleRate: 0
-    });
-  }
-};
+export { onRequestError, register } from '@/configuration/observability/error-reporter';

@@ -1,5 +1,11 @@
-import { logger } from '@/configuration/observability/logger';
-import { withErrorReporter as createWithErrorReporter, loggerReporter } from '@/libraries/observability';
+import { clientEnv } from '@/env/env.client';
+import { withErrorReporter as createWithErrorReporter } from '@/libraries/observability';
+import { registerSentry } from '@/libraries/observability/error-reporter/sentry-instrumentation';
+import { sentryReporter } from '@/libraries/observability/error-reporter/sentry-reporter';
 
-export const errorReporter = loggerReporter(logger);
+export { onRequestError } from '@/libraries/observability/error-reporter/sentry-instrumentation';
+
+export const errorReporter = sentryReporter();
 export const withErrorReporter = createWithErrorReporter(errorReporter);
+
+export const register = registerSentry({ dsn: clientEnv.NEXT_PUBLIC_SENTRY_DSN });
