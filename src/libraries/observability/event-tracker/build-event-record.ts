@@ -31,7 +31,7 @@ type PageInput = CommonInput & {
 
 export type BuildEventRecordInput = TrackInput | IdentifyInput | PageInput;
 
-const LIBRARY = { name: 'ihexa-observability', version: '0.1.0' } as const;
+const LIBRARY = { name: 'arckit-observability', version: '0.1.0' } as const;
 
 const resolveUserId = (input: BuildEventRecordInput): UserId | undefined => input.userId ?? input.user?.userId;
 

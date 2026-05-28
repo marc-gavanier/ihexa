@@ -30,7 +30,7 @@ const wrapSpan = (otelSpan: OtelSpan): Span => ({
   }
 });
 
-export const otelTracer = (instrumentationName = 'ihexa'): Tracer => {
+export const otelTracer = (instrumentationName = 'arckit-observability'): Tracer => {
   const tracer = trace.getTracer(instrumentationName);
   return {
     startSpan: <T>(name: string, fn: (span: Span) => T | Promise<T>, options?: StartSpanOptions): Promise<T> =>
