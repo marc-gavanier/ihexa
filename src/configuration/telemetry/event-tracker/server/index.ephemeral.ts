@@ -11,8 +11,9 @@ export const eventTracker = createNoopEventTracker({ getScope, getIdentity, getT
 export const withEventTracker = createWithEventTracker(eventTracker, preservingAfter);
 
 export const withPageView =
-  (name: string, properties?: EventProperties) =>
-  async <TCtx extends object>(ctx: TCtx, _props: unknown): Promise<{ readonly ctx: TCtx }> => {
+  <TCtx extends object>(name: string, extractProperties?: (ctx: TCtx) => EventProperties) =>
+  async (ctx: TCtx, _props: unknown): Promise<{ readonly ctx: TCtx }> => {
+    const properties = extractProperties?.(ctx);
     preservingAfter(() => eventTracker.page({ name, ...(properties ? { properties } : {}) }));
     return { ctx };
   };

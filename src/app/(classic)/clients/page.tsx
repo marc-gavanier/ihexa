@@ -26,5 +26,5 @@ export default pageBuilder()
   .use(withSearchTerm(), withPagination())
   .use(withFetch('result', ({ search, page }) => listClients({ search, page, pageSize: PageSize(10) })))
   .use(withI18n(i18n)('clients.list', 'clients.create', 'global.server-action'))
-  .use(withPageView('Clients List'))
+  .use(withPageView('Clients List', ({ page, search }) => ({ page, search_length: search.length })))
   .render(async ({ result, search }) => <ListClientsPage view={presentListClients(result, search)} search={search} />);
