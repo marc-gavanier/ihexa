@@ -4,7 +4,7 @@ import {
   createWithClientBinder,
   type PageBuilder
 } from '@arckit/nextjs';
-import { withActionScope, withPageScope } from '@/configuration/observability/context/server';
+import { withActionScope, withPageScope } from '@/configuration/telemetry/context/server';
 import { ClientBinder } from './client';
 
 const errorPrefix = 'global.server-action:error';

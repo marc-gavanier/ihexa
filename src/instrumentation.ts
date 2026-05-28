@@ -1,1 +1,1 @@
-export { onRequestError, register } from '@/configuration/observability/error-reporter/server';
+export { onRequestError, register } from '@/configuration/telemetry/error-reporter/server';

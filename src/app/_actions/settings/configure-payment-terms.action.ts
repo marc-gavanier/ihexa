@@ -2,11 +2,11 @@
 
 import { fromEither, withInput } from '@arckit/nextjs';
 import { actionBuilder } from '@/configuration/nextjs';
-import { withErrorReporter } from '@/configuration/observability/error-reporter/server';
-import { withEventTracker } from '@/configuration/observability/event-tracker/server';
-import { withLogger } from '@/configuration/observability/logger/server';
-import { withMetrics } from '@/configuration/observability/metrics/server';
-import { withTracer } from '@/configuration/observability/tracer/server';
+import { withErrorReporter } from '@/configuration/telemetry/error-reporter/server';
+import { withEventTracker } from '@/configuration/telemetry/event-tracker/server';
+import { withLogger } from '@/configuration/telemetry/logger/server';
+import { withMetrics } from '@/configuration/telemetry/metrics/server';
+import { withTracer } from '@/configuration/telemetry/tracer/server';
 import {
   CONFIGURE_PAYMENT_TERMS_ERRORS,
   type ConfigurePaymentTermsFormData,

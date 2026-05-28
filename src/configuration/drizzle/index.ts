@@ -1,7 +1,7 @@
 import { drizzle } from 'drizzle-orm/node-postgres';
 import { Pool, type QueryResult, type QueryResultRow } from 'pg';
-import { metrics } from '@/configuration/observability/metrics/server';
-import { tracer } from '@/configuration/observability/tracer/server';
+import { metrics } from '@/configuration/telemetry/metrics/server';
+import { tracer } from '@/configuration/telemetry/tracer/server';
 import * as clientSchema from '@/features/client/db';
 import * as settingsSchema from '@/features/settings/db';
 
