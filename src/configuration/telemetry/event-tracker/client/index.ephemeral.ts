@@ -1,3 +1,3 @@
-import { createNoopEventTracker } from '@/libraries/telemetry';
+import { createNoopEventTracker } from '@arckit/telemetry';
 
 export const eventTracker = createNoopEventTracker();

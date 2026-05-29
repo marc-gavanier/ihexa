@@ -1,6 +1,6 @@
 'use server';
 
-import { createConsoleLogger, createLoggerReporter, type ErrorCapture, type MessageCapture } from '@/libraries/telemetry';
+import { createConsoleLogger, createLoggerReporter, type ErrorCapture, type MessageCapture } from '@arckit/telemetry';
 
 const reporter = createLoggerReporter({ logger: createConsoleLogger() });
 

@@ -1,6 +1,7 @@
+import { withMetrics as createWithMetrics } from '@arckit/nextjs/telemetry';
+import { createOtelMetrics } from '@arckit/telemetry';
+import { getIdentity, getScope } from '@arckit/telemetry/context';
 import { preservingAfter } from '@/configuration/telemetry/scheduler';
-import { createOtelMetrics, withMetrics as createWithMetrics } from '@/libraries/telemetry';
-import { getIdentity, getScope } from '@/libraries/telemetry/context';
 
 export const metrics = createOtelMetrics({ namespace: 'ihexa', getScope, getIdentity });
 

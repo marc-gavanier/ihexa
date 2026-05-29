@@ -1,12 +1,5 @@
+import { getIdentity, getScope, getTrace, type Identity, type TelemetryScope, type Traced } from '@arckit/telemetry/context';
 import { describe, expect, it } from 'vitest';
-import {
-  getIdentity,
-  getScope,
-  getTrace,
-  type Identity,
-  type TelemetryScope,
-  type Traced
-} from '@/libraries/telemetry/context';
 import { restoreContext } from './preserving-after';
 
 describe('restoreContext', () => {

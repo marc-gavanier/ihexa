@@ -1,6 +1,7 @@
+import { withErrorReporter as createWithErrorReporter } from '@arckit/nextjs/telemetry';
+import { createNoopReporter } from '@arckit/telemetry';
+import { getIdentity, getScope, getTrace } from '@arckit/telemetry/context';
 import { preservingAfter } from '@/configuration/telemetry/scheduler';
-import { createNoopReporter, withErrorReporter as createWithErrorReporter } from '@/libraries/telemetry';
-import { getIdentity, getScope, getTrace } from '@/libraries/telemetry/context';
 
 export const errorReporter = createNoopReporter({ getScope, getIdentity, getTrace });
 

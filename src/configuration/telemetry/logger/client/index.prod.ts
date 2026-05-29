@@ -1,3 +1,3 @@
-import { createConsoleLogger } from '@/libraries/telemetry';
+import { createConsoleLogger } from '@arckit/telemetry';
 
 export const logger = createConsoleLogger();

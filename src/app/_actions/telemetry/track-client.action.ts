@@ -6,7 +6,7 @@ import {
   type IdentifyEvent,
   type PageEvent,
   type TrackedEvent
-} from '@/libraries/telemetry';
+} from '@arckit/telemetry';
 
 const tracker = createLoggerEventTracker({ logger: createConsoleLogger() });
 
