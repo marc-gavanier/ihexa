@@ -1,5 +1,6 @@
+import { withLogger as createWithLogger } from '@arckit/nextjs/telemetry';
+import { noopLogger } from '@arckit/telemetry';
 import { preservingAfter } from '@/configuration/telemetry/scheduler';
-import { withLogger as createWithLogger, noopLogger } from '@/libraries/telemetry';
 
 export const logger = noopLogger();
 

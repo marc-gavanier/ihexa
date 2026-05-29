@@ -1,6 +1,6 @@
+import { createSentryReporter } from '@arckit/telemetry';
 import * as Sentry from '@sentry/nextjs';
 import { clientEnv } from '@/env/env.client';
-import { createSentryReporter } from '@/libraries/telemetry';
 
 export const errorReporter = createSentryReporter();
 

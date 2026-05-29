@@ -1,4 +1,5 @@
-import { withTracer as createWithTracer, otelTracer } from '@/libraries/telemetry';
+import { withTracer as createWithTracer } from '@arckit/nextjs/telemetry';
+import { otelTracer } from '@arckit/telemetry';
 
 export const tracer = otelTracer('ihexa');
 

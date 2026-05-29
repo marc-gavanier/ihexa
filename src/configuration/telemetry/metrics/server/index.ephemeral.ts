@@ -1,5 +1,6 @@
+import { withMetrics as createWithMetrics } from '@arckit/nextjs/telemetry';
+import { noopMetrics } from '@arckit/telemetry';
 import { preservingAfter } from '@/configuration/telemetry/scheduler';
-import { withMetrics as createWithMetrics, noopMetrics } from '@/libraries/telemetry';
 
 export const metrics = noopMetrics();
 

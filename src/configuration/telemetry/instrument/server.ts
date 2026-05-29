@@ -1,4 +1,4 @@
-import { createInstrument } from '@/libraries/telemetry';
+import { createInstrument } from '@arckit/telemetry';
 import { errorReporter } from '../error-reporter/server';
 import { metrics } from '../metrics/server';
 import { tracer } from '../tracer/server';

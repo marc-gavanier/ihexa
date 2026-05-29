@@ -1,5 +1,4 @@
-import { after } from 'next/server';
-import type { Scheduler } from '@/libraries/telemetry';
+import type { Scheduler } from '@arckit/nextjs/telemetry';
 import {
   getIdentity,
   getScope,
@@ -10,7 +9,8 @@ import {
   runWithTrace,
   type TelemetryScope,
   type Traced
-} from '@/libraries/telemetry/context';
+} from '@arckit/telemetry/context';
+import { after } from 'next/server';
 
 export const restoreContext = (
   scope: TelemetryScope | undefined,

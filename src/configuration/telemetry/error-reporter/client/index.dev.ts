@@ -1,5 +1,5 @@
+import { serverActionReporter } from '@arckit/telemetry';
 import { reportClientException, reportClientMessage } from '@/app/_actions/telemetry/report-client.action';
-import { serverActionReporter } from '@/libraries/telemetry';
 
 export const errorReporter = serverActionReporter({
   captureException: reportClientException,
