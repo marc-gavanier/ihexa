@@ -1,3 +1,35 @@
+# [1.12.0](https://github.com/marc-gavanier/ihexa/compare/v1.11.0...v1.12.0) (2026-05-29)
+
+
+### Bug Fixes
+
+* **observability:** make otelTracer typecheck against @opentelemetry/api ([6fb1140](https://github.com/marc-gavanier/ihexa/commit/6fb114082879234e132572f1ba452e15721259fc))
+* **telemetry:** preserve ALS context across the after() boundary ([a9c28ac](https://github.com/marc-gavanier/ihexa/commit/a9c28ac69e6ab5024a19f0464e91e35a9151c786))
+* **telemetry:** propagate per-request scope via pageBuilder wrap hook ([2c40cd3](https://github.com/marc-gavanier/ihexa/commit/2c40cd3878493e6417a6ce4a224d3c77a8a96153))
+
+
+### Features
+
+* **observability:** add AsyncLocalStorage context foundation ([f9d93fd](https://github.com/marc-gavanier/ihexa/commit/f9d93fd9800c31f3d16cbc6893194d88293ff209))
+* **observability:** add client-side adapters + server action bridges ([8ec204b](https://github.com/marc-gavanier/ihexa/commit/8ec204bcde5ce15b4dee7f1bb473bc08fd8aed11))
+* **observability:** add ErrorReporter pillar (Sentry / Logger / no-op) ([b58660b](https://github.com/marc-gavanier/ihexa/commit/b58660be2e089551b39cb3e0268552bf072b8df6))
+* **observability:** add EventTracker pillar (Segment Spec) ([1aab4ae](https://github.com/marc-gavanier/ihexa/commit/1aab4aed4062d61e3fb35c98ce96c74ded22eaf0))
+* **observability:** add Logger pillar (Pino + OTel LogRecord shape) ([30fdef2](https://github.com/marc-gavanier/ihexa/commit/30fdef2f0b3870ab26af487bd21cf2b04d5080eb))
+* **observability:** add Metrics pillar (counter / histogram / gauge) ([26eca29](https://github.com/marc-gavanier/ihexa/commit/26eca29f24f1755cc3c55683d0647fd754e0d943))
+* **observability:** add Tracer pillar (OTel + noop) ([4058954](https://github.com/marc-gavanier/ihexa/commit/4058954410205f6ce803a1a4c5651bb61346f040))
+* **observability:** complete Matomo Segment→native mapping (lossless) ([50d0335](https://github.com/marc-gavanier/ihexa/commit/50d03355a2817f81070d022cf907c95d79c03228))
+* **observability:** emit business events from actions and pages ([aa5cb89](https://github.com/marc-gavanier/ihexa/commit/aa5cb8986946a17476c9a36ab0b0099384042394))
+* **observability:** establish per-request scope via cookie + Identity union ([771266a](https://github.com/marc-gavanier/ihexa/commit/771266a33dd9b7e1fcb65f8841b10215ba8dd8ee))
+* **observability:** instrument recherche-entreprises HTTP calls ([55501d7](https://github.com/marc-gavanier/ihexa/commit/55501d7cc93539c8a69861c39dd487930a062c70))
+* **observability:** measure action volume and duration ([87b3f88](https://github.com/marc-gavanier/ihexa/commit/87b3f8869fa78fb0686488ed2959a245fdae9792))
+* **observability:** report unexpected action errors with context ([61bc351](https://github.com/marc-gavanier/ihexa/commit/61bc351f08e2606405ad7efb2b72fe432d8093f8))
+* **observability:** trace every pg query at the pool level ([6144d48](https://github.com/marc-gavanier/ihexa/commit/6144d48964fc677659850daafdcfd285535e47b3))
+* **observability:** trace every server action ([6c2bf40](https://github.com/marc-gavanier/ihexa/commit/6c2bf404695e21a95fb69a315f108bb21369cc96))
+* **observability:** wire per-env configuration for the five pillars ([6fec926](https://github.com/marc-gavanier/ihexa/commit/6fec926ed5d08d26396537a4cd96874ee61b74be))
+* **telemetry:** report page context on page views ([c48c459](https://github.com/marc-gavanier/ihexa/commit/c48c4598844a5f0be4aa202d5467853ef68a8ac4))
+* **telemetry:** route debug-level signals to the dev log file ([ed3f5bc](https://github.com/marc-gavanier/ihexa/commit/ed3f5bc37b5419b084c1e20f9ddd40cf821f86ff))
+* **telemetry:** route every signal to the log file in dev ([6636c41](https://github.com/marc-gavanier/ihexa/commit/6636c41d007dce64549edb337162ae16b10cc694))
+
 # [1.11.0](https://github.com/marc-gavanier/ihexa/compare/v1.10.0...v1.11.0) (2026-05-20)
 
 
