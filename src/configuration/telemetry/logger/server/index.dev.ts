@@ -2,7 +2,6 @@ import { withLogger as createWithLogger } from '@arckit/nextjs/telemetry';
 import { createPinoLogger } from '@arckit/telemetry';
 import { getIdentity, getScope, getTrace } from '@arckit/telemetry/context';
 import pino from 'pino';
-import { preservingAfter } from '@/configuration/telemetry/scheduler';
 
 const transport = pino.transport({
   targets: [
@@ -19,4 +18,4 @@ export const logger = createPinoLogger({
   getTrace
 });
 
-export const withLogger = createWithLogger(logger, preservingAfter);
+export const withLogger = createWithLogger(logger);
