@@ -1,7 +1,8 @@
 'use client';
 
 import { Options } from '@arckit/daisyui/primitives-client';
-import { applyEffectSchema, fieldErrorTranslation, handleAction, handleSubmit, transformValue, useAppForm } from '@arckit/form';
+import { fieldErrorTranslation, handleAction, handleSubmit, transformValue, useAppForm } from '@arckit/form';
+import { applyEffectSchema } from '@arckit/form/effect-schema';
 import { toastError, toastSuccess } from '@arckit/nextjs/client';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';

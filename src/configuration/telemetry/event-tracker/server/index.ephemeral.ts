@@ -1,6 +1,6 @@
 import { withEventTracker as createWithEventTracker, withPageView as createWithPageView } from '@arckit/nextjs/telemetry';
-import { createNoopEventTracker } from '@arckit/telemetry';
 import { getIdentity, getScope, getTrace } from '@arckit/telemetry/context';
+import { createNoopEventTracker } from '@arckit/telemetry/event-tracker';
 
 export const eventTracker = createNoopEventTracker({ getScope, getIdentity, getTrace });
 

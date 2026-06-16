@@ -1,4 +1,4 @@
-import { serverActionReporter } from '@arckit/telemetry';
+import { serverActionReporter } from '@arckit/telemetry/error-reporter';
 import { reportClientException, reportClientMessage } from '@/app/_actions/telemetry/report-client.action';
 
 export const errorReporter = serverActionReporter({

@@ -1,6 +1,6 @@
 import { withErrorReporter as createWithErrorReporter } from '@arckit/nextjs/telemetry';
-import { createLoggerReporter } from '@arckit/telemetry';
 import { getIdentity, getScope, getTrace } from '@arckit/telemetry/context';
+import { createLoggerReporter } from '@arckit/telemetry/error-reporter';
 import { logger } from '../../logger/server';
 
 export const errorReporter = createLoggerReporter({ logger, getScope, getIdentity, getTrace });

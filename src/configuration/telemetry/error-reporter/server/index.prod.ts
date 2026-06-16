@@ -1,6 +1,6 @@
 import { withErrorReporter as createWithErrorReporter } from '@arckit/nextjs/telemetry';
-import { createSentryReporter } from '@arckit/telemetry';
 import { getIdentity, getScope, getTrace } from '@arckit/telemetry/context';
+import { createSentryReporter } from '@arckit/telemetry/error-reporter';
 import * as Sentry from '@sentry/nextjs';
 import { serverEnv } from '@/env/env.server';
 
