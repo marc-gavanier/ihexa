@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
+  "packageManager": "pnpm@11.2.2",
   "browserslist": ["> 1%", "maintained node versions", "not dead"],
   "main": "index.js",
   "scripts": {
