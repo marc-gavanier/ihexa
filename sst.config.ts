@@ -14,7 +14,9 @@ export default $config({
 
     new sst.aws.Nextjs('IHexa', {
       environment: {
-        DATABASE_URL: databaseUrl.value
+        DATABASE_URL: databaseUrl.value,
+        NEXT_PUBLIC_MATOMO_URL: process.env['NEXT_PUBLIC_MATOMO_URL'] ?? '',
+        NEXT_PUBLIC_MATOMO_SITE_ID: process.env['NEXT_PUBLIC_MATOMO_SITE_ID'] ?? ''
       }
     });
   }
