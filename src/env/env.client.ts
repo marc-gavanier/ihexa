@@ -9,4 +9,9 @@ const ClientEnvSchema = Schema.Struct({
 
 export type ClientEnv = typeof ClientEnvSchema.Type;
 
-export const clientEnv = Schema.decodeUnknownSync(ClientEnvSchema)(process.env);
+export const clientEnv = Schema.decodeUnknownSync(ClientEnvSchema)({
+  NEXT_PUBLIC_APP_NAME: process.env['NEXT_PUBLIC_APP_NAME'],
+  NEXT_PUBLIC_SENTRY_DSN: process.env['NEXT_PUBLIC_SENTRY_DSN'],
+  NEXT_PUBLIC_MATOMO_URL: process.env['NEXT_PUBLIC_MATOMO_URL'],
+  NEXT_PUBLIC_MATOMO_SITE_ID: process.env['NEXT_PUBLIC_MATOMO_SITE_ID']
+});
