@@ -1,3 +1,16 @@
+# [1.13.0](https://github.com/marc-gavanier/ihexa/compare/v1.12.0...v1.13.0) (2026-06-16)
+
+
+### Bug Fixes
+
+* **actions:** validate input with Schema.decodeUnknownSync ([101f9eb](https://github.com/marc-gavanier/ihexa/commit/101f9eb37fc2c080fe02bc23e3682b2c7e7ee9eb))
+
+
+### Features
+
+* **telemetry:** track analytics client-side with Matomo in production ([12cf6e9](https://github.com/marc-gavanier/ihexa/commit/12cf6e9b414c9bf26f6d629c2c5d500d148fe438))
+* **telemetry:** track domain events client-side and align Sentry router transition ([489ea5f](https://github.com/marc-gavanier/ihexa/commit/489ea5f2b92d0307d71d457ac7fb64b3f51a14f3))
+
 # [1.12.0](https://github.com/marc-gavanier/ihexa/compare/v1.11.0...v1.12.0) (2026-05-29)
 
 
