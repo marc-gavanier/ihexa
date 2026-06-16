@@ -13,7 +13,7 @@ import { searchCompany } from '@/features/settings/abilities/configure-seller/im
 export const searchCompanyAction = actionBuilder()
   .use(withTracer('action.searchCompany', { kind: 'server' }))
   .use(withMetrics('searchCompany'))
-  .use(withInput(Schema.standardSchemaV1(searchCompanyValidation)))
+  .use(withInput(Schema.decodeUnknownSync(searchCompanyValidation)))
   .use(withLogger('searchCompanyAction'))
   .use(withErrorReporter('searchCompanyAction'))
   .execute(async ({ input }) => searchCompany(input));

@@ -13,7 +13,7 @@ import { searchCompany } from '@/features/client/abilities/create-client/impleme
 export const searchCompanyForClientAction = actionBuilder()
   .use(withTracer('action.searchCompanyForClient', { kind: 'server' }))
   .use(withMetrics('searchCompanyForClient'))
-  .use(withInput(Schema.standardSchemaV1(searchCompanyValidation)))
+  .use(withInput(Schema.decodeUnknownSync(searchCompanyValidation)))
   .use(withLogger('searchCompanyForClientAction'))
   .use(withErrorReporter('searchCompanyForClientAction'))
   .execute(async ({ input }) => searchCompany(input));
