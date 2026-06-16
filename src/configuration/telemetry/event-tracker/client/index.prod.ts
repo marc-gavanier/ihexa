@@ -7,8 +7,8 @@ export const trackPageView = matomoBrowserPageView();
 
 export const register = (): void => {
   initMatomoBrowser({
-    url: clientEnv.NEXT_PUBLIC_MATOMO_URL || 'https://ihexa.matomo.cloud',
-    siteId: clientEnv.NEXT_PUBLIC_MATOMO_SITE_ID || '1',
+    url: clientEnv.NEXT_PUBLIC_MATOMO_URL,
+    siteId: clientEnv.NEXT_PUBLIC_MATOMO_SITE_ID,
     disableCookies: true
   });
   trackPageView();
