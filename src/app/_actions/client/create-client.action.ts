@@ -1,6 +1,8 @@
 'use server';
 
-import { fromEither, withInput } from '@arckit/nextjs';
+import { withInput } from '@arckit/nextjs';
+import { fromEither } from '@arckit/nextjs/action/either';
+import { Schema } from 'effect';
 import { actionBuilder } from '@/configuration/nextjs';
 import { withErrorReporter } from '@/configuration/telemetry/error-reporter/server';
 import { withEventTracker } from '@/configuration/telemetry/event-tracker/server';
@@ -18,7 +20,7 @@ import { createB2BClient, createB2CClient } from '@/features/client/abilities/cr
 export const createB2CClientAction = actionBuilder()
   .use(withTracer('action.createB2CClient', { kind: 'server' }))
   .use(withMetrics('createB2CClient'))
-  .use(withInput(createB2CClientValidation))
+  .use(withInput(Schema.standardSchemaV1(createB2CClientValidation)))
   .use(withLogger('createB2CClientAction', { extractAttributes: ({ input: { id } }) => ({ id }) }))
   .use(withErrorReporter('createB2CClientAction', { extractAttributes: ({ input: { id } }) => ({ id }) }))
   .use(withEventTracker('Client Created', { extractProperties: () => ({ type: 'b2c' }) }))
@@ -43,7 +45,7 @@ export const createB2CClientAction = actionBuilder()
 export const createB2BClientAction = actionBuilder()
   .use(withTracer('action.createB2BClient', { kind: 'server' }))
   .use(withMetrics('createB2BClient'))
-  .use(withInput(createB2BClientValidation))
+  .use(withInput(Schema.standardSchemaV1(createB2BClientValidation)))
   .use(withLogger('createB2BClientAction', { extractAttributes: ({ input: { id } }) => ({ id }) }))
   .use(withErrorReporter('createB2BClientAction', { extractAttributes: ({ input: { id } }) => ({ id }) }))
   .use(withEventTracker('Client Created', { extractProperties: () => ({ type: 'b2b' }) }))

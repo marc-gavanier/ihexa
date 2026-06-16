@@ -1,4 +1,4 @@
-import { createNoopReporter } from '@arckit/telemetry';
+import { createNoopReporter } from '@arckit/telemetry/error-reporter';
 
 export const errorReporter = createNoopReporter();
 

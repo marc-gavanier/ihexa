@@ -1,6 +1,7 @@
 'use client';
 
-import { applyEffectSchema, fieldErrorTranslation, handleAction, handleSubmit, transformValue, useAppForm } from '@arckit/form';
+import { fieldErrorTranslation, handleAction, handleSubmit, transformValue, useAppForm } from '@arckit/form';
+import { applyEffectSchema } from '@arckit/form/effect-schema';
 import { toastError, toastSuccess } from '@arckit/nextjs/client';
 import { useState } from 'react';
 import { useTranslation } from 'react-i18next';

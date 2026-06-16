@@ -1,6 +1,6 @@
 import { withErrorReporter as createWithErrorReporter } from '@arckit/nextjs/telemetry';
-import { createNoopReporter } from '@arckit/telemetry';
 import { getIdentity, getScope, getTrace } from '@arckit/telemetry/context';
+import { createNoopReporter } from '@arckit/telemetry/error-reporter';
 
 export const errorReporter = createNoopReporter({ getScope, getIdentity, getTrace });
 

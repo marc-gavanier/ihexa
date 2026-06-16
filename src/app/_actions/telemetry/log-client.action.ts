@@ -1,6 +1,6 @@
 'use server';
 
-import { createConsoleLogger, type LogEntry } from '@arckit/telemetry';
+import { createConsoleLogger, type LogEntry } from '@arckit/telemetry/logger';
 
 const logger = createConsoleLogger();
 

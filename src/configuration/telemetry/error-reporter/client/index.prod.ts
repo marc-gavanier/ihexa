@@ -1,4 +1,4 @@
-import { createSentryReporter } from '@arckit/telemetry';
+import { createSentryReporter } from '@arckit/telemetry/error-reporter';
 import * as Sentry from '@sentry/nextjs';
 import { clientEnv } from '@/env/env.client';
 

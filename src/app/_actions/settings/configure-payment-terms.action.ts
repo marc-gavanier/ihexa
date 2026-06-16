@@ -1,6 +1,8 @@
 'use server';
 
-import { fromEither, withInput } from '@arckit/nextjs';
+import { withInput } from '@arckit/nextjs';
+import { fromEither } from '@arckit/nextjs/action/either';
+import { Schema } from 'effect';
 import { actionBuilder } from '@/configuration/nextjs';
 import { withErrorReporter } from '@/configuration/telemetry/error-reporter/server';
 import { withEventTracker } from '@/configuration/telemetry/event-tracker/server';
@@ -27,7 +29,7 @@ const toValidatedInput = (input: ConfigurePaymentTermsFormData): ValidatedPaymen
 export const configurePaymentTermsAction = actionBuilder()
   .use(withTracer('action.configurePaymentTerms', { kind: 'server' }))
   .use(withMetrics('configurePaymentTerms'))
-  .use(withInput(configurePaymentTermsValidation))
+  .use(withInput(Schema.standardSchemaV1(configurePaymentTermsValidation)))
   .use(withLogger('configurePaymentTermsAction'))
   .use(withErrorReporter('configurePaymentTermsAction'))
   .use(withEventTracker('Payment Terms Configured'))

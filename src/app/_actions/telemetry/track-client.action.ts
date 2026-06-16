@@ -1,12 +1,12 @@
 'use server';
 
 import {
-  createConsoleLogger,
   createLoggerEventTracker,
   type IdentifyEvent,
   type PageEvent,
   type TrackedEvent
-} from '@arckit/telemetry';
+} from '@arckit/telemetry/event-tracker';
+import { createConsoleLogger } from '@arckit/telemetry/logger';
 
 const tracker = createLoggerEventTracker({ logger: createConsoleLogger() });
 
