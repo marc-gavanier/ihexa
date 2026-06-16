@@ -1,3 +1,12 @@
+## [1.13.1](https://github.com/marc-gavanier/ihexa/compare/v1.13.0...v1.13.1) (2026-06-16)
+
+
+### Bug Fixes
+
+* **sst:** expose NEXT_PUBLIC_MATOMO_* to the Next.js build ([6278b35](https://github.com/marc-gavanier/ihexa/commit/6278b35ea13df6aec5821f92493bb594d4068d6c))
+* **telemetry:** fall back to Matomo instance config in production ([6d96e07](https://github.com/marc-gavanier/ihexa/commit/6d96e07c428fdaa5959b3a93d34c026e71a1295f))
+* **telemetry:** plumb Sentry DSN to client build and server runtime ([7344282](https://github.com/marc-gavanier/ihexa/commit/734428244ffe0d8ec936b1fd67cacede3a175c9f))
+
 # [1.13.0](https://github.com/marc-gavanier/ihexa/compare/v1.12.0...v1.13.0) (2026-06-16)
 
 
