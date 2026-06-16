@@ -16,7 +16,7 @@ import { CompanyIdentity } from '@/features/settings/domain/seller';
 export const configureSellerAction = actionBuilder()
   .use(withTracer('action.configureSeller', { kind: 'server' }))
   .use(withMetrics('configureSeller'))
-  .use(withInput(Schema.standardSchemaV1(configureSellerValidation)))
+  .use(withInput(Schema.decodeUnknownSync(configureSellerValidation)))
   .use(withLogger('configureSellerAction'))
   .use(withErrorReporter('configureSellerAction'))
   .use(withEventTracker('Seller Configured'))

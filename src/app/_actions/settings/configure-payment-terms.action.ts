@@ -29,7 +29,7 @@ const toValidatedInput = (input: ConfigurePaymentTermsFormData): ValidatedPaymen
 export const configurePaymentTermsAction = actionBuilder()
   .use(withTracer('action.configurePaymentTerms', { kind: 'server' }))
   .use(withMetrics('configurePaymentTerms'))
-  .use(withInput(Schema.standardSchemaV1(configurePaymentTermsValidation)))
+  .use(withInput(Schema.decodeUnknownSync(configurePaymentTermsValidation)))
   .use(withLogger('configurePaymentTermsAction'))
   .use(withErrorReporter('configurePaymentTermsAction'))
   .use(withEventTracker('Payment Terms Configured'))
