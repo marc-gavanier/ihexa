@@ -1,3 +1,10 @@
+## [1.13.2](https://github.com/marc-gavanier/ihexa/compare/v1.13.1...v1.13.2) (2026-06-16)
+
+
+### Bug Fixes
+
+* **env:** read NEXT_PUBLIC_* via explicit keys for build inlining ([a8bc103](https://github.com/marc-gavanier/ihexa/commit/a8bc103d3a64c3443df3622ada9d9bbc06460132))
+
 ## [1.13.1](https://github.com/marc-gavanier/ihexa/compare/v1.13.0...v1.13.1) (2026-06-16)
 
 
