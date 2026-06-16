@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { inject } from '@/configuration/injection';
 import { useServerAction } from '@/configuration/nextjs/client';
+import { TrackerAction, TrackerCategory, trackEvent } from '@/configuration/telemetry/event-tracker/client/track-event';
 import type { CompanySummary } from '@/libraries/recherche-entreprises';
 import { CREATE_B2B_CLIENT_ACTION_KEY } from '../../action/create-client.key';
 import { createB2BClientValidation } from '../../action/create-client.validation';
@@ -29,6 +30,7 @@ export const CreateB2BClientForm = ({ onSuccess }: CreateB2BClientFormProps) => 
   const [action, isPending] = useServerAction(inject(CREATE_B2B_CLIENT_ACTION_KEY), {
     onSuccess: (state) => {
       toastSuccess(state)(({ denominationSociale }) => t('success.createdB2B', { denominationSociale }));
+      trackEvent({ category: TrackerCategory.CLIENT, action: TrackerAction.CREATED, type: 'b2b' });
       form.reset();
       setSelectedCompany(null);
       router.refresh();

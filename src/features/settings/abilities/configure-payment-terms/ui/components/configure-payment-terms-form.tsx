@@ -7,6 +7,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { inject } from '@/configuration/injection';
 import { useServerAction } from '@/configuration/nextjs/client';
+import { TrackerAction, TrackerCategory, trackEvent } from '@/configuration/telemetry/event-tracker/client/track-event';
 import { DEADLINE_STARTING_POINTS } from '@/features/settings/domain/payment-terms/payment-deadline';
 import { PAYMENT_METHODS } from '@/features/settings/domain/payment-terms/payment-method';
 import { CONFIGURE_PAYMENT_TERMS_KEY } from '../../action/configure-payment-terms.key';
@@ -31,6 +32,7 @@ export const ConfigurePaymentTermsForm = ({ paymentTerms }: { paymentTerms: Conf
   const [action, isPending] = useServerAction(inject(CONFIGURE_PAYMENT_TERMS_KEY), {
     onSuccess: (state) => {
       toastSuccess(state)(() => t('success.saved'));
+      trackEvent({ category: TrackerCategory.PAYMENT_TERMS, action: TrackerAction.CONFIGURED });
     },
     onError: toastError(t)
   });

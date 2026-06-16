@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useTranslation } from 'react-i18next';
 import { inject } from '@/configuration/injection';
 import { useServerAction } from '@/configuration/nextjs/client';
+import { TrackerAction, TrackerCategory, trackEvent } from '@/configuration/telemetry/event-tracker/client/track-event';
 import { CREATE_B2C_CLIENT_ACTION_KEY } from '../../action/create-client.key';
 import { createB2CClientValidation } from '../../action/create-client.validation';
 import { emptyB2CClientFormValues, toCreateB2CClientInput } from './create-b2c-client.submission';
@@ -22,6 +23,7 @@ export const CreateB2CClientForm = ({ onSuccess }: CreateB2CClientFormProps) => 
   const [action, isPending] = useServerAction(inject(CREATE_B2C_CLIENT_ACTION_KEY), {
     onSuccess: (state) => {
       toastSuccess(state)(({ name }) => t('success.created', name));
+      trackEvent({ category: TrackerCategory.CLIENT, action: TrackerAction.CREATED, type: 'b2c' });
       form.reset();
       router.refresh();
       onSuccess?.();
