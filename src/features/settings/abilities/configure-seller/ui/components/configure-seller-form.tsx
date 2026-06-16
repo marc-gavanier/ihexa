@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { inject } from '@/configuration/injection';
 import { useServerAction } from '@/configuration/nextjs/client';
+import { TrackerAction, TrackerCategory, trackEvent } from '@/configuration/telemetry/event-tracker/client/track-event';
 import { VAT_REGIMES } from '@/features/settings/domain/seller/vat-regime';
 import type { CompanySummary } from '@/libraries/recherche-entreprises';
 import { CONFIGURE_SELLER_KEY } from '../../action/configure-seller.key';
@@ -26,6 +27,7 @@ export const ConfigureSellerForm = ({ seller }: { seller: ConfigureSellerViewMod
   const [action, isPending] = useServerAction(inject(CONFIGURE_SELLER_KEY), {
     onSuccess: (state) => {
       toastSuccess(state)(() => t('success.saved'));
+      trackEvent({ category: TrackerCategory.SELLER, action: TrackerAction.CONFIGURED });
     },
     onError: toastError(t)
   });
