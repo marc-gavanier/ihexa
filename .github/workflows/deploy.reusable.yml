@@ -45,6 +45,8 @@ jobs:
           ENV: ${{ inputs.env-type }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          NEXT_PUBLIC_MATOMO_URL: ${{ vars.NEXT_PUBLIC_MATOMO_URL }}
+          NEXT_PUBLIC_MATOMO_SITE_ID: ${{ vars.NEXT_PUBLIC_MATOMO_SITE_ID }}
         run: |
           echo "Deploying stage: ${{ inputs.stage }}"
           DEPLOY_OUTPUT=$(pnpm sst deploy --stage "${{ inputs.stage }}")
